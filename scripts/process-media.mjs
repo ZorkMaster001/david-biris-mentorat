@@ -31,7 +31,15 @@ const IMAGES = [
   // Testimoniale, normalizate la 9:16. Decupajele sunt masurate pe fiecare sursa.
   { src: "testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0] },
   { src: "testimonial_darius/after.jpeg", out: "darius-after", crop: [2268, 4032, 378, 0] },
-  { src: "testimonial_meril/before.jpeg", out: "meril-before", crop: [617, 1415, 23, 176] },
+  // meril-before: crop-ul de 617px latime elimina UI-ul Snapchat dar nu mai respecta 9:16
+  // (0.436 in loc de 0.5625). Se completeaza canvas-ul la 796x1415 (9:16 exact la aceasta
+  // inaltime) cu fundalul site-ului, in loc sa se decupeze si mai mult din subiect.
+  {
+    src: "testimonial_meril/before.jpeg",
+    out: "meril-before",
+    crop: [617, 1415, 23, 176],
+    pad: { width: 796, height: 1415, background: "#0A0A0B" },
+  },
   { src: "testimonial_meril/after.jpeg", out: "meril-after", crop: [790, 1404, 39, 0] },
 ];
 
@@ -70,7 +78,7 @@ async function toWebFormats(inputBuffer, outName) {
   await sharp(inputBuffer).webp({ quality: 78 }).toFile(`${base}.webp`);
 }
 
-async function processImage({ src, out, crop }) {
+async function processImage({ src, out, crop, pad }) {
   const input = path.join(ROOT, src);
   if (!existsSync(input)) throw new Error(`Lipseste sursa imagine: ${src}`);
 
@@ -79,7 +87,17 @@ async function processImage({ src, out, crop }) {
     const [width, height, left, top] = crop;
     pipeline = pipeline.extract({ width, height, left, top });
   }
-  const buffer = await pipeline.resize({ width: 1440, withoutEnlargement: true }).toBuffer();
+  if (pad) {
+    // fit: "contain" pastreaza pixelii decupati neschimbati si adauga bare laterale din
+    // culoarea de fundal a site-ului, ca sa iasa exact 9:16 fara sa mai taie din subiect.
+    // Acesta e singurul resize pentru acest caz: sharp combina optiunile mai multor apeluri
+    // .resize() intr-o singura operatie, deci inlantuirea cu resize-ul comun de mai jos
+    // (width: 1440) ar suprascrie height-ul din pad si ar strica raportul 9:16.
+    pipeline = pipeline.resize({ width: pad.width, height: pad.height, fit: "contain", background: pad.background });
+  } else {
+    pipeline = pipeline.resize({ width: 1440, withoutEnlargement: true });
+  }
+  const buffer = await pipeline.toBuffer();
   await toWebFormats(buffer, out);
 }
 
