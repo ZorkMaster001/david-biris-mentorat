@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #0a0a0b;
+  --color-ink-raised: #141416;
+  --color-bone: #f2efe9;
+  --color-bone-dim: #a3a099;
+  --color-ember: #ff5c1a;
+  --color-deep: #0e4a4f;
+  --color-hairline: rgba(242, 239, 233, 0.1);
+
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --spacing-nav: 64px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Spatiu sub continut cat sa nu intre nimic sub bottom nav. */
+.pb-nav {
+  padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom) + 1.5rem);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 115%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.92;
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
