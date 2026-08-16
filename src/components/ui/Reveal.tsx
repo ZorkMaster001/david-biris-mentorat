@@ -1,21 +1,21 @@
-"use client";
+import type { CSSProperties, ReactNode } from "react";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
-
+/**
+ * Intrare la scroll, fara nicio linie de JavaScript: animatia e condusa de
+ * `animation-timeline: view()` in globals.css, protejata de `@supports`.
+ *
+ * Consecinta importanta: intr-un browser fara suport, sau cu JS dezactivat, sau
+ * pentru un crawler care nu executa JS, continutul e pur si simplu vizibil. Nu
+ * exista starea „a ramas la opacity: 0 pentru ca observer-ul n-a pornit".
+ *
+ * `delay` decaleaza inceputul intervalului de scroll, ca elementele dintr-o lista
+ * sa intre esalonat.
+ */
 export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
-  const reduced = useReducedMotion();
-
-  if (reduced) return <>{children}</>;
-
+  const style = { "--reveal-shift": `${Math.round(delay * 100)}%` } as CSSProperties;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div className="reveal" style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }
