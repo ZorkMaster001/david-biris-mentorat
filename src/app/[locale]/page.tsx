@@ -1,14 +1,27 @@
+import { notFound } from "next/navigation";
+import { HeroStories } from "@/components/hero/HeroStories";
 import { getContent } from "@/content";
 import { isLocale } from "@/content/types";
-import { notFound } from "next/navigation";
+import { whatsappUrl } from "@/lib/contact";
+import { localePath } from "@/lib/site";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
   return (
-    <main className="px-5 py-20">
-      <h1 className="font-display text-5xl">{content.hero.headline}</h1>
+    <main>
+      <HeroStories
+        slides={content.hero.slides}
+        headline={content.hero.headline}
+        subheadline={content.hero.subheadline}
+        ctaPrimary={content.hero.ctaPrimary}
+        ctaPrimaryHref={whatsappUrl(content.contact.prefilledMessage)}
+        ctaSecondary={content.hero.ctaSecondary}
+        ctaSecondaryHref={localePath(locale, "metoda")}
+        prevSlideLabel={content.hero.prevSlideLabel}
+        nextSlideLabel={content.hero.nextSlideLabel}
+      />
     </main>
   );
 }

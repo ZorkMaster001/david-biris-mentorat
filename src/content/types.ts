@@ -64,6 +64,8 @@ export interface Content {
     subheadline: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    prevSlideLabel: string;
+    nextSlideLabel: string;
     slides: HeroSlide[];
   };
   firstTime: { eyebrow: string; headline: string; body: string[]; image: string; imageAlt: string };

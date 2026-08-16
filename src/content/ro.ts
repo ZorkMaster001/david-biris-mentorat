@@ -24,6 +24,8 @@ export const ro: Content = {
       "Mentorat 1-la-1 care îmbină sportul pe care îl faci deja — box, înot, cățărat, sală — cu un plan de nutriție care nu îți cere să renunți la viața ta.",
     ctaPrimary: "Scrie-i lui David pe WhatsApp",
     ctaSecondary: "Vezi metoda",
+    prevSlideLabel: "Slide-ul anterior",
+    nextSlideLabel: "Slide-ul următor",
     slides: [
       { id: "sala", word: "Ridică", video: "01-sala", poster: "poster-01-sala", alt: "David antrenându-se în sală" },
       { id: "box", word: "Lovește", video: "02-box", poster: "poster-02-box", alt: "Antrenament de box în doi" },

@@ -24,6 +24,8 @@ export const en: Content = {
       "One-on-one mentoring that combines the sport you already do — boxing, swimming, climbing, lifting — with a nutrition plan that doesn't ask you to give up your life.",
     ctaPrimary: "Message David on WhatsApp",
     ctaSecondary: "See the method",
+    prevSlideLabel: "Previous slide",
+    nextSlideLabel: "Next slide",
     slides: [
       { id: "sala", word: "Lift", video: "01-sala", poster: "poster-01-sala", alt: "David training in the gym" },
       { id: "box", word: "Strike", video: "02-box", poster: "poster-02-box", alt: "Boxing session for two" },
