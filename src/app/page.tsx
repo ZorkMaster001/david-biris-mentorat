@@ -1,3 +1,4 @@
+// Pagină temporară de verificare vizuală (Task 3) — înlocuită de Task 4 cu redirectarea pe locale.
 export default function Page() {
   return (
     <main className="px-5 py-20">
