@@ -1,7 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../";
 
-@theme {
+@theme static {
   --color-ink: #0a0a0b;
   --color-ink-raised: #141416;
   --color-bone: #f2efe9;
