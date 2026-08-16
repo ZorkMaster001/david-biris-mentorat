@@ -42,9 +42,26 @@ export function ContactFab({ labels }: { labels: Content["contact"] }) {
   return (
     <div
       ref={containerRef}
-      className="fixed right-4 z-50 flex flex-col items-end gap-3"
+      className="fixed right-4 z-50 flex flex-col-reverse items-end gap-3"
       style={{ bottom: "calc(var(--spacing-nav) + env(safe-area-inset-bottom) + 16px)" }}
     >
+      <button
+        ref={toggleRef}
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        aria-label={labels.fabLabel}
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-ember text-ink shadow-lg shadow-ember/25"
+      >
+        <motion.span
+          animate={reduced ? undefined : { rotate: open ? 90 : 0 }}
+          transition={{ type: "spring", stiffness: 320, damping: 26 }}
+          className="flex items-center justify-center"
+        >
+          {open ? <X size={26} weight="bold" /> : <ChatCircleDots size={26} weight="fill" />}
+        </motion.span>
+      </button>
+
       <AnimatePresence>
         {open
           ? actions.map((action, index) => (
@@ -66,23 +83,6 @@ export function ContactFab({ labels }: { labels: Content["contact"] }) {
             ))
           : null}
       </AnimatePresence>
-
-      <button
-        ref={toggleRef}
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-        aria-label={labels.fabLabel}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-ember text-ink shadow-lg shadow-ember/25"
-      >
-        <motion.span
-          animate={reduced ? undefined : { rotate: open ? 90 : 0 }}
-          transition={{ type: "spring", stiffness: 320, damping: 26 }}
-          className="flex items-center justify-center"
-        >
-          {open ? <X size={26} weight="bold" /> : <ChatCircleDots size={26} weight="fill" />}
-        </motion.span>
-      </button>
     </div>
   );
 }
