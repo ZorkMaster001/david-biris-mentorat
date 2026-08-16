@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { BottomNav } from "@/components/nav/BottomNav";
 import { getContent } from "@/content";
-import { LOCALES, isLocale, type Locale } from "@/content/types";
+import { LOCALES, isLocale } from "@/content/types";
 import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -40,5 +41,11 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return <div data-locale={locale satisfies Locale}>{children}</div>;
+  const content = getContent(locale);
+  return (
+    <>
+      <div className="pb-nav">{children}</div>
+      <BottomNav locale={locale} items={content.nav} />
+    </>
+  );
 }
