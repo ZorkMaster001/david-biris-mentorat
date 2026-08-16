@@ -18,6 +18,8 @@ interface HeroStoriesProps {
   ctaSecondaryHref: string;
   prevSlideLabel: string;
   nextSlideLabel: string;
+  pauseLabel: string;
+  resumeLabel: string;
 }
 
 export function HeroStories({
@@ -30,6 +32,8 @@ export function HeroStories({
   ctaSecondaryHref,
   prevSlideLabel,
   nextSlideLabel,
+  pauseLabel,
+  resumeLabel,
 }: HeroStoriesProps) {
   const capabilities = useDeviceCapabilities();
   const playVideo = shouldPlayVideo(capabilities);
@@ -37,6 +41,12 @@ export function HeroStories({
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [failed, setFailed] = useState<Set<number>>(new Set());
+  // Respinsul autoplay e definitiv pentru sesiunea curenta: odata blocat, nu mai
+  // reincercam play() la fiecare schimbare de slide — trecem pe postere si pe timer.
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  // La primul randare se vede doar posterul slide-ului activ; vecinii se adauga
+  // dupa montare, in acelasi idle callback care preincarca urmatorul clip video.
+  const [visiblePosters, setVisiblePosters] = useState<Set<number>>(() => new Set([0]));
 
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const pointerStart = useRef<{ x: number; time: number } | null>(null);
@@ -45,47 +55,67 @@ export function HeroStories({
   const goNext = useCallback(() => setActive((index) => nextIndex(index, total)), [total]);
   const goPrev = useCallback(() => setActive((index) => prevIndex(index, total)), [total]);
 
-  // Reduced motion sau save-data: animatia CSS e neutralizata / neatasata, deci temporizam manual.
+  const activelyPlaying = playVideo && !autoplayBlocked;
+
+  // Reduced motion, save-data, sau autoplay respins: animatia CSS e neutralizata / neatasata
+  // ori clipul nu porneste deloc, deci temporizam manual avansarea.
   useEffect(() => {
-    if (playVideo || paused) return;
+    if (activelyPlaying || paused) return;
     const timer = window.setTimeout(goNext, SLIDE_DURATION_MS);
     return () => window.clearTimeout(timer);
-  }, [active, paused, playVideo, goNext]);
+  }, [active, paused, activelyPlaying, goNext]);
 
-  // Reda doar clipul activ; restul raman oprite ca sa nu tina decodoare ocupate.
+  // Schimbarea slide-ului: opreste clipurile inactive ca sa nu tina decodoare
+  // ocupate, si readuce clipul activ la inceput.
   useEffect(() => {
-    if (!playVideo) return;
-
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
-      if (index === active) {
-        video.currentTime = 0;
-        void video.play().catch(() => setPaused(false));
-      } else {
-        video.pause();
-      }
+      if (index === active) video.currentTime = 0;
+      else video.pause();
     });
-  }, [active, playVideo]);
+  }, [active]);
 
-  // Preincarca urmatorul clip cand browserul e liber.
+  // Redarea si pauza clipului activ, separat de efectul de mai sus: reluarea dupa
+  // pauza continua de unde a ramas, in loc sa reporneasca de la zero.
   useEffect(() => {
-    if (!playVideo) return;
-    const upcoming = videoRefs.current[nextIndex(active, total)];
-    if (!upcoming || upcoming.preload === "auto") return;
+    if (!activelyPlaying) return;
+    const video = videoRefs.current[active];
+    if (!video) return;
 
-    const warm = () => {
+    if (paused) {
+      video.pause();
+      return;
+    }
+    void video.play().catch(() => setAutoplayBlocked(true));
+  }, [active, activelyPlaying, paused]);
+
+  // Extinde setul de postere vizibile la vecini si preincarca urmatorul clip video,
+  // ambele intr-un singur idle callback ca sa nu concureze cu LCP-ul primului cadru.
+  useEffect(() => {
+    const expand = () => {
+      setVisiblePosters((current) => {
+        const updated = new Set(current);
+        updated.add(active);
+        updated.add(nextIndex(active, total));
+        updated.add(prevIndex(active, total));
+        return updated;
+      });
+
+      if (!activelyPlaying) return;
+      const upcoming = videoRefs.current[nextIndex(active, total)];
+      if (!upcoming || upcoming.preload === "auto") return;
       upcoming.preload = "auto";
       upcoming.load();
     };
 
     if (typeof window.requestIdleCallback === "function") {
-      const handle = window.requestIdleCallback(warm);
+      const handle = window.requestIdleCallback(expand);
       return () => window.cancelIdleCallback(handle);
     }
 
-    const handle = window.setTimeout(warm, 400);
+    const handle = window.setTimeout(expand, 400);
     return () => window.clearTimeout(handle);
-  }, [active, playVideo, total]);
+  }, [active, activelyPlaying, total]);
 
   // Un clip stricat nu blocheaza slideshow-ul.
   const handleError = useCallback(
@@ -148,8 +178,9 @@ export function HeroStories({
             }}
             slide={slide}
             active={index === active}
-            playVideo={playVideo && !failed.has(index)}
+            playVideo={activelyPlaying && !failed.has(index)}
             priority={index === 0}
+            showPoster={visiblePosters.has(index) || index === active}
             onError={() => handleError(index)}
           />
         ))}
@@ -162,7 +193,7 @@ export function HeroStories({
         active={active}
         paused={paused}
         durationMs={SLIDE_DURATION_MS}
-        animate={playVideo}
+        animate={activelyPlaying}
         onComplete={goNext}
       />
 
@@ -191,6 +222,12 @@ export function HeroStories({
         onClick={goNext}
         aria-label={nextSlideLabel}
         className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:inset-y-0 focus-visible:right-0 focus-visible:z-30 focus-visible:w-16"
+      />
+      <button
+        type="button"
+        onClick={() => setPaused((current) => !current)}
+        aria-label={paused ? resumeLabel : pauseLabel}
+        className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:inset-x-0 focus-visible:top-3 focus-visible:z-30 focus-visible:mx-auto focus-visible:w-fit focus-visible:px-3"
       />
     </section>
   );

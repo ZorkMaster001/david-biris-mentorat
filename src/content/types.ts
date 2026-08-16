@@ -66,6 +66,8 @@ export interface Content {
     ctaSecondary: string;
     prevSlideLabel: string;
     nextSlideLabel: string;
+    pauseLabel: string;
+    resumeLabel: string;
     slides: HeroSlide[];
   };
   firstTime: { eyebrow: string; headline: string; body: string[]; image: string; imageAlt: string };

@@ -26,6 +26,8 @@ export const ro: Content = {
     ctaSecondary: "Vezi metoda",
     prevSlideLabel: "Slide-ul anterior",
     nextSlideLabel: "Slide-ul următor",
+    pauseLabel: "Pune slideshow-ul pe pauză",
+    resumeLabel: "Reia slideshow-ul",
     slides: [
       { id: "sala", word: "Ridică", video: "01-sala", poster: "poster-01-sala", alt: "David antrenându-se în sală" },
       { id: "box", word: "Lovește", video: "02-box", poster: "poster-02-box", alt: "Antrenament de box în doi" },

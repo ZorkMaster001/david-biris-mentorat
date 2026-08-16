@@ -26,6 +26,8 @@ export const en: Content = {
     ctaSecondary: "See the method",
     prevSlideLabel: "Previous slide",
     nextSlideLabel: "Next slide",
+    pauseLabel: "Pause the slideshow",
+    resumeLabel: "Resume the slideshow",
     slides: [
       { id: "sala", word: "Lift", video: "01-sala", poster: "poster-01-sala", alt: "David training in the gym" },
       { id: "box", word: "Strike", video: "02-box", poster: "poster-02-box", alt: "Boxing session for two" },

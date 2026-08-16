@@ -8,6 +8,8 @@ export interface DeviceCapabilities {
   slowNetwork: boolean;
   lowEndCpu: boolean;
   webgl: boolean;
+  /** True once `detect()` has actually run. False means these are still guesses. */
+  confirmed: boolean;
 }
 
 export const INITIAL_CAPABILITIES: DeviceCapabilities = {
@@ -16,10 +18,13 @@ export const INITIAL_CAPABILITIES: DeviceCapabilities = {
   slowNetwork: false,
   lowEndCpu: true,
   webgl: false,
+  confirmed: false,
 };
 
 export function shouldPlayVideo(caps: DeviceCapabilities): boolean {
-  return !caps.reducedMotion && !caps.saveData && !caps.slowNetwork;
+  // Video asteapta confirmarea: un cadru de redare care se opreste e nevinovat,
+  // dar o cerere de retea pe save-data, odata trimisa, nu mai poate fi anulata.
+  return caps.confirmed && !caps.reducedMotion && !caps.saveData && !caps.slowNetwork;
 }
 
 export function shouldRender3D(caps: DeviceCapabilities): boolean {
@@ -51,14 +56,15 @@ function detect(): DeviceCapabilities {
     slowNetwork: effectiveType === "slow-2g" || effectiveType === "2g" || effectiveType === "3g",
     lowEndCpu: navigator.hardwareConcurrency <= 4 || memory <= 4,
     webgl: detectWebgl(),
+    confirmed: true,
   };
 }
 
 /**
- * Incepe conservator pentru 3D si optimist pentru video, apoi corecteaza dupa montare.
- * Video poate porni optimist si apoi sa fie oprit — acceptabil, e un singur cadru.
- * 3D nu se monteaza niciodata pana cand detect() nu confirma capabilitatile,
- * evitand incercarea de a monta un canvas WebGL pe un device care nu-l suporta.
+ * Incepe conservator peste tot si corecteaza dupa montare.
+ * Nici video, nici 3D nu pornesc inainte ca detect() sa confirme capabilitatile:
+ * un cadru de 3D nepotrivit sau o cerere de retea pe save-data, odata trimisa,
+ * nu mai pot fi anulate retroactiv.
  */
 export function useDeviceCapabilities(): DeviceCapabilities {
   const [capabilities, setCapabilities] = useState<DeviceCapabilities>(INITIAL_CAPABILITIES);

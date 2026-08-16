@@ -21,6 +21,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         ctaSecondaryHref={localePath(locale, "metoda")}
         prevSlideLabel={content.hero.prevSlideLabel}
         nextSlideLabel={content.hero.nextSlideLabel}
+        pauseLabel={content.hero.pauseLabel}
+        resumeLabel={content.hero.resumeLabel}
       />
     </main>
   );

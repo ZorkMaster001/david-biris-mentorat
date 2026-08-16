@@ -7,6 +7,7 @@ const capable: DeviceCapabilities = {
   slowNetwork: false,
   lowEndCpu: false,
   webgl: true,
+  confirmed: true,
 };
 
 describe("shouldPlayVideo", () => {
@@ -30,8 +31,18 @@ describe("shouldPlayVideo", () => {
     expect(shouldPlayVideo({ ...capable, lowEndCpu: true })).toBe(true);
   });
 
-  it("plays on INITIAL_CAPABILITIES — video may start optimistically", () => {
-    expect(shouldPlayVideo(INITIAL_CAPABILITIES)).toBe(true);
+  it("refuses on INITIAL_CAPABILITIES — video waits for confirmation, an unwanted fetch can't be undone", () => {
+    expect(shouldPlayVideo(INITIAL_CAPABILITIES)).toBe(false);
+  });
+});
+
+describe("confirmed", () => {
+  it("starts unconfirmed in the initial capabilities", () => {
+    expect(INITIAL_CAPABILITIES.confirmed).toBe(false);
+  });
+
+  it("is true once a capability set has actually been detected", () => {
+    expect(capable.confirmed).toBe(true);
   });
 });
 

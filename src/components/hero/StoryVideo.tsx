@@ -9,11 +9,12 @@ interface StoryVideoProps {
   active: boolean;
   playVideo: boolean;
   priority: boolean;
+  showPoster: boolean;
   onError: () => void;
 }
 
 export const StoryVideo = forwardRef<HTMLVideoElement, StoryVideoProps>(function StoryVideo(
-  { slide, active, playVideo, priority, onError },
+  { slide, active, playVideo, priority, showPoster, onError },
   ref,
 ) {
   return (
@@ -22,14 +23,16 @@ export const StoryVideo = forwardRef<HTMLVideoElement, StoryVideoProps>(function
       style={{ opacity: active ? 1 : 0 }}
       aria-hidden={!active}
     >
-      <Image
-        src={`/media/img/${slide.poster}.avif`}
-        alt={slide.alt}
-        fill
-        priority={priority}
-        sizes="100vw"
-        className="object-cover"
-      />
+      {showPoster ? (
+        <Image
+          src={`/media/img/${slide.poster}.avif`}
+          alt={slide.alt}
+          fill
+          priority={priority}
+          sizes="100vw"
+          className="object-cover"
+        />
+      ) : null}
       {playVideo ? (
         <video
           ref={ref}
@@ -38,7 +41,6 @@ export const StoryVideo = forwardRef<HTMLVideoElement, StoryVideoProps>(function
           loop
           playsInline
           preload={priority ? "auto" : "none"}
-          poster={`/media/img/${slide.poster}.webp`}
           onError={onError}
         >
           <source src={`/media/video/${slide.video}.webm`} type="video/webm" />
