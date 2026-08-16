@@ -88,8 +88,13 @@ export function ContactFab({ labels }: { labels: Content["contact"] }) {
           }`}
         >
           <span className="text-sm font-medium">{action.label}</span>
+          {/*
+            `loading="lazy"` nu e cosmetic: React 19 emite un <link rel="preload"> pentru
+            imaginile gasite in SSR, iar butonul e inchis la incarcare — cele doua logo-uri
+            ar concura cu posterul care decide LCP-ul, degeaba.
+          */}
           {/* eslint-disable-next-line @next/next/no-img-element -- logo de brand static, dimensiuni fixe, fara beneficiu din optimizare */}
-          <img src={action.icon} alt="" width={28} height={28} aria-hidden="true" />
+          <img src={action.icon} alt="" width={28} height={28} loading="lazy" aria-hidden="true" />
         </a>
       ))}
     </div>

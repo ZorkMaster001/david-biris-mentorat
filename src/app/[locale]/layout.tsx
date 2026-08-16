@@ -22,6 +22,9 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
   return {
+    // Fara asta, Next construieste og:image relativ la localhost si previzualizarile
+    // din WhatsApp si Instagram raman goale in productie.
+    metadataBase: new URL(SITE_URL),
     title: content.meta.title,
     description: content.meta.description,
     alternates: {
