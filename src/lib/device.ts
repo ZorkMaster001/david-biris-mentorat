@@ -10,12 +10,12 @@ export interface DeviceCapabilities {
   webgl: boolean;
 }
 
-export const OPTIMISTIC_CAPABILITIES: DeviceCapabilities = {
+export const INITIAL_CAPABILITIES: DeviceCapabilities = {
   reducedMotion: false,
   saveData: false,
   slowNetwork: false,
-  lowEndCpu: false,
-  webgl: true,
+  lowEndCpu: true,
+  webgl: false,
 };
 
 export function shouldPlayVideo(caps: DeviceCapabilities): boolean {
@@ -55,12 +55,13 @@ function detect(): DeviceCapabilities {
 }
 
 /**
- * Porneste optimist ca sa nu blocheze primul render, apoi corecteaza dupa montare.
- * Consecinta: pe un device slab, 3D-ul nu se monteaza niciodata (se decide dupa efect),
- * iar video-ul poate porni si apoi sa fie oprit — acceptabil, e un singur cadru.
+ * Incepe conservator pentru 3D si optimist pentru video, apoi corecteaza dupa montare.
+ * Video poate porni optimist si apoi sa fie oprit — acceptabil, e un singur cadru.
+ * 3D nu se monteaza niciodata pana cand detect() nu confirma capabilitatile,
+ * evitand incercarea de a monta un canvas WebGL pe un device care nu-l suporta.
  */
 export function useDeviceCapabilities(): DeviceCapabilities {
-  const [capabilities, setCapabilities] = useState<DeviceCapabilities>(OPTIMISTIC_CAPABILITIES);
+  const [capabilities, setCapabilities] = useState<DeviceCapabilities>(INITIAL_CAPABILITIES);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
