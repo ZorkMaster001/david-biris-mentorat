@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { BottomNav } from "@/components/nav/BottomNav";
+import { MotionProvider } from "@/components/motion-provider";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
 import { absoluteUrl } from "@/lib/site";
@@ -43,9 +44,9 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
   return (
-    <>
+    <MotionProvider>
       <div className="pb-nav">{children}</div>
       <BottomNav locale={locale} items={content.nav} />
-    </>
+    </MotionProvider>
   );
 }
