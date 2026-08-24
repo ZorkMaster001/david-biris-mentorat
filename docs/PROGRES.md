@@ -4,7 +4,156 @@ Notă de context pentru sesiunile următoare. Se citește prima, ca să nu redes
 
 Ultima actualizare: 2026-08-24
 
-## Ce s-a schimbat în runda asta
+## Runda „lifestyle" — repoziționare de mesaj
+
+Cererea clientului, pe scurt: designul rămâne, se schimbă **poziționarea**. Site-ul nu mai vinde
+un „program de antrenament", ci **fitness ca lifestyle**. Ideea centrală, cuvintele lui:
+
+> „Te ajut să construiești un fizic de care să fii mândru, fără să-ți sacrifici viața pentru el."
+
+Sala e instrumentul principal, mentoratul e ghidarea, fizicul e rezultatul, iar lifestyle-ul e ce
+poți păstra în timp ce ajungi acolo. În plus: mentoratul e de acum **doar online**, nu mai există
+antrenamente față în față.
+
+### 1. Ordinea secțiunilor de pe homepage e argumentul paginii
+
+`src/app/[locale]/page.tsx`. Ordinea nouă și de ce:
+
+| # | Secțiune | Ce face |
+| --- | --- | --- |
+| 1 | `Hero` | Promisiunea, direct: fizic + fără sacrificiu |
+| 2 | `Offer` (**nouă**) | Ce cumperi, concret. Fără ea, tot restul e abstract |
+| 3 | `Results` | Dovada. A **urcat** de pe locul 6 — traficul vine din TikTok, iar omul care nu îl cunoaște pe David nu are răbdare de metodă până nu vede rezultate |
+| 4 | `FirstTime` | De ce ți-ai dori-o (identitate, oglindă, încredere) |
+| 5 | `Reel` | Că se poate fără să-ți ocupe viața |
+| 6 | `Method` | Abia acum: cum se face |
+| 7 | `Balance` | Nu renunți la bere și burger |
+| 8 | `David` · 9 `Process` · 10 `Faq` · 11 `FinalCta` | Neschimbate ca rol |
+
+`Reel` nu mai stă după `Method`. Motivul vechi („pilonii tocmai au enumerat sporturile") a dispărut
+odată cu pilonii-sporturi — banda își poartă acum singură mesajul de lifestyle.
+
+### 2. `Offer` — secțiune nouă
+
+- `src/components/sections/Offer.tsx` — server component. Șapte **carduri** cu pictogramă duotone
+  Phosphor, ramă `hairline` pe `bg-ink-raised/60`, cu ridicare la hover și o aură în colț care se
+  aprinde. Prima variantă era o listă de text peste linii orizontale; clientul a zis direct că e
+  „prea mult text, neplăcut vizual", și avea dreptate — secțiunea asta e primul lucru de sub hero.
+- **Pictogramele nu stau în conținut.** Sunt desen, nu text, deci n-au ce căuta într-un fișier care
+  se traduce. Harta `ICONS` din componentă se cheamă pe `id`-ul punctului, același în ambele limbi.
+- **Grila e calculată să nu rămână găuri**: 7 carduri + concluzia pe două celule = 9, adică trei
+  rânduri pline pe ecran lat; pe două coloane se lățesc ultimul card și concluzia. Cu span-uri fixe,
+  undeva rămânea mereu o celulă goală.
+- Mișcarea de hover stă pe cardul **dinăuntru**, nu pe `li`. Pe același element ar fi moștenit
+  tranziția de 620ms a intrării la scroll și ar fi răspuns la mouse cu o jumătate de secundă
+  întârziere.
+- `offer.closing` nu e al optulea serviciu, e **beneficiul final**: card propriu, cu ramă și fundal
+  în culoarea de accent, plus eticheta `closingLabel` („Rezultatul").
+- Tipuri noi `OfferItem` și câmpul `offer` în `src/content/types.ts`.
+
+### 2b. Accentul din hero
+
+`.hero-accent` în `globals.css`, în loc de `text-signal` pe `span`. Culoarea singură nu ieșea destul
+peste fotografie. Trei lucruri, în ordinea în care contează: stă pe rândul ei, are aură (`text-shadow`
+în culoarea de semnal — pe fundal închis face mai mult decât orice creștere de corp de literă, și nu
+mișcă deloc așezarea) și i se trage o linie dedesubt după ce titlul a urcat. `width: fit-content`, ca
+linia să se oprească la capătul cuvintelor, nu la marginea coloanei. Linia intră doar sub
+`prefers-reduced-motion: no-preference`; fără ea rămâne exact același titlu.
+
+### 2c. Poza din hero — în sfârșit fizicul, nu peisajul
+
+Clientul a trimis o poză în oglindă din vestiarul sălii. Era exact ce lipsea: heroul vindea
+lifestyle-ul (creastă de munte) când poziționarea nouă cere fizicul.
+
+- `assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg` → `public/media/img/david-gym.{avif,webp}`,
+  prin `scripts/process-media.mjs`, nu copiat de mână în `public/`.
+- Decupaj `[2800, 4520, 0, 600]` pe o sursă de 3840x5120: taie coloana goală din dreapta (ușa albă,
+  balustrada) și 600px de tavan, ca David să cadă aproape de mijloc. Așa `object-cover` îl ține în
+  cadru pe orice raport, fără o poziție orizontală strâmbă în CSS.
+- `Hero.tsx`: poziția verticală `45% → 30%`. Pe ecran lat, `object-cover` păstrează din poza portret
+  o bandă de ~35% din înălțime; la 45% banda începea sub bărbie și **tăia capul**.
+- `hiking-peaks` rămâne în `public/media/`, nefolosit. Nu s-a șters: e material bun, poate reveni.
+- **Nou în script**: `--only=<nume>` reface o singură ieșire. Fără el, adăugarea unei poze însemna
+  re-encodarea celor șase clipuri, deci ffmpeg pe PATH și toate folderele sursă prezente.
+
+### 2d. Banda cu clipuri nu se mișca deloc — `scrollLeft` rotunjește la scriere
+
+Clientul a reclamat că banda stă pe loc. Nu era o impresie, era un bug complet.
+
+`DRIFT_PER_SECOND` era 26. La 60 de cadre pe secundă asta înseamnă **0,43px pe cadru**, iar
+`scrollLeft` rotunjește la scriere: fiecare pas se pierdea întreg. Măsurat direct în Chrome, pe
+pagina noastră:
+
+```
+v.scrollLeft = start - 0.43  →  citit înapoi: neschimbat
+v.scrollLeft = start - 5     →  citit înapoi: start - 5
+```
+
+Fix, în `ClipMarquee.tsx`: restul sub-pixel se adună într-o variabilă proprie (`carry`) și se scrie
+în `scrollLeft` **doar când face un pixel întreg**. Viteza a urcat la 60px/s, dar asta e cosmetic —
+fără `carry`, bug-ul ar fi reapărut oricum pe un ecran cu rată mare de împrospătare (144Hz → 0,42px
+pe cadru, exact aceeași situație). `carry` se golește cât timp conduce omul, altfel banda ar fi
+smucit la reluare.
+
+**Ce n-am putut verifica**: că se mișcă vizibil. Tabul deschis de automatizarea browserului rulează
+în fundal, unde Chrome suspendă `requestAnimationFrame` — orice măsurătoare de mișcare de acolo dă
+zero indiferent de cod. Rotunjirea de mai sus e însă măsurată direct și nu depinde de rAF.
+
+### 2e. Fără liniuțe de dialog în copy
+
+Clientul le citește ca semn că textul e scris de o mașină. Scoase din toate cele 9 locuri din
+`src/content/{ro,en}.ts` plus 2 din proza lui `/llms.txt`. **Nu prin înlocuire cu virgulă**: fiecare
+frază a fost rescrisă, de obicei ruptă în două propoziții („Primești planul scris — exerciții, serii,
+încărcare." → „Primești planul scris, cu exerciții, serii și încărcare.").
+
+Verificat pe toate cele 8 pagini randate plus `llms.txt`: zero apariții. Comentariile din cod nu
+intră la socoteală, nu se văd pe site. Regula e trecută în „Content rules" din README.
+
+### 3. „Metoda" — sala e baza, cinci pași în loc de șase piloni
+
+Clientul nu voia ca metoda să pară „Sală + Box + Înot + Cățărat + Alergare".
+
+- Pilonii vechi (Sală, Antrenament, Nutriție, Motivație, Disciplină, Consistență) → cinci pași:
+  **Antrenament, Progres, Nutriție, Lifestyle, Ajustare**. „Sala" a ieșit din listă și a urcat în
+  titlu — e baza, nu un punct pe listă.
+- `src/components/method/PillarList.tsx` — numerotare `01`–`05`, calculată **din poziție**, nu
+  scrisă în conținut: un câmp separat s-ar fi desincronizat la prima reordonare. `aria-hidden`.
+- Bara 3D și varianta desenată nu au avut nevoie de nimic: numărul de discuri vine din lungimea
+  listei. Cinci discuri, nu șase.
+- Galeria de pe `/metoda` începe acum cu o poză din sală (`poster-01-sala`), nu cu cățăratul.
+
+### 4. Doar online
+
+Peste tot, în ambele limbi: meta, `business.locationLine`, FAQ, `llms.txt`, JSON-LD.
+
+- Titlurile nu mai sunt construite în jurul orașului („Antrenor personal Târgu Mureș"), ci în jurul
+  mentoratului online. **Compromis asumat**: se pierde din semnalul de căutare locală, dar targetul
+  e trafic național din TikTok, iar a targeta orașul când nu se antrenează nimeni acolo e fals.
+- Orașul **rămâne** vizibil în subsol și în `address`, cu sensul corect: de acolo lucrează David, nu
+  acolo vin clienții. `src/lib/business.ts` explică distincția.
+- `LocalBusiness.areaServed` și `Service.areaServed` → `Country`, nu `City`. `Service` a primit
+  `availableChannel` cu `serviceUrl`, ca un motor să nu deducă din adresă că antrenamentele se țin
+  la fața locului.
+- FAQ: întrebarea „Unde se țin antrenamentele?" a fost înlocuită cu „Cum funcționează, dacă e totul
+  online?" (plan scris → filmări → feedback → ajustare săptămânală) și s-a adăugat „Cât timp pe
+  săptămână îmi ia?", care servește direct mesajul „fără să-ți consume viața".
+
+### 5. Ce **nu** s-a atins
+
+Designul, paleta, mișcarea, banda cu clipuri, testimonialele, disclaimerul din subsol, regulile de
+conținut (fără cifre, fără promisiuni de kilograme, fără a-l da drept medic).
+
+### De discutat cu clientul
+
+- **Poza din hero** e tot `hiking-peaks` (creastă de munte). Vinde lifestyle-ul, dar nu fizicul. Dacă
+  focusul e sala și fizicul, aici ar trebui o poză din sală sau un portret. Nu s-a schimbat de capul
+  nostru: e decizia lui vizuală, nu una de cod.
+- Textele sunt scrise de noi pe baza brief-ului. Trebuie citite de David cu voce tare — trebuie să
+  sune a el, nu a agenție.
+
+---
+
+## Runda anterioară — hero, bandă cu clipuri, testimoniale
 
 Cererea clientului, pe scurt: fără slideshow video în hero (doar o poză), clipurile coboară mai jos
 într-o bandă cu pătrățele care derulează încet spre dreapta, iar la testimoniale textul stă între

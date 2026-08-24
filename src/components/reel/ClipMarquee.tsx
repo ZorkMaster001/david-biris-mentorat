@@ -13,8 +13,11 @@ interface ClipMarqueeProps {
 
 /** Trei copii ale listei: una vizibila, una de rezerva in fiecare parte. */
 const COPIES = 3;
-/** Viteza derularii automate, in pixeli pe secunda. */
-const DRIFT_PER_SECOND = 26;
+/**
+ * Viteza derularii automate, in pixeli pe secunda. La 26 un patratel isi facea
+ * propria latime in 11 secunde, ceea ce nu se citea ca miscare, ci ca banda blocata.
+ */
+const DRIFT_PER_SECOND = 60;
 /** Cat sta derularea automata dupa ce omul a terminat de tras. */
 const RESUME_AFTER_MS = 1400;
 
@@ -104,6 +107,18 @@ export function ClipMarquee({ clips, pauseLabel, resumeLabel }: ClipMarqueeProps
     let frame = 0;
     let last = 0;
 
+    /*
+      Restul de sub un pixel al derularii, tinut aici si nu in `scrollLeft`.
+
+      `scrollLeft` rotunjeste la scriere. La 60 de cadre pe secunda un pas de derulare
+      e de sub un pixel, deci fiecare scriere se pierdea intreaga si banda statea pe
+      loc la nesfarsit — masurat in Chrome: `scrollLeft -= 0.43` se citeste inapoi
+      neschimbat, `scrollLeft -= 5` se aplica. Asa se aduna pasii pana fac un pixel
+      intreg si abia atunci se scrie. Marind doar viteza, bug-ul ar fi ramas: ar fi
+      reaparut la prima rulare pe un ecran cu rata mare de improspatare.
+    */
+    let carry = 0;
+
     const step = (now: number) => {
       frame = requestAnimationFrame(step);
       const elapsed = last === 0 ? 0 : Math.min(now - last, 100);
@@ -112,7 +127,16 @@ export function ClipMarquee({ clips, pauseLabel, resumeLabel }: ClipMarqueeProps
       const idle = now >= drivingUntil.current && !dragFrom.current;
       if (drifting && !pausedRef.current && idle) {
         // Spre dreapta inseamna continut care vine dinspre stanga, deci pozitia scade.
-        viewport.scrollLeft -= (DRIFT_PER_SECOND * elapsed) / 1000;
+        carry -= (DRIFT_PER_SECOND * elapsed) / 1000;
+        const whole = Math.trunc(carry);
+        if (whole !== 0) {
+          viewport.scrollLeft += whole;
+          carry -= whole;
+        }
+      } else {
+        // Cat timp conduce omul, restul n-are de la ce sa se adune: pozitia nu mai
+        // vine de aici. Pastrat, ar fi impins banda cu o smucitura la reluare.
+        carry = 0;
       }
       normalize();
     };

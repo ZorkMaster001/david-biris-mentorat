@@ -83,7 +83,19 @@ export function PillarList({ pillars, onVisibleCountChange }: PillarListProps) {
           }}
           className="border-t border-hairline pt-5"
         >
-          <h3 className="font-display text-2xl">{pillar.name}</h3>
+          {/*
+            Numarul se calculeaza din pozitie, nu se scrie in continut: e deja implicit
+            in ordinea listei, iar un camp separat s-ar fi putut desincroniza la prima
+            reordonare. `aria-hidden` fiindca „01" citit cu voce tare nu adauga nimic
+            peste titlul care urmeaza.
+          */}
+          <span
+            aria-hidden="true"
+            className="font-display text-sm tracking-[0.2em] text-signal"
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="mt-2 font-display text-2xl">{pillar.name}</h3>
           <p className="mt-2 max-w-[44ch] text-bone-dim">{pillar.angle}</p>
         </li>
       ))}

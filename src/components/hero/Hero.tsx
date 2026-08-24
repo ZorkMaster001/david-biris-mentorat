@@ -52,17 +52,26 @@ export function Hero({
           fill
           priority
           sizes="100vw"
-          className="hero-image object-cover object-[50%_45%]"
+          /*
+            30% pe verticala, nu 45%: pe ecran lat `object-cover` pastreaza din poza
+            portret o banda de vreo 35% din inaltime, centrata in punctul asta. La 45%
+            banda incepea sub barbie si taia capul. La 30% intra cap, umeri si piept,
+            adica exact ce trebuie sa vada omul in prima secunda.
+            Pe telefon poza se vede pe toata inaltimea, deci valoarea nu conteaza acolo.
+          */
+          className="hero-image object-cover object-[50%_30%]"
         />
-        {/* Cerul si valea sunt jumatate din poza, deci degradeul apasa doar jos, sub text. */}
+        {/* Subiectul sta in jumatatea de sus, deci degradeul apasa doar jos, sub text. */}
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" />
       </div>
 
       <div className="hero-fade-text absolute inset-x-0 bottom-0 z-10 px-5 pb-[calc(var(--spacing-nav)+env(safe-area-inset-bottom)+2rem)]">
         <h1 className="hero-rise max-w-[16ch] font-display text-[clamp(2.25rem,8.5vw,5rem)]">
           {headline}{" "}
-          {/* A doua propozitie duce promisiunea, deci ea poarta culoarea. */}
-          <span className="text-signal">{headlineAccent}</span>
+          {/* A doua propozitie duce promisiunea, deci ea poarta accentul: rand
+              propriu, aura in culoarea de semnal si linia care se trage sub ea.
+              Toate stau in `.hero-accent`, vezi `globals.css`. */}
+          <span className="hero-accent">{headlineAccent}</span>
         </h1>
 
         <p className="hero-rise mt-5 max-w-[42ch] text-base text-bone-dim" style={{ "--hero-delay": "90ms" } as CSSProperties}>

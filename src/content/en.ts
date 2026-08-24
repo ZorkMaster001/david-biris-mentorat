@@ -2,32 +2,32 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "David Biriș 1-on-1 · Personal Trainer Târgu Mureș",
+    title: "Online 1-on-1 fitness mentoring · David Biriș",
     description:
-      "Personal trainer in Târgu Mureș and online. One-on-one mentoring for weight loss, strength and habits that last: training, nutrition, motivation and discipline, built around your life.",
+      "I help you build a physique you're proud of, without sacrificing your life for it. One-on-one mentoring, 100% online: training plan, nutrition, form feedback and weekly adjustments.",
   },
   pageMeta: {
     metoda: {
-      title: "The method · Personal trainer Târgu Mureș",
+      title: "The method · Lifting is the base, your life stays yours",
       description:
-        "Training, nutrition, programming, motivation and discipline, arranged around the life you already have. Personal trainer in Târgu Mureș and online, in Romanian and English.",
+        "Five steps: training, progress, nutrition, lifestyle, adjustment. Lifting is the base the physique is built on, and the rest fits around the life you already have.",
     },
     rezultate: {
-      title: "Real results · Personal trainer Târgu Mureș",
+      title: "Real results · Online 1-on-1 mentoring",
       description:
-        "Two people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring in Târgu Mureș and online.",
+        "Two people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring, 100% online.",
     },
     despre: {
-      title: "About David Biriș · Personal trainer Târgu Mureș",
+      title: "About David Biriș · Online fitness mentor",
       description:
-        "7 years under the bar, second year of medical school. He has been through the hard start too. Personal trainer in Târgu Mureș and online, for weight loss and strength.",
+        "7 years under the bar, his own results, and second year of medical school. The urge to understand why things work, not just that they do. One-on-one mentoring, online.",
     },
   },
   business: {
-    serviceType: "One-on-one fitness mentoring",
-    areaServed: "Mureș County",
-    audience: "Adults who want to lose weight, get stronger or learn how to train",
-    locationLine: "One-on-one mentoring in Târgu Mureș and online, in Romanian and English.",
+    serviceType: "Online one-on-one fitness mentoring",
+    areaServed: "Romania",
+    audience: "People who want to look good and be fit without giving up the rest of their life",
+    locationLine: "One-on-one mentoring, 100% online. From Târgu Mureș, in Romanian and English.",
   },
   nav: [
     { href: "", label: "Home" },
@@ -48,21 +48,61 @@ export const en: Content = {
     closeLabel: "Close",
   },
   hero: {
-    headline: "You don't give up what you love",
-    headlineAccent: "to look good.",
+    headline: "A physique you're proud of,",
+    headlineAccent: "without sacrificing your life.",
     subheadline:
-      "One-on-one mentoring that fits the gym around your everyday life and the hobbies you already have. Training, nutrition, motivation and discipline, in Târgu Mureș or online.",
+      "One-on-one mentoring, 100% online. A training plan, nutrition and direct guidance from me, laid over university, work and everything you already do.",
     ctaPrimary: "Message David",
     ctaSecondary: "See the method",
-    image: "hiking-peaks",
-    imageAlt: "David on the cliff edge, the valley and the mountains behind him",
+    image: "david-gym",
+    imageAlt: "David in the gym, shot in the mirror after training",
+  },
+  offer: {
+    headline: "What the mentoring actually is.",
+    body: "We work one-on-one, online. I build the plan, guide you on execution and adjust as we go, until the gym stops being something you attempt and becomes something you know how to do.",
+    items: [
+      { id: "online", label: "100% online", detail: "From wherever you are, in Romanian or in English." },
+      {
+        id: "program",
+        label: "A plan built for you",
+        detail: "Around your goal, your level and the time you actually have.",
+      },
+      {
+        id: "ghidare",
+        label: "Guidance on training",
+        detail: "Which exercises, how many sets, how much to load and how each one is performed.",
+      },
+      {
+        id: "feedback",
+        label: "Feedback on your form",
+        detail: "You send me clips from the gym, I tell you exactly what to fix.",
+      },
+      {
+        id: "nutritie",
+        label: "The nutrition basics",
+        detail: "How much and what you eat, starting from the food you already eat.",
+      },
+      {
+        id: "progres",
+        label: "Progress and adjustments",
+        detail: "We track what changes and rework the plan before it stalls.",
+      },
+      {
+        id: "acces",
+        label: "Direct access to me",
+        detail: "You message me when you have a question. You're not talking to an app.",
+      },
+    ],
+    closingLabel: "The result",
+    closing:
+      "Not a list of services, but what's left of it: you look good, feel good in your own body, and still keep your degree, your job, your relationship, your friends and everything you do outside the gym.",
   },
   firstTime: {
-    headline: "Someone teaches you how to start enjoying the gym, not how to endure it.",
+    headline: "You don't want a training programme. You want to feel good in your own skin.",
     body: [
-      "Most programmes hand you exercises and leave you alone with the hard part, which is coming back next week.",
-      "Here we work the other way round. We build the habit and the reason first, then we add the weight.",
-      "The goal isn't to survive eight weeks. It's that in two years, not training feels strange.",
+      "You want to look good in a t-shirt. To look in the mirror and like what you see. To walk into a room with confidence.",
+      "You want to be strong, to have energy, and not to be out of breath at the first flight of stairs.",
+      "The gym is only the tool that gets you there. My job is to put it in your hands and teach you to use it, so that in two years, not training feels strange.",
     ],
     image: "training-bench",
     imageAlt: "David in the gym, between sets",
@@ -75,25 +115,44 @@ export const en: Content = {
       "You need balance, not punishment. Plans that ban everything work for three weeks and then leave you worse off than they found you. A good plan has room in it for the life you already live.",
   },
   method: {
-    headline: "It is built around your life.",
-    body: "It does not matter what sport you play or what your hobbies are. The gym sits on top of them, not in their place, and the rest is food, rhythm and reasons to come back.",
+    headline: "Lifting is the base. Everything else sits around it.",
+    body: "The physique is built in the gym. That's where the work happens and where everything starts. The five steps below are how the gym gets into your life and stays there, without taking it over.",
     pillars: [
-      { id: "sala", name: "Lifting", angle: "The base. The structure everything else sits on." },
-      { id: "antrenament", name: "Programming", angle: "A plan built on your week, not on someone else's." },
-      { id: "nutritie", name: "Nutrition", angle: "Food you'll still be eating in a year, not just while cutting." },
-      { id: "motivatie", name: "Motivation", angle: "The reason you come back next week too." },
-      { id: "disciplina", name: "Discipline", angle: "What gets you in on the days you don't feel like it." },
-      { id: "consistenta", name: "Consistency", angle: "The only variable that matters long term." },
+      {
+        id: "antrenament",
+        name: "Training",
+        angle: "A gym plan built on your goal, your level and the time you have.",
+      },
+      {
+        id: "progres",
+        name: "Progress",
+        angle: "You learn how to lift properly, how to add load and how to track your results.",
+      },
+      {
+        id: "nutritie",
+        name: "Nutrition",
+        angle: "Eating habits you can keep, not an extreme diet you drop after two weeks.",
+      },
+      {
+        id: "lifestyle",
+        name: "Lifestyle",
+        angle: "The gym goes on top of university, work, your relationship and your hobbies. Not instead of them.",
+      },
+      {
+        id: "ajustare",
+        name: "Adjustment",
+        angle: "I follow your progress and we change what isn't working, week by week.",
+      },
     ],
     gallery: [
-      { id: "catarat", src: "climbing-wall", alt: "David climbing a wall on rope" },
+      { id: "sala", src: "poster-01-sala", alt: "David training in the gym" },
       { id: "nutritie", src: "nutrition-plate", alt: "A plate of simply cooked food" },
-      { id: "creasta", src: "outdoor-summit", alt: "David on a ridge after the climb" },
+      { id: "catarat", src: "climbing-wall", alt: "David climbing a wall on rope" },
     ],
   },
   reel: {
-    headline: "That's him in every clip.",
-    body: "He doesn't teach you boxing, swimming or climbing. But he does them, so he knows what each one asks of a body, and he builds the gym around them instead of against them.",
+    headline: "Fitness should improve your life, not become your whole life.",
+    body: "David trains to look good. In the same week he boxes, runs, climbs and swims, and still has time for university, for his friends and for his own life. He doesn't teach you those sports. They're just the proof that it can be done.",
     pauseLabel: "Stop the reel",
     resumeLabel: "Start the reel",
     clips: [
@@ -105,11 +164,11 @@ export const en: Content = {
     ],
   },
   david: {
-    headline: "7 years under the bar. Second year of medical school.",
+    headline: "7 years under the bar. And the urge to know why it works.",
     body: [
-      "He walked into a gym at 13 and never stopped.",
-      "He studies medicine, so he understands what happens inside the body when you lift, not just how many reps to do.",
-      "He coaches people because he started where you are and knows exactly where it falls apart.",
+      "He walked into a gym at 13 and never stopped. The physique he has now came out of those years, not out of a certificate.",
+      "He studies medicine along the way, which means he isn't satisfied with “that's how it's done”. He wants to know what happens inside the body when you lift, and why.",
+      "He coaches people because he started where you are, got everything wrong that there was to get wrong, and knows exactly where it falls apart.",
     ],
     image: "david-formal",
     imageAlt: "David Biriș",
@@ -122,7 +181,7 @@ export const en: Content = {
     },
   },
   results: {
-    headline: "Two people, two different starting points.",
+    headline: "Two people, two starting points, the same method.",
     beforeLabel: "Before",
     afterLabel: "After",
     quoteOpen: "“",
@@ -156,13 +215,27 @@ export const en: Content = {
     headline: "Three steps, no forms.",
     steps: [
       { index: "01", title: "You write", body: "A message on WhatsApp or Instagram. The first conversation is free." },
-      { index: "02", title: "We build the plan", body: "Starting from the sport you do, the time you have and what you eat now." },
+      {
+        index: "02",
+        title: "We build the plan",
+        body: "Starting from your goal, the time you have and what you eat right now.",
+      },
       { index: "03", title: "We adjust", body: "Week by week, with direct access to David." },
     ],
   },
   faq: {
     headline: "What's actually stopping you.",
     items: [
+      {
+        question: "How does it work if it's all online?",
+        answer:
+          "You get the plan in writing, with exercises, sets and load. You send me clips from the gym, I give you feedback on your form, and we adjust weekly. We don't need to be in the same room for me to see what you're doing wrong.",
+      },
+      {
+        question: "How much time a week does it take?",
+        answer:
+          "As much as you have. The plan is built around your time, not the other way round. If you can do three days a week, the plan has three days. I'm not asking you to move your life around the gym.",
+      },
       { question: "I don't have time, I'm at university.", answer: "So is David. The plan is built around your schedule, not the other way round." },
       { question: "I've never set foot in a gym.", answer: "That's the best case. You have no bad habits to unlearn." },
       {
@@ -172,14 +245,9 @@ export const en: Content = {
       },
       { question: "I don't speak Romanian.", answer: "Neither does Meril. The mentoring runs in English." },
       {
-        question: "Where do the sessions take place?",
-        answer:
-          "In Târgu Mureș, face to face, or online from wherever you are. The plan, the food and the weekly adjustments work the same either way.",
-      },
-      {
         question: "I already play another sport. Is this still for me?",
         answer:
-          "It is, and that is exactly the case the mentoring is built for. He doesn't teach you your sport — he builds the gym and the food around it, so the two stop working against each other.",
+          "It is. Lifting stays the base the physique is built on, and your sport is what you do on top. We arrange the two so they stop working against each other. He isn't teaching you your sport.",
       },
       {
         question: "I only want to lose weight, not compete.",

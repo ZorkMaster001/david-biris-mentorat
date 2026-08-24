@@ -30,6 +30,17 @@ export interface Testimonial {
   afterAlt: string;
 }
 
+export interface OfferItem {
+  /**
+   * Si cheia dupa care `sections/Offer` isi alege pictograma. Pictogramele nu stau in
+   * continut: sunt desen, nu text, si n-au ce cauta intr-un fisier care se traduce.
+   * Un `id` nou fara pereche in harta de acolo ramane pur si simplu fara pictograma.
+   */
+  id: string;
+  label: string;
+  detail: string;
+}
+
 export interface Step {
   index: string;
   title: string;
@@ -102,6 +113,21 @@ export interface Content {
     ctaSecondary: string;
     image: string;
     imageAlt: string;
+  };
+  /**
+   * Lista concreta cu ce primeste omul, asezata imediat sub hero. Vizitatorul venit
+   * din TikTok pleaca daca nu intelege in primele secunde ce cumpara, iar restul
+   * paginii vinde senzatia — asta e singurul loc unde scrie negru pe alb ce contine
+   * mentoratul. `closing` e beneficiul final, nu inca un serviciu: de aceea sta in
+   * camp separat si se randeaza mai luminos decat lista.
+   */
+  offer: {
+    headline: string;
+    body: string;
+    items: OfferItem[];
+    /** Eticheta mica de deasupra concluziei, in culoarea de accent. */
+    closingLabel: string;
+    closing: string;
   };
   firstTime: { headline: string; body: string[]; image: string; imageAlt: string };
   balance: {

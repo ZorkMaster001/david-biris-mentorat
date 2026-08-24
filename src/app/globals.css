@@ -157,6 +157,55 @@ body {
   }
 }
 
+/*
+  A doua propozitie din titlu. Culoarea singura n-o scotea destul in evidenta peste o
+  fotografie: pe fundal inchis, o aura face mai mult decat orice crestere de corp de
+  litera, si nu misca deloc asezarea. Trei lucruri, in ordinea in care conteaza —
+  stă pe randul ei, are aura, si i se trage o linie dedesubt dupa ce titlul a urcat.
+
+  `width: fit-content` ca linia sa se opreasca la capatul cuvintelor, nu la marginea
+  coloanei. Fara el, sub un rand scurt ramanea o linie cat toata latimea titlului.
+*/
+.hero-accent {
+  display: block;
+  position: relative;
+  width: fit-content;
+  color: var(--color-signal);
+  text-shadow:
+    0 0 34px rgba(47, 230, 196, 0.45),
+    0 0 10px rgba(47, 230, 196, 0.25);
+}
+
+.hero-accent::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.16em;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-signal), rgba(47, 230, 196, 0));
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Dupa titlu si dupa subtitlu, nu odata cu ele: linia inchide intrarea, nu o
+     insoteste. Fara `both`, ar clipi la latime plina inainte de intarziere. */
+  .hero-accent::after {
+    animation: hero-accent-line 720ms var(--ease-out-expo) 560ms both;
+  }
+}
+
+@keyframes hero-accent-line {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
 @keyframes hero-drift {
   from {
     transform: scale(1.12);

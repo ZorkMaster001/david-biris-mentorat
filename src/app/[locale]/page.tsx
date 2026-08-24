@@ -7,6 +7,7 @@ import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { FirstTime } from "@/components/sections/FirstTime";
 import { Method } from "@/components/sections/Method";
+import { Offer } from "@/components/sections/Offer";
 import { Process } from "@/components/sections/Process";
 import { Reel } from "@/components/sections/Reel";
 import { Results } from "@/components/sections/Results";
@@ -33,12 +34,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         image={content.hero.image}
         imageAlt={content.hero.imageAlt}
       />
-      <FirstTime data={content.firstTime} />
-      <Balance data={content.balance} />
-      <Method data={content.method} />
-      <Reel data={content.reel} />
-      <David data={content.david} />
+      {/*
+        Ordinea sectiunilor e argumentul paginii, nu o insiruire de blocuri:
+        promisiune (hero) → ce cumperi, concret (`Offer`) → dovada ca a functionat
+        la altii (`Results`) → de ce ti-ai dori-o (`FirstTime`) → ca se poate fara
+        sa-ti ocupe viata (`Reel`) → abia apoi cum se face (`Method`).
+
+        `Results` a urcat inaintea tuturor explicatiilor anume: traficul vine din
+        TikTok, iar omul care nu il cunoaste pe David are nevoie sa vada rezultate
+        inainte sa aiba rabdare de metoda.
+      */}
+      <Offer data={content.offer} />
       <Results data={content.results} />
+      <FirstTime data={content.firstTime} />
+      <Reel data={content.reel} />
+      <Method data={content.method} />
+      <Balance data={content.balance} />
+      <David data={content.david} />
       <Process data={content.process} />
       <Faq data={content.faq} />
       <FinalCta data={content.finalCta} contact={content.contact} />

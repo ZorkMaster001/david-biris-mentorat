@@ -2,32 +2,32 @@ import type { Content } from "./types";
 
 export const ro: Content = {
   meta: {
-    title: "David Biriș 1-la-1 · Antrenor personal Târgu Mureș",
+    title: "Mentorat fitness online 1-la-1 · David Biriș",
     description:
-      "Antrenor personal în Târgu Mureș și online. Mentorat 1-la-1 pentru slăbit, forță și obiceiuri care țin: sală, nutriție, motivație și disciplină, în jurul vieții tale.",
+      "Te ajut să construiești un fizic de care ești mândru, fără să-ți sacrifici viața pentru el. Mentorat 1-la-1, 100% online: program de sală, nutriție, ghidare pe execuție și ajustări săptămânale.",
   },
   pageMeta: {
     metoda: {
-      title: "Metoda de antrenament · Antrenor Târgu Mureș",
+      title: "Metoda · Sala e baza, viața ta rămâne a ta",
       description:
-        "Sală, nutriție, antrenament, motivație și disciplină, așezate în jurul vieții pe care o ai deja. Antrenor personal în Târgu Mureș și online, în română și engleză.",
+        "Cinci pași: antrenament, progres, nutriție, lifestyle, ajustare. Sala e baza pe care se construiește fizicul, iar restul se așază peste viața pe care o ai deja.",
     },
     rezultate: {
-      title: "Rezultate reale · Antrenor personal Târgu Mureș",
+      title: "Rezultate reale · Mentorat online 1-la-1",
       description:
-        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1 în Târgu Mureș și online.",
+        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat la ei. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1, 100% online.",
     },
     despre: {
-      title: "Despre David Biriș · Antrenor personal Târgu Mureș",
+      title: "Despre David Biriș · Mentor fitness online",
       description:
-        "7 ani în sală, anul 2 la Medicină. A trecut și el prin începutul greu. Antrenor personal în Târgu Mureș și online, pentru slăbit, forță și obiceiuri care rămân.",
+        "7 ani în sală, rezultate proprii și anul 2 la Medicină. Pasiunea de a înțelege de ce funcționează lucrurile, nu doar că funcționează. Mentorat 1-la-1, online.",
     },
   },
   business: {
-    serviceType: "Mentorat fitness 1-la-1",
-    areaServed: "Județul Mureș",
-    audience: "Adulți care vor să slăbească, să prindă forță sau să învețe să facă sală",
-    locationLine: "Mentorat 1-la-1 în Târgu Mureș și online, în română și engleză.",
+    serviceType: "Mentorat fitness online 1-la-1",
+    areaServed: "România",
+    audience: "Oameni care vor să arate bine și să fie fit, fără să renunțe la restul vieții lor",
+    locationLine: "Mentorat 1-la-1, 100% online. Din Târgu Mureș, în română și engleză.",
   },
   nav: [
     { href: "", label: "Acasă" },
@@ -48,21 +48,61 @@ export const ro: Content = {
     closeLabel: "Închide",
   },
   hero: {
-    headline: "Nu renunți la pasiunile tale",
-    headlineAccent: "ca să arăți bine.",
+    headline: "Un fizic de care ești mândru,",
+    headlineAccent: "fără să-ți sacrifici viața.",
     subheadline:
-      "Mentorat 1-la-1 care îmbină viața ta de zi cu zi și hobby-urile pe care le ai deja cu sala. Sală, nutriție, motivație și disciplină, în Târgu Mureș sau online.",
+      "Mentorat 1-la-1, 100% online. Program de sală, nutriție și ghidare directă de la mine, așezate peste facultate, job și tot ce faci deja.",
     ctaPrimary: "Scrie-i lui David",
     ctaSecondary: "Vezi metoda",
-    image: "hiking-peaks",
-    imageAlt: "David pe marginea stâncii, cu valea și munții în spate",
+    image: "david-gym",
+    imageAlt: "David în sală, fotografiat în oglindă după antrenament",
+  },
+  offer: {
+    headline: "Ce înseamnă, concret, mentoratul.",
+    body: "Lucrăm 1-la-1, online. Îți construiesc planul, te ghidez pe execuție și ajustăm pe parcurs, până când sala nu mai e ceva ce încerci, ci ceva ce știi să faci.",
+    items: [
+      { id: "online", label: "100% online", detail: "De oriunde ai fi, în română sau în engleză." },
+      {
+        id: "program",
+        label: "Program personalizat",
+        detail: "Construit pe obiectivul tău, pe nivelul tău și pe timpul pe care îl ai tu.",
+      },
+      {
+        id: "ghidare",
+        label: "Ghidare pe antrenamente",
+        detail: "Ce exerciții faci, câte serii, cât încarci și cum se execută corect fiecare.",
+      },
+      {
+        id: "feedback",
+        label: "Feedback pe execuție",
+        detail: "Îmi trimiți filmări din sală, îți spun exact ce ai de corectat.",
+      },
+      {
+        id: "nutritie",
+        label: "Nutriție de bază",
+        detail: "Cât și ce mănânci, pornind de la mâncarea pe care o mănânci deja.",
+      },
+      {
+        id: "progres",
+        label: "Progres și ajustări",
+        detail: "Urmărim ce se schimbă și modificăm planul înainte să se blocheze.",
+      },
+      {
+        id: "acces",
+        label: "Acces direct la mine",
+        detail: "Îmi scrii când ai o întrebare. Nu vorbești cu o aplicație.",
+      },
+    ],
+    closingLabel: "Rezultatul",
+    closing:
+      "Nu o listă de servicii, ci ce rămâne din ea: arăți bine, te simți bine în corpul tău și îți păstrezi în același timp facultatea, jobul, relația, prietenii și tot ce faci în afara sălii.",
   },
   firstTime: {
-    headline: "Cineva te învață cum să începi să îți placă sala, nu cum să o suporți.",
+    headline: "Nu vrei un program de antrenament. Vrei să te simți bine în pielea ta.",
     body: [
-      "Majoritatea programelor îți dau exerciții și te lasă să te descurci cu partea grea, care e să te întorci săptămâna viitoare.",
-      "Aici lucrăm invers. Construim întâi obiceiul și motivul, apoi încărcăm greutatea.",
-      "Ținta nu e să reziști opt săptămâni. E ca peste doi ani să ți se pară ciudat să nu te antrenezi.",
+      "Vrei să arăți bine în tricou. Să te uiți în oglindă și să-ți placă ce vezi. Să ai încredere când intri undeva.",
+      "Vrei să fii puternic, să ai energie și să nu te lase corpul la primul etaj de scări.",
+      "Sala e doar instrumentul prin care ajungi acolo. Treaba mea e să ți-l pun în mână și să te învăț să-l folosești, ca peste doi ani să ți se pară ciudat să nu te antrenezi.",
     ],
     image: "training-bench",
     imageAlt: "David în sală, între serii",
@@ -75,25 +115,44 @@ export const ro: Content = {
       "Ai nevoie de o balanță, nu de o pedeapsă. Planurile care interzic tot funcționează trei săptămâni și apoi te lasă mai rău decât te-au găsit. Un plan bun are loc în el pentru viața pe care o trăiești deja.",
   },
   method: {
-    headline: "Se construiește în jurul vieții tale.",
-    body: "Nu contează ce sport faci sau ce hobby-uri ai. Sala se așază peste ele, nu în locul lor, iar restul e mâncare, ritm și motive să te întorci.",
+    headline: "Sala e baza. Restul se așază în jurul ei.",
+    body: "Fizicul se construiește în sală. Acolo se face treaba și de acolo pornește tot. Cei cinci pași de mai jos sunt felul în care sala intră în viața ta și rămâne acolo, fără să o dea peste cap.",
     pillars: [
-      { id: "sala", name: "Sală", angle: "Baza. Structura peste care se așază tot restul." },
-      { id: "antrenament", name: "Antrenament", angle: "Un plan făcut pe orarul tău, nu pe al altcuiva." },
-      { id: "nutritie", name: "Nutriție", angle: "Mâncare pe care o mănânci și peste un an, nu doar în deficit." },
-      { id: "motivatie", name: "Motivație", angle: "Motivul pentru care te întorci și săptămâna viitoare." },
-      { id: "disciplina", name: "Disciplină", angle: "Ce te duce în sală în zilele în care nu ai chef." },
-      { id: "consistenta", name: "Consistență", angle: "Singura variabilă care contează pe termen lung." },
+      {
+        id: "antrenament",
+        name: "Antrenament",
+        angle: "Program de sală construit pe obiectivul, nivelul și timpul pe care le ai.",
+      },
+      {
+        id: "progres",
+        name: "Progres",
+        angle: "Înveți cum se execută corect, cum se încarcă și cum îți urmărești rezultatele.",
+      },
+      {
+        id: "nutritie",
+        name: "Nutriție",
+        angle: "Obiceiuri alimentare pe care le ții, nu o dietă extremă pe care o lași după două săptămâni.",
+      },
+      {
+        id: "lifestyle",
+        name: "Lifestyle",
+        angle: "Sala intră peste facultate, job, relație și hobby-uri. Nu în locul lor.",
+      },
+      {
+        id: "ajustare",
+        name: "Ajustare",
+        angle: "Îți urmăresc progresul și schimbăm ce nu merge, săptămână de săptămână.",
+      },
     ],
     gallery: [
-      { id: "catarat", src: "climbing-wall", alt: "David cățărându-se pe perete, cu coardă" },
+      { id: "sala", src: "poster-01-sala", alt: "David antrenându-se în sală" },
       { id: "nutritie", src: "nutrition-plate", alt: "Farfurie cu mâncare gătită simplu" },
-      { id: "creasta", src: "outdoor-summit", alt: "David pe creastă, după urcare" },
+      { id: "catarat", src: "climbing-wall", alt: "David cățărându-se pe perete, cu coardă" },
     ],
   },
   reel: {
-    headline: "Tot ce vezi aici face el.",
-    body: "Nu te învață box, înot sau cățărat. Dar le face, deci știe ce cere fiecare de la corp și construiește sala în jurul lor, nu împotriva lor.",
+    headline: "Fitness-ul ar trebui să-ți îmbunătățească viața, nu să devină toată viața ta.",
+    body: "David merge la sală ca să arate bine. În aceeași săptămână face box, alergare, cățărat și înot, și îi rămâne timp de facultate, de prieteni și de viața lui. Nu te învață sporturile astea. Sunt doar dovada că se poate.",
     pauseLabel: "Oprește derularea",
     resumeLabel: "Pornește derularea",
     clips: [
@@ -105,11 +164,11 @@ export const ro: Content = {
     ],
   },
   david: {
-    headline: "7 ani în sală. Anul 2 la Medicină.",
+    headline: "7 ani în sală. Și obsesia de a înțelege de ce funcționează.",
     body: [
-      "A intrat în sală la 13 ani și nu s-a mai oprit.",
-      "Studiază Medicina, deci înțelege ce se întâmplă în corp când ridici greutatea, nu doar câte repetări să faci.",
-      "Antrenează oameni pentru că a fost și el la început și știe exact unde se rupe firul.",
+      "A intrat în sală la 13 ani și nu s-a mai oprit. Fizicul pe care îl are acum vine din anii ăia, nu dintr-o diplomă.",
+      "Între timp studiază Medicina, ceea ce înseamnă că nu se mulțumește cu „așa se face”. Vrea să știe ce se întâmplă în corp când ridici greutatea și de ce.",
+      "Antrenează oameni pentru că a fost și el la început, a greșit tot ce era de greșit și știe exact unde se rupe firul.",
     ],
     image: "david-formal",
     imageAlt: "David Biriș",
@@ -122,7 +181,7 @@ export const ro: Content = {
     },
   },
   results: {
-    headline: "Doi oameni, două puncte de plecare diferite.",
+    headline: "Doi oameni, două puncte de plecare, aceeași metodă.",
     beforeLabel: "Înainte",
     afterLabel: "După",
     quoteOpen: "„",
@@ -156,13 +215,27 @@ export const ro: Content = {
     headline: "Trei pași, fără formulare.",
     steps: [
       { index: "01", title: "Scrii", body: "Un mesaj pe WhatsApp sau Instagram. Prima discuție e gratuită." },
-      { index: "02", title: "Construim planul", body: "Pornind de la ce sport faci, cât timp ai și ce mănânci acum." },
+      {
+        index: "02",
+        title: "Construim planul",
+        body: "Pornind de la obiectivul tău, de la timpul pe care îl ai și de la ce mănânci acum.",
+      },
       { index: "03", title: "Ajustăm", body: "Săptămână de săptămână, cu acces direct la David." },
     ],
   },
   faq: {
     headline: "Ce te oprește, de fapt.",
     items: [
+      {
+        question: "Cum funcționează, dacă e totul online?",
+        answer:
+          "Primești planul scris, cu exerciții, serii și încărcare. Îmi trimiți filmări din sală, îți dau feedback pe execuție și ajustăm săptămânal. Nu trebuie să fim în aceeași sală ca să văd ce faci greșit.",
+      },
+      {
+        question: "Cât timp pe săptămână îmi ia?",
+        answer:
+          "Cât ai tu de dat. Planul se construiește pe timpul tău, nu invers. Dacă poți trei zile pe săptămână, planul are trei zile. Nu-ți cer să-ți muți viața în jurul sălii.",
+      },
       { question: "N-am timp, am facultate.", answer: "Și David are. Planul se construiește în jurul orarului tău, nu invers." },
       { question: "N-am mai fost niciodată în sală.", answer: "E cazul cel mai bun. N-ai obiceiuri proaste de dezvățat." },
       {
@@ -172,14 +245,9 @@ export const ro: Content = {
       },
       { question: "Nu vorbesc română.", answer: "Meril nu vorbește nici el. Mentoratul merge în engleză." },
       {
-        question: "Unde se țin antrenamentele?",
-        answer:
-          "În Târgu Mureș, față în față, sau online, de oriunde ai fi. Planul, mâncarea și ajustările săptămânale merg la fel în ambele feluri.",
-      },
-      {
         question: "Eu fac deja alt sport. Mai are rost?",
         answer:
-          "Are, și e chiar cazul pentru care e făcut mentoratul. Nu te învață sportul tău, ci construiește sala și mâncarea în jurul lui, ca să nu te încurce unul pe altul.",
+          "Are. Sala rămâne baza pe care se construiește fizicul, iar sportul tău e ce faci în plus. Le așezăm așa încât să nu se încurce unul pe altul, nu te învăț eu sportul tău.",
       },
       {
         question: "Vreau doar să slăbesc, nu să fac performanță.",

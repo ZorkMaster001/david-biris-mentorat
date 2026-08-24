@@ -25,6 +25,15 @@ const IMAGES = [
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (9).jpeg", out: "climbing-wall", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (7).jpeg", out: "training-bench", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.05 (3).jpeg", out: "hiking-peaks", crop: null },
+  /*
+    Fotografia din hero. Sursa e 3840x5120, cu David la vreo 35% din latime si cu un
+    sfert de tavan deasupra. Decupajul taie coloana goala din dreapta (usa alba si
+    balustrada) si 600px de tavan, ca subiectul sa cada aproape de mijloc: asa `object-cover`
+    il tine in cadru pe orice raport, in loc sa fie nevoie de o pozitie orizontala
+    stramba in CSS. Pozitia verticala ramane in `Hero.tsx`, unde se vede alaturi de
+    degradeul de sub text.
+  */
+  { src: "assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg", out: "david-gym", crop: [2800, 4520, 0, 600] },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23.jpeg", out: "david-formal", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "sea-rest", crop: null },
   // Acelasi cadru, decupat pe cap: e avatarul rotund din tabul „Despre" al barei de jos.
@@ -103,11 +112,24 @@ async function processImage({ src, out, crop, pad }) {
   await toWebFormats(buffer, out);
 }
 
+/*
+  `--only=nume` reface o singura iesire. Fara el, adaugarea unei poze insemna
+  re-encodarea celor sase clipuri, deci ffmpeg pe PATH si toate folderele de sursa
+  prezente — pentru un fisier care nu are nicio legatura cu ele. Numele e cel din
+  campul `out`, iar pentru clipuri acopera si posterul generat din ele.
+*/
+const only = process.argv.find((arg) => arg.startsWith("--only="))?.slice("--only=".length);
+const wanted = (entry) => !only || entry.out === only;
+
 async function main() {
   mkdirSync(OUT_VIDEO, { recursive: true });
   mkdirSync(OUT_IMG, { recursive: true });
 
-  for (const video of VIDEOS) {
+  if (only && ![...VIDEOS, ...IMAGES].some(wanted)) {
+    throw new Error(`Nu exista nicio iesire numita „${only}".`);
+  }
+
+  for (const video of VIDEOS.filter(wanted)) {
     const posterPng = processVideo(video);
     const buffer = await sharp(posterPng).resize({ width: 1080 }).toBuffer();
     await toWebFormats(buffer, `poster-${video.out}`);
@@ -116,7 +138,7 @@ async function main() {
     console.log(`${video.out}.mp4  ${(statSync(mp4).size / 1_048_576).toFixed(2)} MB`);
   }
 
-  for (const image of IMAGES) await processImage(image);
+  for (const image of IMAGES.filter(wanted)) await processImage(image);
   console.log("Gata.");
 }
 

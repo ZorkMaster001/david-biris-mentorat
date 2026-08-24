@@ -1,6 +1,8 @@
 # David Biriș — 1-on-1 Fitness Mentoring
 
-A bilingual, fully static marketing site for a personal trainer in Târgu Mureș, Romania.
+A bilingual, fully static marketing site for an online 1-on-1 fitness mentor, working from
+Târgu Mureș, Romania. It sells the lifestyle — a physique you're proud of without giving up
+the rest of your life — and the mentoring is the method that gets you there.
 
 No backend, no database, no forms. Every call to action lands in WhatsApp or Instagram,
 because that is where the conversation actually happens. The whole site is prerendered at
@@ -94,17 +96,19 @@ two copies the end of the band is also the end of the scrollable area, and a dra
 against a wall. Each copy is measured after mount and the list repeats until one copy is at
 least as wide as the viewport.
 
-### 5. SEO is local-first, and the schema only claims what is true
+### 5. The schema only claims what is true
 
-The site targets one city. The city therefore appears in titles, descriptions, FAQ answers
-and a visible line in the footer — not only in structured data, which on its own is a much
-weaker signal.
+The mentoring is **online only**. Titles and descriptions are therefore built around the
+service, not around the city, and the city survives in exactly two places with one precise
+meaning: the `address` in the schema and one visible line in the footer, both saying where
+David works *from* — not where clients go. `areaServed` is the country on both the business
+and the service, so nothing in the markup implies in-person sessions.
 
 `JsonLd` emits one `@graph` per page linking `Person` → `LocalBusiness` → `Service` by
 `@id`, plus `FAQPage` on the home page. The business address carries locality and county
-only. Street address, coordinates, opening hours and price are **deliberately absent**
-because they were never provided — see the `TODO(client)` in `src/lib/business.ts`. An
-approximate address is worse than a missing one.
+only. Street address, coordinates, opening hours and price are **deliberately absent** —
+see the `TODO(client)` in `src/lib/business.ts`. An approximate address is worse than a
+missing one, and a precise one would be worse still when no client ever visits it.
 
 `/llms.txt` is generated from the same content module as the pages, so it cannot drift out
 of date. AI search crawlers are allowed in `robots.ts`; only the training-only crawler is not.
@@ -149,9 +153,13 @@ which is what lets the root layout sit under `[locale]` and carry the correct `l
 `npm run media` does **not** run at build time. It needs `ffmpeg` on your PATH and the raw
 source folders `assets/`, `testimonial_darius/`, `testimonial_meril/`, all git-ignored.
 
-It encodes six clips to WebM and MP4, and 20 images to AVIF and WebP, with crop boxes
+It encodes six clips to WebM and MP4, and 21 images to AVIF and WebP, with crop boxes
 measured per image rather than guessed. `public/media/` is committed, so a clone builds and
 deploys without any of the raw material.
+
+`--only=<name>` rebuilds a single output — `npm run media -- --only=david-gym`. Without it,
+adding one photograph re-encodes all six clips, which means ffmpeg on PATH and every raw
+source folder present, for a file that has nothing to do with them.
 
 ---
 
@@ -181,6 +189,9 @@ Client decisions, not style preferences. Do not relax them without asking:
 - No promises of kilograms lost or of a timeline
 - Nothing that implies David is a doctor or a licensed nutritionist
 - The footer disclaimer stays, in both languages
+- **No em dashes in visible copy.** The client reads them as a tell that a machine wrote the
+  text. Rewrite the sentence around a full stop or a comma, rather than swapping the character.
+  This covers `src/content/*` and the prose in `/llms.txt`; code comments are exempt
 
 ## Code conventions
 
@@ -208,8 +219,8 @@ from `SITE_URL` in `src/lib/site.ts`, which falls back to that domain.
 - [ ] Trim the initial JS bundle back under 180 KB gz
 - [ ] Street address, coordinates, opening hours and price range for the `LocalBusiness`
       schema (`src/lib/business.ts`)
-- [ ] Google Business Profile — for local queries it outweighs anything on the site, and it
-      cannot be done from code
+- [ ] Hero photograph: still the mountain ridge, which sells the lifestyle but not the
+      physique. A gym shot or a portrait would match the new positioning — client's call
 - [ ] Confirm Darius's surname initial and Meril's full name
 - [ ] Real-device pass: iPhone safe areas, video autoplay, the 3D scene on Android, and a
       full keyboard run-through

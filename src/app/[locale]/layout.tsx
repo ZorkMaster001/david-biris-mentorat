@@ -104,14 +104,15 @@ export default async function LocaleLayout({
         <ContactFab labels={content.contact} />
 
         {/*
-          Un singur graf pentru toata pagina: persoana, afacerea locala si serviciul,
-          legate prin `@id`. Fara legaturi, motoarele vad trei entitati fara nicio
-          relatie intre ele si niciuna nu se ancoreaza de oras.
+          Un singur graf pentru toata pagina: persoana, afacerea si serviciul, legate
+          prin `@id`. Fara legaturi, motoarele vad trei entitati fara nicio relatie
+          intre ele si niciuna nu se ancoreaza de om.
 
-          Adresa are doar localitatea si judetul. Strada, coordonatele si programul
-          lipsesc pentru ca nu le stim — vezi TODO(client) din `lib/business.ts`.
-          O adresa inventata ar fi mai rea decat una lipsa: Google verifica datele
-          locale si o nepotrivire strica increderea in tot restul.
+          Adresa are doar localitatea si judetul, si spune de unde lucreaza, nu unde
+          vin clientii: mentoratul e doar online, deci raza de actiune sta separat, in
+          `areaServed`. Strada, coordonatele si programul lipsesc — vezi TODO(client)
+          din `lib/business.ts`. O adresa inventata ar fi mai rea decat una lipsa:
+          Google verifica datele locale si o nepotrivire strica increderea in tot restul.
         */}
         <JsonLd
           data={{
@@ -146,10 +147,10 @@ export default async function LocaleLayout({
                   addressRegion: REGION,
                   addressCountry: "RO",
                 },
-                areaServed: [
-                  { "@type": "City", name: CITY },
-                  { "@type": "AdministrativeArea", name: content.business.areaServed },
-                ],
+                // Adresa spune de unde lucreaza, `areaServed` spune pe cine
+                // serveste. Mentoratul e doar online, deci raza de actiune e tara,
+                // nu orasul: un `City` aici ar promite antrenamente fata in fata.
+                areaServed: { "@type": "Country", name: content.business.areaServed },
                 availableLanguage: ["ro", "en"],
                 knowsLanguage: ["ro", "en"],
                 founder: { "@id": `${SITE_URL}/#david` },
@@ -163,13 +164,16 @@ export default async function LocaleLayout({
                 description: content.meta.description,
                 serviceType: content.business.serviceType,
                 provider: { "@id": `${SITE_URL}/#business` },
-                // Fata in fata doar in oras, dar mentoratul merge si online, deci
-                // serviciul acopera toata tara. Afacerea de mai sus ramane pe
-                // localitate si judet: acolo e adresa, nu raza de actiune.
-                areaServed: [
-                  { "@type": "City", name: CITY },
-                  { "@type": "Country", name: "România" },
-                ],
+                // Serviciul se livreaza integral online, deci acopera toata tara.
+                // `serviceOutput` si canalul de mai jos spun explicit ca nu exista
+                // locatie fizica: fara ele, un motor deduce din adresa afacerii ca
+                // antrenamentele se tin acolo.
+                areaServed: { "@type": "Country", name: content.business.areaServed },
+                availableChannel: {
+                  "@type": "ServiceChannel",
+                  serviceUrl: absoluteUrl(locale, ""),
+                  availableLanguage: ["ro", "en"],
+                },
                 availableLanguage: ["ro", "en"],
                 audience: { "@type": "Audience", audienceType: content.business.audience },
               },
