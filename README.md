@@ -1,119 +1,215 @@
-# David Biriș — Mentorat 1-la-1
+# David Biriș — 1-on-1 Fitness Mentoring
 
-Site static de prezentare pentru mentoratul de fitness 1-la-1 al lui David Biriș.
-Română și engleză. Fără backend: fiecare CTA duce în WhatsApp sau Instagram.
+A bilingual, fully static marketing site for a personal trainer in Târgu Mureș, Romania.
 
-Mobile-first. Navigarea stă jos, ca la o aplicație, iar butonul de contact e sticky
-în dreapta jos.
+No backend, no database, no forms. Every call to action lands in WhatsApp or Instagram,
+because that is where the conversation actually happens. The whole site is prerendered at
+build time and served as HTML.
 
-## Rulare locală
+Built mobile-first: navigation sits at the bottom like an app, contact is one thumb-reach
+away, and every heavy feature degrades to something static when the device cannot afford it.
+
+```
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · three.js · Vitest
+```
+
+---
+
+## Quick start
 
 ```bash
 npm install
-npm run dev
+npm run dev          # http://localhost:3000 → redirects to /ro
 ```
 
-## Comenzi
+Node 22 or newer.
 
-| Comandă | Ce face |
-|---|---|
-| `npm run dev` | Server de dezvoltare |
-| `npm run build` | Build de producție |
-| `npm run typecheck` | `tsc --noEmit` (rulează `next typegen` înainte) |
-| `npm run test` | Teste Vitest pentru modulele pure |
-| `npm run lint` | ESLint |
-| `npm run media` | Reprocesează media brută în `public/media/` |
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build (18 prerendered routes) |
+| `npm run typecheck` | `next typegen` then `tsc --noEmit` |
+| `npm test` | Vitest — 31 tests over the pure modules |
+| `npm run lint` | ESLint, including the React Compiler rules |
+| `npm run media` | Re-encode raw media into `public/media/` (see below) |
 
-## Media
+---
 
-`npm run media` **nu** rulează la build. Are nevoie de `ffmpeg` instalat local și de
-directoarele `assets/`, `testimonial_darius/`, `testimonial_meril/`, care sunt ignorate
-de git. Ieșirea din `public/media/` e comisă în repo, deci deploy-ul nu depinde de ffmpeg.
+## How it is put together
 
-Rulează-l doar când se schimbă pozele sau clipurile sursă.
+Five decisions shape almost everything else in this codebase.
 
-Două lucruri de știut dacă îl rulezi din nou:
-- Re-encodarea VP9 e nedeterministă, deci fișierele `.webm` apar modificate chiar dacă
-  nimic real nu s-a schimbat. Dă-le `git checkout` dacă n-ai schimbat clipurile.
-- Scriptul nu curăță ieșiri orfane. Dacă scoți o intrare din `VIDEOS`/`IMAGES`, fișierele
-  ei rămân în `public/media/` până le ștergi manual.
+### 1. One content source, two languages, enforced parity
 
-## Unde se schimbă ce
+Not a single user-facing string lives inside a component. Everything is typed and comes
+from `src/content/{ro,en}.ts`, shaped by `Content` in `types.ts`.
 
-| Vrei să schimbi | Fișier |
-|---|---|
-| Număr de telefon, handle de Instagram | `src/lib/contact.ts` |
-| Orice text vizibil, în orice limbă | `src/content/ro.ts`, `src/content/en.ts` |
-| Culori, fonturi, spațieri | `src/app/globals.css` (blocul `@theme static`) |
-| Ce poze apar unde | `src/content/*.ts`, câmpurile `image` / `*Src` |
-| URL-ul public (canonical, sitemap, OG) | variabila de mediu `NEXT_PUBLIC_SITE_URL` |
+A test compares the **ordered key paths** of both locales, so a field added to one language
+and forgotten in the other fails CI rather than shipping as a blank. Another test rejects
+empty strings, and a third pins the route slugs so that `/en/metoda` stays `metoda` — the
+URLs are Romanian in both locales on purpose, so a shared link never 404s across a language
+switch.
 
-Textele nu se scriu niciodată direct în componente. Dacă găsești un string vizibil
-într-un `.tsx`, e un bug — mută-l în `src/content/`.
+Adding a field means touching three files, in the same position, every time. That is the
+cost of never having to hunt for hardcoded copy.
 
-Cele două fișiere de conținut sunt tipate împotriva aceleiași interfețe, iar un test de
-paritate compară structura lor. O cheie adăugată doar într-o limbă pică la `tsc` și la teste.
+### 2. Capabilities decide what runs, not screen size
 
-## Decizii care par ciudate dar sunt intenționate
+`src/lib/device.ts` is the single gate for anything expensive. Two pure predicates —
+`shouldPlayVideo()` and `shouldRender3D()` — read reduced-motion, save-data, effective
+connection type, hardware concurrency and WebGL support, and every heavy feature asks
+before starting.
 
-**Nu folosim o bibliotecă de animație.** Cele patru animații — indicatorul de tab,
-butonul de contact, intrarea la scroll, rotația iconiței — sunt CSS. `motion` costa
-45 KB gz din încărcarea inițială, iar animațiile lui în JavaScript nu respectau blocul
-global `prefers-reduced-motion`, pentru că acela guvernează doar CSS.
+Both start conservative and only relax after `detect()` confirms. A 3D frame that renders
+and then stops is harmless; a network request fired on a metered connection cannot be taken
+back.
 
-**`Reveal` n-are JavaScript deloc.** Folosește `animation-timeline: view()` sub
-`@supports`. Într-un browser fără suport, conținutul e pur și simplu vizibil. Nu există
-starea „a rămas invizibil pentru că observer-ul n-a pornit" — care ar fi însemnat pagină
-goală pentru un crawler care nu execută JS.
+Each gated feature ships a real fallback that looks intentional, not broken: the 3D barbell
+becomes a drawn diagram, the video tiles stay on their posters, the animated background
+becomes a matching CSS gradient.
 
-**Video-ul așteaptă confirmarea capabilităților device-ului.** `shouldPlayVideo` întoarce
-`false` până când `detect()` chiar a rulat. Un cadru de redare care se oprește e inofensiv,
-dar o cerere de rețea pe economie de date, odată trimisă, nu se mai poate anula.
+### 3. Motion is layered on top of content that already works
 
-**Scena 3D nu folosește `@react-three/drei`.** Nu aveam nevoie de niciun helper din el, iar
-el trage tranzitiv o a doua copie de `three`.
+Every animation is decoration over something readable and complete when it is switched off.
 
-**Butonul de contact ține acțiunile montate, ascunse cu `inert`.** Așa animează și intrarea
-și ieșirea fără bibliotecă, iar `inert` le scoate din ordinea de Tab și din arborele de
-accesibilitate cât timp meniul e închis.
+- Scroll reveals are triggered by one shared `IntersectionObserver` and then run on a fixed
+  duration. They are **not** scrubbed by scroll position — tying progress to scroll speed
+  means a normal flick finishes the animation before the element reaches the eye.
+- The pre-reveal hidden state hangs off a `js` class set by a blocking inline script. Without
+  JavaScript the rule never applies, so a crawler never sees a page of invisible text.
+- The hero dissolves as it leaves, driven by a named `view-timeline` scoped to the section,
+  so the effect is tied to the element rather than to an absolute scroll offset.
+- Everything sits behind `prefers-reduced-motion`, and transitions are preferred over
+  keyframes wherever a user can re-trigger them.
 
-## Bugete de performanță
+### 4. The clip marquee is a scroll container, not an animation
 
-Măsurate pe build de producție, gzip, excluzând bundle-ul de polyfill-uri servit cu
-`noModule` (browserele moderne nu-l execută).
+The band of videos is a real `overflow-x` container. Touch drag, momentum, horizontal wheel
+and pointer drag all come from the browser. A `requestAnimationFrame` loop nudges
+`scrollLeft` for the slow automatic drift and steps aside for 1.4 s whenever a person takes
+over.
 
-| Metrică | Buget | Măsurat |
-|---|---|---|
-| JS inițial, per pagină | < 180 KB gz | 145–151 KB gz |
-| Chunk 3D, încărcat leneș | < 240 KB gz | 229 KB gz |
-| CSS | — | 6.7 KB gz |
+Three identical copies of the list, not two, with the position kept in the middle one: with
+two copies the end of the band is also the end of the scrollable area, and a drag stops dead
+against a wall. Each copy is measured after mount and the list repeats until one copy is at
+least as wide as the viewport.
 
-Bugetul pentru chunk-ul 3D a fost ridicat de la 200 la 240 KB: `three` plus
-`@react-three/fiber` nu coboară sub atât, iar chunk-ul e păzit de trei ori — se încarcă
-doar în browser, doar când secțiunea intră în viewport, și doar dacă device-ul are WebGL,
-procesor suficient, fără reduced-motion și fără economie de date.
+### 5. SEO is local-first, and the schema only claims what is true
 
-## Reguli de conținut
+The site targets one city. The city therefore appears in titles, descriptions, FAQ answers
+and a visible line in the footer — not only in structured data, which on its own is a much
+weaker signal.
 
-Sunt decizii ale clientului, nu preferințe de stil:
+`JsonLd` emits one `@graph` per page linking `Person` → `LocalBusiness` → `Service` by
+`@id`, plus `FAQPage` on the home page. The business address carries locality and county
+only. Street address, coordinates, opening hours and price are **deliberately absent**
+because they were never provided — see the `TODO(client)` in `src/lib/business.ts`. An
+approximate address is worse than a missing one.
 
-- Fără cifre despre numărul de clienți
-- Fără statistici
-- Fără promisiuni de kilograme sau de interval de timp
-- Fără formulări care sugerează că David e medic sau nutriționist licențiat
-- Disclaimerul din footer rămâne, în ambele limbi
+`/llms.txt` is generated from the same content module as the pages, so it cannot drift out
+of date. AI search crawlers are allowed in `robots.ts`; only the training-only crawler is not.
+
+---
+
+## Project structure
+
+```
+src/
+├─ app/
+│  ├─ [locale]/            root layout lives here, so <html lang> is per-locale
+│  │  ├─ layout.tsx        fonts, background, nav, JSON-LD graph
+│  │  ├─ page.tsx          home
+│  │  ├─ despre/           about
+│  │  ├─ metoda/           method
+│  │  ├─ rezultate/        results
+│  │  └─ opengraph-image.tsx
+│  ├─ llms.txt/route.ts    generated from the content module
+│  ├─ icon.svg · icon.png · apple-icon.png
+│  ├─ robots.ts · sitemap.ts
+│  └─ globals.css          palette, motion, everything Tailwind cannot express
+├─ components/
+│  ├─ about/               before → after pair with a drawn arrow
+│  ├─ bg/                  Silk WebGL background + its gate
+│  ├─ contact/             CTA that opens the WhatsApp / Instagram picker
+│  ├─ hero/ · reel/ · results/ · method/ · sections/
+│  ├─ nav/                 bottom nav, back button, locale switch, footer
+│  ├─ seo/                 JSON-LD
+│  └─ ui/                  Section, CtaButton, Reveal, shared styles
+├─ content/                ro.ts · en.ts · types.ts · parity tests
+└─ lib/                    device · contact · business · site · fonts
+```
+
+`/` issues a permanent redirect to `/ro` from `next.config.ts` rather than rendering a page,
+which is what lets the root layout sit under `[locale]` and carry the correct `lang`.
+
+---
+
+## Media pipeline
+
+`npm run media` does **not** run at build time. It needs `ffmpeg` on your PATH and the raw
+source folders `assets/`, `testimonial_darius/`, `testimonial_meril/`, all git-ignored.
+
+It encodes six clips to WebM and MP4, and 20 images to AVIF and WebP, with crop boxes
+measured per image rather than guessed. `public/media/` is committed, so a clone builds and
+deploys without any of the raw material.
+
+---
+
+## Performance
+
+Measured on a production build, gzipped.
+
+| Metric | Budget | Measured |
+| --- | --- | --- |
+| Initial JS, per page | < 180 KB gz | **189–193 KB gz** |
+| Lazy 3D chunk (`three` + fiber) | < 240 KB gz | 229 KB gz |
+| CSS | — | 8 KB gz |
+
+The initial bundle currently sits **just over budget**. The overage arrived with the client
+components added late: the WebGL background gate, the contact dialog, the interactive
+marquee and the reveal observer. It is worth a pass before launch; the 3D chunk is fine and
+is guarded three times over — browser only, in-view only, and only when `shouldRender3D()`
+agrees.
+
+---
+
+## Content rules
+
+Client decisions, not style preferences. Do not relax them without asking:
+
+- No client counts, no statistics
+- No promises of kilograms lost or of a timeline
+- Nothing that implies David is a doctor or a licensed nutritionist
+- The footer disclaimer stays, in both languages
+
+## Code conventions
+
+- Code comments and `docs/` are written in Romanian, without diacritics. Keep it.
+- Comments explain **why**, not what. If a line looks strange, the comment says what broke
+  when it was written the obvious way.
+- `docs/PROGRES.md` is the running log of every client round and the reasoning behind each
+  change. Read it before picking the work back up.
+
+---
 
 ## Deploy
 
-Vercel. Setează `NEXT_PUBLIC_SITE_URL` la URL-ul real de producție **înainte** de primul
-build, altfel sitemap-ul, canonical-urile și imaginile OG se generează cu valoarea implicită.
+Vercel — live at **https://david-biris-mentorat.vercel.app**
 
-## TODO deschise
+Canonicals, hreflang, the sitemap, `og:url` and every `@id` in the structured data derive
+from `SITE_URL` in `src/lib/site.ts`, which falls back to that domain.
 
-- [ ] **`INSTAGRAM_HANDLE` din `src/lib/contact.ts` e provizoriu.** Trebuie înlocuit cu
-      handle-ul real. Apare și în `sameAs` din JSON-LD, dar se schimbă într-un singur loc.
-- [ ] De confirmat inițiala lui Darius („Darius B.")
-- [ ] De confirmat numele complet al lui Meril
-- [ ] De decis dacă se adaugă secțiunea „locuri limitate" (doar dacă e adevărat)
-- [ ] Verificare pe telefon real: safe area pe iPhone, autoplay, gesturile din hero,
-      scena 3D pe Android, parcurs complet la tastatură
+> When a custom domain arrives, set `NEXT_PUBLIC_SITE_URL` **before** the build. The pages
+> are statically generated, so the URLs are baked into the HTML — setting it afterwards
+> changes nothing until the next deploy.
+
+## Open items
+
+- [ ] Trim the initial JS bundle back under 180 KB gz
+- [ ] Street address, coordinates, opening hours and price range for the `LocalBusiness`
+      schema (`src/lib/business.ts`)
+- [ ] Google Business Profile — for local queries it outweighs anything on the site, and it
+      cannot be done from code
+- [ ] Confirm Darius's surname initial and Meril's full name
+- [ ] Real-device pass: iPhone safe areas, video autoplay, the 3D scene on Android, and a
+      full keyboard run-through

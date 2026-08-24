@@ -31,7 +31,11 @@ export function Method({
     if (!element) return;
     const observer = new IntersectionObserver(
       ([entry]) => setInView(entry?.isIntersecting ?? false),
-      { rootMargin: "200px" },
+      // Marja e generoasa anume: chunk-ul cu `three` are vreo 229 KB comprimat, iar
+      // pe telefon, pe date mobile, 200px de avans nu ajung ca sa fie descarcat pana
+      // cand sectiunea chiar intra in cadru. Asa incepe sa se incarce cu un ecran
+      // intreg inainte.
+      { rootMargin: "800px" },
     );
     observer.observe(element);
     return () => observer.disconnect();

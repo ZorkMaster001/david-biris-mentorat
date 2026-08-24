@@ -546,3 +546,65 @@ fără „755", cu „Târgu Mureș", doar două legături. Testimonial: ordinea
   JSON-LD și `llms.txt`. Verificat: `instagram.com/david_biris` e singura formă din pagină și din
   `llms.txt`.
 - **Rămâne un singur blocant înainte de publicare**: `SITE_URL` e tot `https://david-biris.vercel.app`.
+
+## Runda 16 (2026-08-24)
+
+- **`SITE_URL` are acum domeniul real**: `https://david-biris-mentorat.vercel.app`. Valoarea veche
+  (`david-biris.vercel.app`, fără `-mentorat`) era greșită, nu doar provizorie — canonicalele,
+  hreflang-ul, sitemap-ul, `og:url` și `@id`-urile din schema arătau toate spre un domeniu care nu
+  există. Verificat că s-a propagat: canonical, cele trei `hreflang` (inclusiv `x-default`),
+  `<loc>`-urile din sitemap, cele trei `@id` din graf și legăturile din `llms.txt`.
+- README actualizat: domeniul e listat la Deploy, iar avertismentul a rămas doar pentru cazul
+  domeniului propriu — `NEXT_PUBLIC_SITE_URL` trebuie pus **înainte** de build, fiindcă paginile
+  sunt statice și adresele se coc în HTML.
+
+### Ce a mai rămas deschis
+
+Bundle-ul inițial peste buget (189–193 KB gz față de 180), adresa exactă pentru schema
+`LocalBusiness`, Google Business Profile, numele complete din testimoniale și verificarea pe
+telefon real.
+
+## Runda 17 (2026-08-24)
+
+Feedback client: pe telefon animația 3D nu se încarcă bine după deploy; iar partea aia din dreapta
+să arate cu procentaj cât de departe ești în site, în turcoaz.
+
+### 3D pe telefon
+
+Suspectul principal: **două contexte WebGL în același timp**. Fundalul Silk desenează fiecare pixel
+al ecranului la fiecare cadru, continuu, iar gantera cerea un al doilea context peste el. Pe un
+GPU de telefon gantera pierdea întrecerea — se încărca greu sau se mișca sacadat. Trei schimbări:
+
+- **Silk rulează doar de la 1024px în sus.** Sub atât rămâne degradeul static din CSS, în aceleași
+  culori; la 30% opacitate diferența dintre el și shader e oricum aproape invizibilă. Gantera e o
+  cerință explicită a clientului, fundalul e decor — cine pierde e clar.
+- `rootMargin` la observatorul din `Method` a urcat de la 200px la **800px**: chunk-ul cu `three` are
+  229 KB comprimat, iar pe date mobile 200px de avans nu ajung ca să fie descărcat până când
+  secțiunea intră în cadru.
+- `dpr` plafonat la **1.5** în loc de 2: pe un telefon retina, dpr 2 înseamnă de patru ori mai mulți
+  pixeli de desenat.
+
+**Neconfirmat.** N-am telefon real la dispoziție și n-am putut reproduce problema; astea sunt fixuri
+raționate din cauza cea mai probabilă, nu verificate. Dacă tot nu merge, următorii suspecți sunt
+memoria (contextul WebGL ucis de sistem pe telefoane cu 3-4 GB) și `SceneBoundary`, care prinde
+eroarea și trece pe varianta statică fără să se plângă vizibil.
+
+### Indicator de progres
+
+- `components/nav/ScrollProgress.tsx`: procentul și o bară verticală care se umple, fixate pe
+  marginea din dreapta, între comutatorul de limbă și butonul de contact. Turcoazul mărcii.
+- Ascultător pasiv de scroll, strâns într-un `requestAnimationFrame`, deci o rafală de evenimente
+  produce o singură măsurătoare pe cadru. **Deliberat JavaScript, nu cronologie CSS de derulare**:
+  numărul e text și trebuie să meargă și în Firefox și pe iOS mai vechi.
+- Se umple prin `scaleY` cu originea sus, nu prin `height`: înălțimea ar fi cerut o reașezare la
+  fiecare cadru de derulare.
+- La 0% e invizibil — în hero n-ar spune încă nimic util și ar concura cu titlul.
+- **Punctul care cobora pe linia din hero a fost scos**, împreună cu CSS-ul lui. Era în același loc,
+  iar două lucruri pe marginea dreaptă ar fi fost gălăgie. Odată cu el a dispărut și singura
+  animație în buclă de pe site, cea semnalată în runda 12.
+
+### Verificat în DOM
+
+La 430px lățime: `canvas` 0 (poarta de mobil pentru Silk ține), punctul din hero dispărut,
+indicatorul prezent, culoarea `rgb(47, 230, 196)`. **Actualizarea procentului la derulare n-a putut
+fi măsurată** — tabul e ascuns, iar `requestAnimationFrame` nu rulează fără cadre randate.

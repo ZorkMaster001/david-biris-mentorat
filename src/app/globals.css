@@ -132,8 +132,8 @@ body {
 /*
   Heroul. Toata miscarea de aici e decor peste un continut care exista si stationar,
   deci intra doar sub `prefers-reduced-motion: no-preference`: fotografia se apropie
-  incet, linia de accent se intinde din nimic, iar textul si butoanele urca esalonat
-  prin `--hero-delay`. Fara ele ramane exact aceeasi imagine cu acelasi text.
+  incet, iar titlul, subtitlul si butoanele urca esalonat prin `--hero-delay`. Fara
+  ele ramane exact aceeasi imagine cu acelasi text.
 */
 @media (prefers-reduced-motion: no-preference) {
   .hero-image {
@@ -142,10 +142,6 @@ body {
 
   .hero-rise {
     animation: hero-rise-in 700ms var(--ease-out-expo) var(--hero-delay, 0ms) both;
-  }
-
-  .hero-scroll-dot {
-    animation: hero-scroll-dot 2.4s var(--ease-out-expo) infinite;
   }
 }
 
@@ -166,24 +162,6 @@ body {
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* Punctul cade de deasupra liniei si iese pe sub ea, deci bucla nu are cusatura. */
-@keyframes hero-scroll-dot {
-  from {
-    top: -0.5rem;
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  to {
-    top: 100%;
-    opacity: 0;
   }
 }
 

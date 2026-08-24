@@ -6,6 +6,7 @@ import { BackButton } from "@/components/nav/BackButton";
 import { BottomNav } from "@/components/nav/BottomNav";
 import { ContactFab } from "@/components/nav/ContactFab";
 import { LocaleSwitch } from "@/components/nav/LocaleSwitch";
+import { ScrollProgress } from "@/components/nav/ScrollProgress";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
@@ -98,6 +99,7 @@ export default async function LocaleLayout({
         <div className="pb-nav">{children}</div>
         <LocaleSwitch locale={locale} label={content.footer.languageLabel} />
         <BackButton locale={locale} label={content.backLabel} />
+        <ScrollProgress />
         <BottomNav locale={locale} items={content.nav} />
         <ContactFab labels={content.contact} />
 

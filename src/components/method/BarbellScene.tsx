@@ -168,7 +168,9 @@ export default function BarbellScene({
       onPointerCancel={endDrag}
     >
       <Canvas
-        dpr={[1, 2]}
+        // Plafonat la 1.5, nu 2: pe un telefon retina dpr 2 inseamna de patru ori mai
+        // multi pixeli de desenat, pentru o scena care oricum are muchii rotunde.
+        dpr={[1, 1.5]}
         frameloop="demand"
         camera={{ position: [0, 0.7, 7.5], fov: 35 }}
         gl={{ antialias: true, powerPreference: "low-power" }}
