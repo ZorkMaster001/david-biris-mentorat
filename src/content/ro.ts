@@ -4,30 +4,30 @@ export const ro: Content = {
   meta: {
     title: "David Biriș 1-la-1 · Antrenor personal Târgu Mureș",
     description:
-      "Antrenor personal în Târgu Mureș. Mentorat 1-la-1 pentru slăbit, forță și obiceiuri care țin: sală, box, înot sau cățărat, plus un plan de nutriție realist.",
+      "Antrenor personal în Târgu Mureș și online. Mentorat 1-la-1 pentru slăbit, forță și obiceiuri care țin: sală, nutriție, motivație și disciplină, în jurul vieții tale.",
   },
   pageMeta: {
     metoda: {
       title: "Metoda de antrenament · Antrenor Târgu Mureș",
       description:
-        "Cum arată mentoratul: sala ca bază, sportul tău peste ea și nutriția care ține pe termen lung. Antrenor personal în Târgu Mureș, în română și engleză.",
+        "Sală, nutriție, antrenament, motivație și disciplină, așezate în jurul vieții pe care o ai deja. Antrenor personal în Târgu Mureș și online, în română și engleză.",
     },
     rezultate: {
       title: "Rezultate reale · Antrenor personal Târgu Mureș",
       description:
-        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1 în Târgu Mureș.",
+        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1 în Târgu Mureș și online.",
     },
     despre: {
       title: "Despre David Biriș · Antrenor personal Târgu Mureș",
       description:
-        "7 ani în sală, anul 2 la Medicină. A trecut și el prin începutul greu. Antrenor personal în Târgu Mureș, pentru slăbit, forță și obiceiuri care rămân.",
+        "7 ani în sală, anul 2 la Medicină. A trecut și el prin începutul greu. Antrenor personal în Târgu Mureș și online, pentru slăbit, forță și obiceiuri care rămân.",
     },
   },
   business: {
     serviceType: "Mentorat fitness 1-la-1",
     areaServed: "Județul Mureș",
     audience: "Adulți care vor să slăbească, să prindă forță sau să învețe să facă sală",
-    locationLine: "Antrenamente 1-la-1 în Târgu Mureș, în română și engleză.",
+    locationLine: "Mentorat 1-la-1 în Târgu Mureș și online, în română și engleză.",
   },
   nav: [
     { href: "", label: "Acasă" },
@@ -48,10 +48,10 @@ export const ro: Content = {
     closeLabel: "Închide",
   },
   hero: {
-    headline: "Nu te învăț să faci sală.",
-    headlineAccent: "Te învăț să îți placă.",
+    headline: "Nu renunți la pasiunile tale",
+    headlineAccent: "ca să arăți bine.",
     subheadline:
-      "Mentorat 1-la-1 care îmbină sportul pe care îl faci deja, fie box, înot, cățărat sau sală, cu un plan de nutriție care nu îți cere să renunți la viața ta.",
+      "Mentorat 1-la-1 care îmbină viața ta de zi cu zi și hobby-urile pe care le ai deja cu sala. Sală, nutriție, motivație și disciplină, în Târgu Mureș sau online.",
     ctaPrimary: "Scrie-i lui David",
     ctaSecondary: "Vezi metoda",
     image: "hiking-peaks",
@@ -75,19 +75,25 @@ export const ro: Content = {
       "Ai nevoie de o balanță, nu de o pedeapsă. Planurile care interzic tot funcționează trei săptămâni și apoi te lasă mai rău decât te-au găsit. Un plan bun are loc în el pentru viața pe care o trăiești deja.",
   },
   method: {
-    headline: "Se construiește peste ce faci deja.",
-    body: "Nu îți cerem să renunți la sportul tău ca să faci sală. Sala devine structura care le face pe toate celelalte mai bune.",
+    headline: "Se construiește în jurul vieții tale.",
+    body: "Nu contează ce sport faci sau ce hobby-uri ai. Sala se așază peste ele, nu în locul lor, iar restul e mâncare, ritm și motive să te întorci.",
     pillars: [
       { id: "sala", name: "Sală", angle: "Baza. Structura peste care se așază tot restul." },
-      { id: "box", name: "Box", angle: "Condiție, coordonare, capul limpede." },
-      { id: "inot", name: "Înot", angle: "Recuperare activă, plămâni, articulații odihnite." },
-      { id: "catarat", name: "Cățărat", angle: "Forță reală, priză, control al corpului." },
+      { id: "antrenament", name: "Antrenament", angle: "Un plan făcut pe orarul tău, nu pe al altcuiva." },
       { id: "nutritie", name: "Nutriție", angle: "Mâncare pe care o mănânci și peste un an, nu doar în deficit." },
+      { id: "motivatie", name: "Motivație", angle: "Motivul pentru care te întorci și săptămâna viitoare." },
+      { id: "disciplina", name: "Disciplină", angle: "Ce te duce în sală în zilele în care nu ai chef." },
       { id: "consistenta", name: "Consistență", angle: "Singura variabilă care contează pe termen lung." },
+    ],
+    gallery: [
+      { id: "catarat", src: "climbing-wall", alt: "David cățărându-se pe perete, cu coardă" },
+      { id: "nutritie", src: "nutrition-plate", alt: "Farfurie cu mâncare gătită simplu" },
+      { id: "creasta", src: "outdoor-summit", alt: "David pe creastă, după urcare" },
     ],
   },
   reel: {
-    headline: "Cinci feluri de a te mișca. Toate intră în plan.",
+    headline: "Tot ce vezi aici face el.",
+    body: "Nu te învață box, înot sau cățărat. Dar le face, deci știe ce cere fiecare de la corp și construiește sala în jurul lor, nu împotriva lor.",
     pauseLabel: "Oprește derularea",
     resumeLabel: "Pornește derularea",
     clips: [
@@ -168,7 +174,12 @@ export const ro: Content = {
       {
         question: "Unde se țin antrenamentele?",
         answer:
-          "În Târgu Mureș. Programul se face în jurul orarului tău, nu invers, așa că stabilim orele după ce știm cum arată săptămâna ta.",
+          "În Târgu Mureș, față în față, sau online, de oriunde ai fi. Planul, mâncarea și ajustările săptămânale merg la fel în ambele feluri.",
+      },
+      {
+        question: "Eu fac deja alt sport. Mai are rost?",
+        answer:
+          "Are, și e chiar cazul pentru care e făcut mentoratul. Nu te învață sportul tău, ci construiește sala și mâncarea în jurul lui, ca să nu te încurce unul pe altul.",
       },
       {
         question: "Vreau doar să slăbesc, nu să fac performanță.",

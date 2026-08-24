@@ -638,3 +638,40 @@ Matematica tragerii verificată la capete: apucat sus → 0, la mijloc → 5329 
 exactă), jos → 10657. **Actualizarea la derulare n-a putut fi văzută** — tabul e ascuns și
 `requestAnimationFrame` nu rulează acolo; măsurătoarea inițială, care rulează sincron la montare, a
 dat valorile corecte.
+
+## Runda 19 (2026-08-24) — corecție de mesaj
+
+Clientul a corectat premisa pe care era construit tot site-ul: **David nu predă box, înot sau
+cățărat.** Clipurile cu ele sunt dovada că le face el însuși. Ce vinde e sala, nutriția,
+antrenamentul, motivația și disciplina, așezate în jurul sportului și hobby-urilor pe care omul le
+are deja — și o face **și online**, ceea ce nu apărea nicăieri până acum.
+
+- **Pilonii metodei s-au schimbat**: Sală, Box, Înot, Cățărat, Nutriție, Consistență →
+  **Sală, Antrenament, Nutriție, Motivație, Disciplină, Consistență**. Rămân șase, deci gantera are
+  în continuare șase discuri.
+- **Galeria de pe /metoda are acum text alternativ propriu** (`method.gallery`). Înainte îl împrumuta
+  de la `pillars[3]`, `[4]`, `[1]` — legătură care s-a rupt odată cu pilonii și care oricum era un
+  hack. Sursele imaginilor au trecut și ele în conținut, ca la `reel.clips`.
+- **Secțiunea cu clipuri a primit un rând de lămurire** (`reel.body`): „Nu te învață box, înot sau
+  cățărat. Dar le face, deci știe ce cere fiecare de la corp." Fără el banda se citea ca un meniu de
+  sporturi predate. Titlul a devenit „Tot ce vezi aici face el."
+- **Hero rescris**: „Nu renunți la pasiunile tale / ca să arăți bine." Subtitlul spune acum îmbinarea
+  vieții de zi cu zi și a hobby-urilor cu sala, plus Târgu Mureș **sau online**.
+- **Online peste tot unde conta**: descrierea principală, cele trei descrieri de pagini, rândul din
+  subsol, `llms.txt`, plus o întrebare nouă de FAQ („Eu fac deja alt sport. Mai are rost?").
+  Răspunsul la „Unde se țin antrenamentele?" acoperă acum ambele feluri.
+- **Schema**: `Service.areaServed` a devenit oraș **plus** țară — față în față doar în Târgu Mureș,
+  dar mentoratul online acoperă toată țara. `LocalBusiness` rămâne pe localitate și județ: acolo e
+  adresa, nu raza de acțiune.
+- `KNOWS_ABOUT`: adăugate `online coaching`, `motivation`, `discipline`. Boxul, înotul și cățăratul
+  **rămân** — sunt pe `Person`, nu pe serviciu, și e adevărat că le practică.
+
+### Ce nu s-a schimbat, deliberat
+
+`reel.clips` păstrează textele alternative care descriu chiar sporturile (box, cățărat, mare) —
+alea descriu ce se vede în clip, nu ce se predă. La fel, fotografia de cățărare de pe /metoda.
+
+### Verificat în DOM
+
+Hero, cei șase piloni, rândul nou din secțiunea cu clipuri, descrierea principală, textele
+alternative din galerie și `llms.txt` — toate ies cu textul nou.

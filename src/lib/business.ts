@@ -16,14 +16,20 @@ export const REGION = "Mureș";
 /**
  * Subiectele pe care le acopera, in engleza fiindca `knowsAbout` e citit de motoare,
  * nu de oameni, iar vocabularul lor de referinta e englezesc.
+ *
+ * Boxul, inotul si cataratul stau pe persoana, nu pe serviciu: le practica el, dar nu
+ * le preda. Ce vinde e sala, mancarea si obiceiul din jurul lor.
  */
 export const KNOWS_ABOUT = [
   "personal training",
   "strength training",
   "weight loss",
   "nutrition coaching",
+  "online coaching",
+  "habit building",
+  "motivation",
+  "discipline",
   "boxing",
   "climbing",
   "swimming",
-  "habit building",
 ];

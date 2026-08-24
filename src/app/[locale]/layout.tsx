@@ -163,7 +163,13 @@ export default async function LocaleLayout({
                 description: content.meta.description,
                 serviceType: content.business.serviceType,
                 provider: { "@id": `${SITE_URL}/#business` },
-                areaServed: { "@type": "City", name: CITY },
+                // Fata in fata doar in oras, dar mentoratul merge si online, deci
+                // serviciul acopera toata tara. Afacerea de mai sus ramane pe
+                // localitate si judet: acolo e adresa, nu raza de actiune.
+                areaServed: [
+                  { "@type": "City", name: CITY },
+                  { "@type": "Country", name: "România" },
+                ],
                 availableLanguage: ["ro", "en"],
                 audience: { "@type": "Audience", audienceType: content.business.audience },
               },

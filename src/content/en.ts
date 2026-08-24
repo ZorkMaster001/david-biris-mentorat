@@ -4,30 +4,30 @@ export const en: Content = {
   meta: {
     title: "David Biriș 1-on-1 · Personal Trainer Târgu Mureș",
     description:
-      "Personal trainer in Târgu Mureș. One-on-one mentoring for weight loss, strength and habits that last: lifting, boxing, swimming or climbing, plus real nutrition.",
+      "Personal trainer in Târgu Mureș and online. One-on-one mentoring for weight loss, strength and habits that last: training, nutrition, motivation and discipline, built around your life.",
   },
   pageMeta: {
     metoda: {
       title: "The method · Personal trainer Târgu Mureș",
       description:
-        "How the mentoring works: lifting as the base, your sport on top of it, and nutrition that lasts. Personal trainer in Târgu Mureș, in Romanian and English.",
+        "Training, nutrition, programming, motivation and discipline, arranged around the life you already have. Personal trainer in Târgu Mureș and online, in Romanian and English.",
     },
     rezultate: {
       title: "Real results · Personal trainer Târgu Mureș",
       description:
-        "Two people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring in Târgu Mureș.",
+        "Two people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring in Târgu Mureș and online.",
     },
     despre: {
       title: "About David Biriș · Personal trainer Târgu Mureș",
       description:
-        "7 years under the bar, second year of medical school. He has been through the hard start too. Personal trainer in Târgu Mureș for weight loss and strength.",
+        "7 years under the bar, second year of medical school. He has been through the hard start too. Personal trainer in Târgu Mureș and online, for weight loss and strength.",
     },
   },
   business: {
     serviceType: "One-on-one fitness mentoring",
     areaServed: "Mureș County",
     audience: "Adults who want to lose weight, get stronger or learn how to train",
-    locationLine: "One-on-one training in Târgu Mureș, in Romanian and English.",
+    locationLine: "One-on-one mentoring in Târgu Mureș and online, in Romanian and English.",
   },
   nav: [
     { href: "", label: "Home" },
@@ -48,10 +48,10 @@ export const en: Content = {
     closeLabel: "Close",
   },
   hero: {
-    headline: "I won't teach you to train.",
-    headlineAccent: "I'll teach you to want to.",
+    headline: "You don't give up what you love",
+    headlineAccent: "to look good.",
     subheadline:
-      "One-on-one mentoring that combines the sport you already do, whether that is boxing, swimming, climbing or lifting, with a nutrition plan that doesn't ask you to give up your life.",
+      "One-on-one mentoring that fits the gym around your everyday life and the hobbies you already have. Training, nutrition, motivation and discipline, in Târgu Mureș or online.",
     ctaPrimary: "Message David",
     ctaSecondary: "See the method",
     image: "hiking-peaks",
@@ -75,19 +75,25 @@ export const en: Content = {
       "You need balance, not punishment. Plans that ban everything work for three weeks and then leave you worse off than they found you. A good plan has room in it for the life you already live.",
   },
   method: {
-    headline: "It builds on what you already do.",
-    body: "We're not asking you to drop your sport to make room for the gym. The gym becomes the structure that makes everything else better.",
+    headline: "It is built around your life.",
+    body: "It does not matter what sport you play or what your hobbies are. The gym sits on top of them, not in their place, and the rest is food, rhythm and reasons to come back.",
     pillars: [
       { id: "sala", name: "Lifting", angle: "The base. The structure everything else sits on." },
-      { id: "box", name: "Boxing", angle: "Conditioning, coordination, a clear head." },
-      { id: "inot", name: "Swimming", angle: "Active recovery, lungs, joints that get a break." },
-      { id: "catarat", name: "Climbing", angle: "Real strength, grip, control over your own body." },
+      { id: "antrenament", name: "Programming", angle: "A plan built on your week, not on someone else's." },
       { id: "nutritie", name: "Nutrition", angle: "Food you'll still be eating in a year, not just while cutting." },
+      { id: "motivatie", name: "Motivation", angle: "The reason you come back next week too." },
+      { id: "disciplina", name: "Discipline", angle: "What gets you in on the days you don't feel like it." },
       { id: "consistenta", name: "Consistency", angle: "The only variable that matters long term." },
+    ],
+    gallery: [
+      { id: "catarat", src: "climbing-wall", alt: "David climbing a wall on rope" },
+      { id: "nutritie", src: "nutrition-plate", alt: "A plate of simply cooked food" },
+      { id: "creasta", src: "outdoor-summit", alt: "David on a ridge after the climb" },
     ],
   },
   reel: {
-    headline: "Five ways to move. All of them fit the plan.",
+    headline: "That's him in every clip.",
+    body: "He doesn't teach you boxing, swimming or climbing. But he does them, so he knows what each one asks of a body, and he builds the gym around them instead of against them.",
     pauseLabel: "Stop the reel",
     resumeLabel: "Start the reel",
     clips: [
@@ -168,7 +174,12 @@ export const en: Content = {
       {
         question: "Where do the sessions take place?",
         answer:
-          "In Târgu Mureș. The plan is built around your schedule, not the other way round, so we set the hours once we know what your week looks like.",
+          "In Târgu Mureș, face to face, or online from wherever you are. The plan, the food and the weekly adjustments work the same either way.",
+      },
+      {
+        question: "I already play another sport. Is this still for me?",
+        answer:
+          "It is, and that is exactly the case the mentoring is built for. He doesn't teach you your sport — he builds the gym and the food around it, so the two stop working against each other.",
       },
       {
         question: "I only want to lose weight, not compete.",

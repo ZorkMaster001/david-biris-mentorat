@@ -110,8 +110,24 @@ export interface Content {
     fastfoodCaption: string;
     closing: string;
   };
-  method: { headline: string; body: string; pillars: Pillar[] };
-  reel: { headline: string; pauseLabel: string; resumeLabel: string; clips: ReelClip[] };
+  method: {
+    headline: string;
+    body: string;
+    pillars: Pillar[];
+    /** Fotografiile de pe /metoda. Textul alternativ nu se mai imprumuta de la piloni. */
+    gallery: { id: string; src: string; alt: string }[];
+  };
+  reel: {
+    headline: string;
+    /**
+     * Clipurile sunt dovada ca David face el insusi sporturile alea, nu un meniu de
+     * lucruri pe care le preda. Randul asta spune diferenta, ca sa nu ramana ambigua.
+     */
+    body: string;
+    pauseLabel: string;
+    resumeLabel: string;
+    clips: ReelClip[];
+  };
   david: {
     headline: string;
     body: string[];
