@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { HeroStories } from "@/components/hero/HeroStories";
+import { Hero } from "@/components/hero/Hero";
 import { Footer } from "@/components/nav/Footer";
 import { Balance } from "@/components/sections/Balance";
 import { David } from "@/components/sections/David";
@@ -8,43 +8,41 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { FirstTime } from "@/components/sections/FirstTime";
 import { Method } from "@/components/sections/Method";
 import { Process } from "@/components/sections/Process";
+import { Reel } from "@/components/sections/Reel";
 import { Results } from "@/components/sections/Results";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { isLocale } from "@/content/types";
-import { whatsappUrl } from "@/lib/contact";
 import { localePath } from "@/lib/site";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
-  const contactHref = whatsappUrl(content.contact.prefilledMessage);
 
   return (
     <main>
-      <HeroStories
-        slides={content.hero.slides}
+      <Hero
         headline={content.hero.headline}
+        headlineAccent={content.hero.headlineAccent}
         subheadline={content.hero.subheadline}
         ctaPrimary={content.hero.ctaPrimary}
-        ctaPrimaryHref={contactHref}
+        contact={content.contact}
         ctaSecondary={content.hero.ctaSecondary}
         ctaSecondaryHref={localePath(locale, "metoda")}
-        prevSlideLabel={content.hero.prevSlideLabel}
-        nextSlideLabel={content.hero.nextSlideLabel}
-        pauseLabel={content.hero.pauseLabel}
-        resumeLabel={content.hero.resumeLabel}
+        image={content.hero.image}
+        imageAlt={content.hero.imageAlt}
       />
       <FirstTime data={content.firstTime} />
       <Balance data={content.balance} />
       <Method data={content.method} />
+      <Reel data={content.reel} />
       <David data={content.david} />
       <Results data={content.results} />
       <Process data={content.process} />
       <Faq data={content.faq} />
-      <FinalCta data={content.finalCta} href={contactHref} />
-      <Footer locale={locale} data={content.footer} route="" />
+      <FinalCta data={content.finalCta} contact={content.contact} />
+      <Footer data={content.footer} contact={content.contact} business={content.business} />
 
       <JsonLd
         data={{

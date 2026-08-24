@@ -17,7 +17,7 @@ export function BarbellFallback({ pillars }: { pillars: Pillar[] }) {
             <span
               key={pillar.id}
               aria-hidden="true"
-              className="absolute top-1/2 h-16 w-[10px] -translate-y-1/2 rounded-[3px] bg-ink-raised ring-1 ring-ember/50"
+              className="absolute top-1/2 h-16 w-[10px] -translate-y-1/2 rounded-[3px] bg-ink-raised ring-1 ring-signal/50"
               style={{ left: `calc(50% + ${side * offset}% - 5px)` }}
             />
           );

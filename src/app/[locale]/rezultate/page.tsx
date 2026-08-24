@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/nav/Footer";
 import { Results } from "@/components/sections/Results";
-import { CtaButton } from "@/components/ui/CtaButton";
+import { ContactCta } from "@/components/contact/ContactCta";
 import { Section } from "@/components/ui/Section";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { whatsappUrl } from "@/lib/contact";
 import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -23,8 +22,8 @@ export async function generateMetadata({
   const content = getContent(locale);
 
   return {
-    title: `${content.results.headline} · ${content.meta.title}`,
-    description: content.results.headline,
+    title: content.pageMeta.rezultate.title,
+    description: content.pageMeta.rezultate.description,
     alternates: {
       canonical: absoluteUrl(locale, "rezultate"),
       languages: {
@@ -45,13 +44,11 @@ export default async function ResultsPage({ params }: { params: Promise<{ locale
       <Results data={content.results} headingLevel="h1" />
       <Section headline={content.finalCta.headline}>
         <p className="mt-6 max-w-[48ch] text-lg text-bone-dim">{content.finalCta.body}</p>
-        <div className="mt-8">
-          <CtaButton href={whatsappUrl(content.contact.prefilledMessage)} external>
-            {content.finalCta.cta}
-          </CtaButton>
+        <div className="mt-8 flex sm:justify-center">
+          <ContactCta labels={content.contact}>{content.finalCta.cta}</ContactCta>
         </div>
       </Section>
-      <Footer locale={locale} data={content.footer} route="rezultate" />
+      <Footer data={content.footer} contact={content.contact} business={content.business} />
     </main>
   );
 }

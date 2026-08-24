@@ -9,19 +9,32 @@ const BAR_LENGTH = 7;
 const PLATE_RADIUS = 0.85;
 const PLATE_THICKNESS = 0.16;
 const LERP = 0.09;
+/*
+  Iesirea e mai lenta decat intrarea. Montarea trebuie sa fie prompta, ca discul sa
+  ajunga pe bara odata cu pilonul citit; demontarea, in schimb, arata a greseala
+  daca discul zboara de pe bara. Odata cu asta a scazut si distanta la care asteapta
+  discurile: de la 5.5 la 3, deci drumul e mai scurt si iesirea nu mai pare o smucire.
+*/
+const LERP_OUT = 0.035;
+const PLATE_PARKED_X = 3;
 const SETTLED = 0.004;
 const DRAG_SENSITIVITY = 0.006;
 const SPIN_FRICTION = 0.94;
+
+/** Primul disc se opreste la distanta asta de centrul barei. */
+const PLATE_FIRST_X = 0.5;
+/** Pasul dintre discurile de pe aceeasi parte: cu putin peste grosime, deci stau lipite. */
+const PLATE_STEP = PLATE_THICKNESS + 0.02;
 
 /** Discurile se monteaza alternand stanga/dreapta, deci bara ramane echilibrata la final. */
 function plateTargetX(index: number): number {
   const side = index % 2 === 0 ? 1 : -1;
   const slot = Math.floor(index / 2);
-  return side * (0.95 + slot * 0.34);
+  return side * (PLATE_FIRST_X + slot * PLATE_STEP);
 }
 
 function plateStartX(index: number): number {
-  return (index % 2 === 0 ? 1 : -1) * 5.5;
+  return (index % 2 === 0 ? 1 : -1) * PLATE_PARKED_X;
 }
 
 interface BarbellProps {
@@ -52,19 +65,23 @@ function Barbell({ pillars, mountedCount, spinRef, invalidateRef }: BarbellProps
     plates.current.forEach((plate, index) => {
       if (!plate) return;
       const mounted = index < mountedCount;
+      const lerp = mounted ? LERP : LERP_OUT;
       const target = mounted ? plateTargetX(index) : plateStartX(index);
-      plate.position.x += (target - plate.position.x) * LERP;
+      plate.position.x += (target - plate.position.x) * lerp;
 
       const material = plate.material as THREE.MeshStandardMaterial;
       const targetOpacity = mounted ? 1 : 0;
-      material.opacity += (targetOpacity - material.opacity) * LERP;
+      material.opacity += (targetOpacity - material.opacity) * lerp;
       // Discul intra incins si se raceste: marcheaza montarea fara un efect separat.
-      if (mounted) material.emissiveIntensity += (0 - material.emissiveIntensity) * 0.05;
+      // Cat sta pe langa bara se reincarca la loc, ca sa se vada din nou daca omul
+      // urca inapoi si coboara a doua oara prin sectiune.
+      const targetGlow = mounted ? 0 : 1;
+      material.emissiveIntensity += (targetGlow - material.emissiveIntensity) * (mounted ? 0.05 : lerp);
 
       if (
         Math.abs(target - plate.position.x) > SETTLED ||
         Math.abs(targetOpacity - material.opacity) > SETTLED ||
-        (mounted && material.emissiveIntensity > 0.01)
+        Math.abs(targetGlow - material.emissiveIntensity) > 0.01
       ) {
         moving = true;
       }
@@ -100,7 +117,7 @@ function Barbell({ pillars, mountedCount, spinRef, invalidateRef }: BarbellProps
           <cylinderGeometry args={[PLATE_RADIUS, PLATE_RADIUS, PLATE_THICKNESS, 32]} />
           <meshStandardMaterial
             color="#141416"
-            emissive="#ff5c1a"
+            emissive="#2fe6c4"
             emissiveIntensity={1}
             metalness={0.6}
             roughness={0.45}

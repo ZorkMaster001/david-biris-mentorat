@@ -11,10 +11,10 @@ export function David({
   headingLevel?: "h1" | "h2";
 }) {
   return (
-    <Section id="despre" eyebrow={data.eyebrow} headline={data.headline} headingLevel={headingLevel}>
+    <Section id="despre" headline={data.headline} headingLevel={headingLevel}>
       <div className="mt-10 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <Reveal>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+          <div className="media-zoom relative aspect-[3/4] overflow-hidden rounded-2xl">
             <Image
               src={`/media/img/${data.image}.avif`}
               alt={data.imageAlt}
@@ -26,7 +26,7 @@ export function David({
         </Reveal>
         <div className="space-y-5 text-lg leading-relaxed text-bone-dim">
           {data.body.map((paragraph, index) => (
-            <Reveal key={paragraph} delay={index * 0.05}>
+            <Reveal key={paragraph} delay={index * 80}>
               <p>{paragraph}</p>
             </Reveal>
           ))}

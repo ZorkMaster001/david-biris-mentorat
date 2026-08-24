@@ -35,15 +35,17 @@ export default async function OpengraphImage({
         <div
           style={{
             fontSize: 26,
-            color: "#FF5C1A",
+            color: "#2FE6C4",
             letterSpacing: 4,
             textTransform: "uppercase",
           }}
         >
           David Biriș
         </div>
+        {/* Titlul e impartit in doua campuri pentru accentul din hero; aici se lipesc
+            la loc, fiindcă previzualizarea are o singura culoare de text. */}
         <div style={{ fontSize: 68, lineHeight: 1.05, marginTop: 20, maxWidth: 900 }}>
-          {content.hero.headline}
+          {`${content.hero.headline} ${content.hero.headlineAccent}`}
         </div>
       </div>
     ),

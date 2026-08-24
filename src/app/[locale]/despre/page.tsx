@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Transformation } from "@/components/about/Transformation";
 import { Footer } from "@/components/nav/Footer";
 import { David } from "@/components/sections/David";
-import { CtaButton } from "@/components/ui/CtaButton";
+import { ContactCta } from "@/components/contact/ContactCta";
 import { Section } from "@/components/ui/Section";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { whatsappUrl } from "@/lib/contact";
 import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -24,8 +23,8 @@ export async function generateMetadata({
   const content = getContent(locale);
 
   return {
-    title: `${content.david.headline} · ${content.meta.title}`,
-    description: content.david.body[0] ?? content.meta.description,
+    title: content.pageMeta.despre.title,
+    description: content.pageMeta.despre.description,
     alternates: {
       canonical: absoluteUrl(locale, "despre"),
       languages: {
@@ -41,35 +40,20 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
 
-  const gallery = [
-    { src: "hiking-peaks", alt: content.method.pillars[3]?.angle ?? "" },
-    { src: "sea-rest", alt: content.method.pillars[2]?.angle ?? "" },
-  ];
-
   return (
     <main>
       <David data={content.david} headingLevel="h1" />
       <Section>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {gallery.map((item) => (
-            <div key={item.src} className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-              <Image
-                src={`/media/img/${item.src}.avif`}
-                alt={item.alt}
-                fill
-                sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-        <div className="mt-12">
-          <CtaButton href={whatsappUrl(content.contact.prefilledMessage)} external>
-            {content.finalCta.cta}
-          </CtaButton>
+        <Transformation
+          data={content.david.transformation}
+          beforeLabel={content.results.beforeLabel}
+          afterLabel={content.results.afterLabel}
+        />
+        <div className="mt-12 flex sm:justify-center">
+          <ContactCta labels={content.contact}>{content.finalCta.cta}</ContactCta>
         </div>
       </Section>
-      <Footer locale={locale} data={content.footer} route="despre" />
+      <Footer data={content.footer} contact={content.contact} business={content.business} />
     </main>
   );
 }

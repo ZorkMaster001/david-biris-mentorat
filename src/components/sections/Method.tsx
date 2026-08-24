@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { BarbellFallback } from "@/components/method/BarbellFallback";
 import { PillarList } from "@/components/method/PillarList";
 import { SceneBoundary } from "@/components/method/SceneBoundary";
+import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import type { Content } from "@/content/types";
 import { shouldRender3D, useDeviceCapabilities } from "@/lib/device";
@@ -42,8 +43,10 @@ export function Method({
   const render3D = shouldRender3D(capabilities) && inView && !crashed;
 
   return (
-    <Section id="metoda" eyebrow={data.eyebrow} headline={data.headline} headingLevel={headingLevel}>
-      <p className="mt-6 max-w-[52ch] text-lg text-bone-dim">{data.body}</p>
+    <Section id="metoda" headline={data.headline} headingLevel={headingLevel}>
+      <Reveal delay={80}>
+        <p className="mt-6 max-w-[52ch] text-lg text-bone-dim">{data.body}</p>
+      </Reveal>
       <div className="mt-12 grid gap-12 lg:grid-cols-2 lg:items-start">
         <div ref={stage} className="sticky top-16 h-[46vh] min-h-[300px] lg:h-[70vh]">
           {render3D ? (

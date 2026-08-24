@@ -5,17 +5,17 @@ import type { Content } from "@/content/types";
 
 export function FirstTime({ data }: { data: Content["firstTime"] }) {
   return (
-    <Section eyebrow={data.eyebrow} headline={data.headline}>
+    <Section headline={data.headline}>
       <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:items-center">
         <div className="space-y-5 text-lg leading-relaxed text-bone-dim">
           {data.body.map((paragraph, index) => (
-            <Reveal key={paragraph} delay={index * 0.05}>
+            <Reveal key={paragraph} delay={index * 80}>
               <p>{paragraph}</p>
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.1}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+        <Reveal delay={120}>
+          <div className="media-zoom relative aspect-[4/5] overflow-hidden rounded-2xl">
             <Image
               src={`/media/img/${data.image}.avif`}
               alt={data.imageAlt}

@@ -53,8 +53,16 @@ function detect(): DeviceCapabilities {
   return {
     reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     saveData: connection?.saveData === true,
-    slowNetwork: effectiveType === "slow-2g" || effectiveType === "2g" || effectiveType === "3g",
-    lowEndCpu: navigator.hardwareConcurrency <= 4 || memory <= 4,
+    // „3g" e raportat de foarte multe telefoane pe conexiuni care duc fara probleme
+    // cateva clipuri scurte si mute. Cat timp era in lista, banda ramanea pe postere
+    // pe aproape orice telefon. Blocam doar conexiunile chiar proaste.
+    slowNetwork: effectiveType === "slow-2g" || effectiveType === "2g",
+    // Chrome pe Android raporteaza foarte des `deviceMemory: 4`, indiferent cat
+    // are telefonul cu adevarat: valoarea e rotunjita in jos si plafonata anume
+    // ca sa nu identifice dispozitivul. Cu pragul la 4 gantera cadea pe varianta
+    // statica pe aproape orice telefon, desi scena are sase forme simple si o
+    // bucla care adoarme. Oprim doar dispozitivele chiar slabe.
+    lowEndCpu: navigator.hardwareConcurrency <= 2 || memory <= 2,
     webgl: detectWebgl(),
     confirmed: true,
   };

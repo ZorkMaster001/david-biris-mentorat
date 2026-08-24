@@ -3,11 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/nav/Footer";
 import { Method } from "@/components/sections/Method";
-import { CtaButton } from "@/components/ui/CtaButton";
+import { ContactCta } from "@/components/contact/ContactCta";
+import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { whatsappUrl } from "@/lib/contact";
 import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -24,8 +24,8 @@ export async function generateMetadata({
   const content = getContent(locale);
 
   return {
-    title: `${content.method.headline} · ${content.meta.title}`,
-    description: content.method.body,
+    title: content.pageMeta.metoda.title,
+    description: content.pageMeta.metoda.description,
     alternates: {
       canonical: absoluteUrl(locale, "metoda"),
       languages: {
@@ -53,10 +53,12 @@ export default async function MethodPage({ params }: { params: Promise<{ locale:
     <main>
       <Method data={content.method} headingLevel="h1" />
       <Section>
+        {/* Fara legende sub poze: numele pilonilor sunt deja in lista de mai sus, iar
+            repetate aici aratau a subtitrari de catalog. Raman doar in `alt`. */}
         <div className="grid gap-4 sm:grid-cols-3">
-          {gallery.map((item) => (
-            <figure key={item.src}>
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+          {gallery.map((item, index) => (
+            <Reveal key={item.src} delay={index * 110}>
+              <div className="media-zoom relative aspect-[3/4] overflow-hidden rounded-2xl">
                 <Image
                   src={`/media/img/${item.src}.avif`}
                   alt={item.pillar?.angle ?? ""}
@@ -65,19 +67,14 @@ export default async function MethodPage({ params }: { params: Promise<{ locale:
                   className="object-cover"
                 />
               </div>
-              <figcaption className="mt-3 text-sm uppercase tracking-wider text-bone-dim">
-                {item.pillar?.name}
-              </figcaption>
-            </figure>
+            </Reveal>
           ))}
         </div>
-        <div className="mt-12">
-          <CtaButton href={whatsappUrl(content.contact.prefilledMessage)} external>
-            {content.finalCta.cta}
-          </CtaButton>
+        <div className="mt-12 flex sm:justify-center">
+          <ContactCta labels={content.contact}>{content.finalCta.cta}</ContactCta>
         </div>
       </Section>
-      <Footer locale={locale} data={content.footer} route="metoda" />
+      <Footer data={content.footer} contact={content.contact} business={content.business} />
     </main>
   );
 }

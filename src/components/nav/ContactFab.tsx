@@ -60,7 +60,7 @@ export function ContactFab({ labels }: { labels: Content["contact"] }) {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-label={labels.fabLabel}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-ember text-ink shadow-lg shadow-ember/25"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-signal text-ink shadow-lg shadow-signal/25"
       >
         <span
           className="flex items-center justify-center transition-transform duration-200 ease-[var(--ease-out-expo)]"

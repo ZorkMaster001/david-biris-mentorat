@@ -2,9 +2,33 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "David Biriș · 1-on-1 Mentoring",
+    title: "Personal Trainer in Târgu Mureș · David Biriș",
     description:
-      "One-on-one mentoring that combines the sport you already do — lifting, boxing, swimming, climbing — with a nutrition plan that doesn't ask you to give up your life.",
+      "Personal trainer in Târgu Mureș. One-on-one mentoring for weight loss, strength and habits that last: lifting, boxing, swimming or climbing, plus real nutrition.",
+  },
+  pageMeta: {
+    metoda: {
+      title: "The method · Personal trainer Târgu Mureș",
+      description:
+        "How the mentoring works: lifting as the base, your sport on top of it, and nutrition that lasts. Personal trainer in Târgu Mureș, in Romanian and English.",
+    },
+    rezultate: {
+      title: "Real results · Personal trainer Târgu Mureș",
+      description:
+        "Two people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring in Târgu Mureș.",
+    },
+    despre: {
+      title: "About David Biriș · Personal trainer Târgu Mureș",
+      description:
+        "7 years under the bar, second year of medical school. He has been through the hard start too. Personal trainer in Târgu Mureș for weight loss and strength.",
+    },
+  },
+  business: {
+    serviceType: "One-on-one fitness mentoring",
+    areaServed: "Mureș County",
+    audience: "Adults who want to lose weight, get stronger or learn how to train",
+    locationLine: "One-on-one training in Târgu Mureș, in Romanian and English.",
+    phoneLabel: "Phone",
   },
   nav: [
     { href: "", label: "Home" },
@@ -12,33 +36,30 @@ export const en: Content = {
     { href: "rezultate", label: "Results" },
     { href: "despre", label: "About" },
   ],
+  backLabel: "Back",
   contact: {
     fabLabel: "Contact",
     whatsappLabel: "WhatsApp",
     instagramLabel: "Instagram",
     prefilledMessage: "Hi David, I saw your site and I'd like to know more about the mentoring.",
+    pickerTitle: "Whichever is easier for you.",
+    pickerBody: "It goes straight to David. No forms, no middleman.",
+    whatsappNote: "The message is already written. Fastest reply here.",
+    instagramNote: "If you'd rather see what he posts first.",
+    closeLabel: "Close",
   },
   hero: {
-    headline: "I won't teach you to train. I'll teach you to want to.",
+    headline: "I won't teach you to train.",
+    headlineAccent: "I'll teach you to want to.",
     subheadline:
-      "One-on-one mentoring that combines the sport you already do — boxing, swimming, climbing, lifting — with a nutrition plan that doesn't ask you to give up your life.",
-    ctaPrimary: "Message David on WhatsApp",
+      "One-on-one mentoring that combines the sport you already do, whether that is boxing, swimming, climbing or lifting, with a nutrition plan that doesn't ask you to give up your life.",
+    ctaPrimary: "Message David",
     ctaSecondary: "See the method",
-    prevSlideLabel: "Previous slide",
-    nextSlideLabel: "Next slide",
-    pauseLabel: "Pause the slideshow",
-    resumeLabel: "Resume the slideshow",
-    slides: [
-      { id: "sala", word: "Lift", video: "01-sala", poster: "poster-01-sala", alt: "David training in the gym" },
-      { id: "box", word: "Strike", video: "02-box", poster: "poster-02-box", alt: "Boxing session for two" },
-      { id: "catarat", word: "Climb", video: "03-catarat", poster: "poster-03-catarat", alt: "Rock climbing with rope and helmet" },
-      { id: "apa", word: "Jump", video: "04-apa", poster: "poster-04-apa", alt: "Cliff jump into the sea" },
-      { id: "alergare", word: "Run", video: "05-alergare", poster: "poster-05-alergare", alt: "Running on the beach at dawn" },
-    ],
+    image: "hiking-peaks",
+    imageAlt: "David on the cliff edge, the valley and the mountains behind him",
   },
   firstTime: {
-    eyebrow: "For the first time",
-    headline: "Someone teaches you how to start enjoying the gym — not how to endure it.",
+    headline: "Someone teaches you how to start enjoying the gym, not how to endure it.",
     body: [
       "Most programmes hand you exercises and leave you alone with the hard part, which is coming back next week.",
       "Here we work the other way round. We build the habit and the reason first, then we add the weight.",
@@ -55,7 +76,6 @@ export const en: Content = {
       "You need balance, not punishment. Plans that ban everything work for three weeks and then leave you worse off than they found you. A good plan has room in it for the life you already live.",
   },
   method: {
-    eyebrow: "The method",
     headline: "It builds on what you already do.",
     body: "We're not asking you to drop your sport to make room for the gym. The gym becomes the structure that makes everything else better.",
     pillars: [
@@ -67,28 +87,47 @@ export const en: Content = {
       { id: "consistenta", name: "Consistency", angle: "The only variable that matters long term." },
     ],
   },
+  reel: {
+    headline: "Five ways to move. All of them fit the plan.",
+    pauseLabel: "Stop the reel",
+    resumeLabel: "Start the reel",
+    clips: [
+      { id: "sala", video: "01-sala", poster: "poster-01-sala", alt: "David training in the gym" },
+      { id: "box", video: "02-box", poster: "poster-02-box", alt: "Boxing session for two" },
+      { id: "catarat", video: "03-catarat", poster: "poster-03-catarat", alt: "Rock climbing with rope and helmet" },
+      { id: "apa", video: "04-apa", poster: "poster-04-apa", alt: "Cliff jump into the sea" },
+      { id: "alergare", video: "05-alergare", poster: "poster-05-alergare", alt: "Running on the beach at dawn" },
+    ],
+  },
   david: {
-    eyebrow: "Who teaches you",
     headline: "7 years under the bar. Second year of medical school.",
     body: [
       "He walked into a gym at 13 and never stopped.",
-      "He studies medicine, so he understands what happens inside the body when you lift — not just how many reps to do.",
+      "He studies medicine, so he understands what happens inside the body when you lift, not just how many reps to do.",
       "He coaches people because he started where you are and knows exactly where it falls apart.",
     ],
     image: "david-formal",
     imageAlt: "David Biriș",
+    transformation: {
+      headline: "He has been there too.",
+      beforeSrc: "sea-rest",
+      afterSrc: "outdoor-summit",
+      beforeAlt: "David on the rocks by the sea, before the years of training",
+      afterAlt: "David on a ridge, after years of training",
+    },
   },
   results: {
-    eyebrow: "Results",
     headline: "Two people, two different starting points.",
     beforeLabel: "Before",
     afterLabel: "After",
+    quoteOpen: "“",
+    quoteClose: "”",
     testimonials: [
       {
         id: "darius",
         name: "Darius B.",
         quote:
-          "With David's help I didn't just change my body. The gym turned into a real hobby — and, more than that, so did the idea of getting a little better every day.",
+          "With David's help I didn't just change my body. The gym turned into a real hobby. And, more than that, so did the idea of getting a little better every day.",
         note: null,
         beforeSrc: "darius-before",
         afterSrc: "darius-after",
@@ -109,7 +148,6 @@ export const en: Content = {
     ],
   },
   process: {
-    eyebrow: "How it works",
     headline: "Three steps, no forms.",
     steps: [
       { index: "01", title: "You write", body: "A message on WhatsApp or Instagram. The first conversation is free." },
@@ -118,7 +156,6 @@ export const en: Content = {
     ],
   },
   faq: {
-    eyebrow: "Questions",
     headline: "What's actually stopping you.",
     items: [
       { question: "I don't have time, I'm at university.", answer: "So is David. The plan is built around your schedule, not the other way round." },
@@ -129,17 +166,29 @@ export const en: Content = {
           "No. A plan that bans everything lasts three weeks. We build one that has room for going out, because otherwise you won't stick to it.",
       },
       { question: "I don't speak Romanian.", answer: "Neither does Meril. The mentoring runs in English." },
+      {
+        question: "Where do the sessions take place?",
+        answer:
+          "In Târgu Mureș. The plan is built around your schedule, not the other way round, so we set the hours once we know what your week looks like.",
+      },
+      {
+        question: "I only want to lose weight, not compete.",
+        answer:
+          "That is the most common case. Weight loss comes from what you eat during the rest of the week and from still walking into the gym next month, not from today's session. That is why the plan starts from the food you already eat.",
+      },
     ],
   },
   finalCta: {
     headline: "The first conversation is free.",
     body: "You write, we talk, and I'll tell you honestly whether I can help. If it doesn't feel right for you, nothing happens.",
-    cta: "Message David on WhatsApp",
+    cta: "Message David",
   },
   footer: {
     disclaimer:
       "David Biriș is a medical student, not a doctor or a licensed nutritionist. This mentoring does not replace medical advice. If you have a health condition, talk to your doctor first.",
     languageLabel: "Language",
     rights: "David Biriș",
+    contactLabel: "Message him directly",
+    wordmark: "David Biriș",
   },
 };

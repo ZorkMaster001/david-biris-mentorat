@@ -27,6 +27,8 @@ const IMAGES = [
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.05 (3).jpeg", out: "hiking-peaks", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23.jpeg", out: "david-formal", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "sea-rest", crop: null },
+  // Acelasi cadru, decupat pe cap: e avatarul rotund din tabul „Despre" al barei de jos.
+  { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "david-avatar", crop: [739, 739, 945, 1361] },
 
   // Testimoniale, normalizate la 9:16. Decupajele sunt masurate pe fiecare sursa.
   { src: "testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0] },

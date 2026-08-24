@@ -2,9 +2,33 @@ import type { Content } from "./types";
 
 export const ro: Content = {
   meta: {
-    title: "David Biriș · Mentorat 1-la-1",
+    title: "Antrenor personal Târgu Mureș · David Biriș",
     description:
-      "Mentorat 1-la-1 care îmbină sportul pe care îl faci deja — sală, box, înot, cățărat — cu un plan de nutriție care nu îți cere să renunți la viața ta.",
+      "Antrenor personal în Târgu Mureș. Mentorat 1-la-1 pentru slăbit, forță și obiceiuri care țin: sală, box, înot sau cățărat, plus un plan de nutriție realist.",
+  },
+  pageMeta: {
+    metoda: {
+      title: "Metoda de antrenament · Antrenor Târgu Mureș",
+      description:
+        "Cum arată mentoratul: sala ca bază, sportul tău peste ea și nutriția care ține pe termen lung. Antrenor personal în Târgu Mureș, în română și engleză.",
+    },
+    rezultate: {
+      title: "Rezultate reale · Antrenor personal Târgu Mureș",
+      description:
+        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1 în Târgu Mureș.",
+    },
+    despre: {
+      title: "Despre David Biriș · Antrenor personal Târgu Mureș",
+      description:
+        "7 ani în sală, anul 2 la Medicină. A trecut și el prin începutul greu. Antrenor personal în Târgu Mureș, pentru slăbit, forță și obiceiuri care rămân.",
+    },
+  },
+  business: {
+    serviceType: "Mentorat fitness 1-la-1",
+    areaServed: "Județul Mureș",
+    audience: "Adulți care vor să slăbească, să prindă forță sau să învețe să facă sală",
+    locationLine: "Antrenamente 1-la-1 în Târgu Mureș, în română și engleză.",
+    phoneLabel: "Telefon",
   },
   nav: [
     { href: "", label: "Acasă" },
@@ -12,33 +36,30 @@ export const ro: Content = {
     { href: "rezultate", label: "Rezultate" },
     { href: "despre", label: "Despre" },
   ],
+  backLabel: "Înapoi",
   contact: {
     fabLabel: "Contact",
     whatsappLabel: "WhatsApp",
     instagramLabel: "Instagram",
     prefilledMessage: "Salut David, am văzut site-ul și vreau să aflu mai multe despre mentorat.",
+    pickerTitle: "Pe unde îți e mai ușor?",
+    pickerBody: "Ajunge direct la David. Fără formulare, fără intermediari.",
+    whatsappNote: "Mesajul e deja scris. Răspunde cel mai repede aici.",
+    instagramNote: "Dacă vrei să vezi întâi ce postează.",
+    closeLabel: "Închide",
   },
   hero: {
-    headline: "Nu te învăț să faci sală. Te învăț să îți placă.",
+    headline: "Nu te învăț să faci sală.",
+    headlineAccent: "Te învăț să îți placă.",
     subheadline:
-      "Mentorat 1-la-1 care îmbină sportul pe care îl faci deja — box, înot, cățărat, sală — cu un plan de nutriție care nu îți cere să renunți la viața ta.",
-    ctaPrimary: "Scrie-i lui David pe WhatsApp",
+      "Mentorat 1-la-1 care îmbină sportul pe care îl faci deja, fie box, înot, cățărat sau sală, cu un plan de nutriție care nu îți cere să renunți la viața ta.",
+    ctaPrimary: "Scrie-i lui David",
     ctaSecondary: "Vezi metoda",
-    prevSlideLabel: "Slide-ul anterior",
-    nextSlideLabel: "Slide-ul următor",
-    pauseLabel: "Pune slideshow-ul pe pauză",
-    resumeLabel: "Reia slideshow-ul",
-    slides: [
-      { id: "sala", word: "Ridică", video: "01-sala", poster: "poster-01-sala", alt: "David antrenându-se în sală" },
-      { id: "box", word: "Lovește", video: "02-box", poster: "poster-02-box", alt: "Antrenament de box în doi" },
-      { id: "catarat", word: "Cațără", video: "03-catarat", poster: "poster-03-catarat", alt: "Cățărare pe stâncă, cu coardă și cască" },
-      { id: "apa", word: "Sari", video: "04-apa", poster: "poster-04-apa", alt: "Săritură de pe stâncă în mare" },
-      { id: "alergare", word: "Aleargă", video: "05-alergare", poster: "poster-05-alergare", alt: "Alergare pe plajă în zori" },
-    ],
+    image: "hiking-peaks",
+    imageAlt: "David pe marginea stâncii, cu valea și munții în spate",
   },
   firstTime: {
-    eyebrow: "Pentru prima dată",
-    headline: "Cineva te învață cum să începi să îți placă sala — nu cum să o suporți.",
+    headline: "Cineva te învață cum să începi să îți placă sala, nu cum să o suporți.",
     body: [
       "Majoritatea programelor îți dau exerciții și te lasă să te descurci cu partea grea, care e să te întorci săptămâna viitoare.",
       "Aici lucrăm invers. Construim întâi obiceiul și motivul, apoi încărcăm greutatea.",
@@ -55,7 +76,6 @@ export const ro: Content = {
       "Ai nevoie de o balanță, nu de o pedeapsă. Planurile care interzic tot funcționează trei săptămâni și apoi te lasă mai rău decât te-au găsit. Un plan bun are loc în el pentru viața pe care o trăiești deja.",
   },
   method: {
-    eyebrow: "Metoda",
     headline: "Se construiește peste ce faci deja.",
     body: "Nu îți cerem să renunți la sportul tău ca să faci sală. Sala devine structura care le face pe toate celelalte mai bune.",
     pillars: [
@@ -67,8 +87,19 @@ export const ro: Content = {
       { id: "consistenta", name: "Consistență", angle: "Singura variabilă care contează pe termen lung." },
     ],
   },
+  reel: {
+    headline: "Cinci feluri de a te mișca. Toate intră în plan.",
+    pauseLabel: "Oprește derularea",
+    resumeLabel: "Pornește derularea",
+    clips: [
+      { id: "sala", video: "01-sala", poster: "poster-01-sala", alt: "David antrenându-se în sală" },
+      { id: "box", video: "02-box", poster: "poster-02-box", alt: "Antrenament de box în doi" },
+      { id: "catarat", video: "03-catarat", poster: "poster-03-catarat", alt: "Cățărare pe stâncă, cu coardă și cască" },
+      { id: "apa", video: "04-apa", poster: "poster-04-apa", alt: "Săritură de pe stâncă în mare" },
+      { id: "alergare", video: "05-alergare", poster: "poster-05-alergare", alt: "Alergare pe plajă în zori" },
+    ],
+  },
   david: {
-    eyebrow: "Cine te învață",
     headline: "7 ani în sală. Anul 2 la Medicină.",
     body: [
       "A intrat în sală la 13 ani și nu s-a mai oprit.",
@@ -77,18 +108,26 @@ export const ro: Content = {
     ],
     image: "david-formal",
     imageAlt: "David Biriș",
+    transformation: {
+      headline: "A trecut și el pe acolo.",
+      beforeSrc: "sea-rest",
+      afterSrc: "outdoor-summit",
+      beforeAlt: "David pe stâncă la mare, înainte de anii de sală",
+      afterAlt: "David pe creastă, după ani de antrenament",
+    },
   },
   results: {
-    eyebrow: "Rezultate",
     headline: "Doi oameni, două puncte de plecare diferite.",
     beforeLabel: "Înainte",
     afterLabel: "După",
+    quoteOpen: "„",
+    quoteClose: "”",
     testimonials: [
       {
         id: "darius",
         name: "Darius B.",
         quote:
-          "Cu ajutorul lui David nu doar că mi-am schimbat corpul. Sala a devenit un hobby adevărat — și, mai important, ideea de a te îmbunătăți puțin în fiecare zi.",
+          "Cu ajutorul lui David nu doar că mi-am schimbat corpul. Sala a devenit un hobby adevărat. Și, mai important, ideea de a te îmbunătăți puțin în fiecare zi.",
         note: null,
         beforeSrc: "darius-before",
         afterSrc: "darius-after",
@@ -109,7 +148,6 @@ export const ro: Content = {
     ],
   },
   process: {
-    eyebrow: "Cum decurge",
     headline: "Trei pași, fără formulare.",
     steps: [
       { index: "01", title: "Scrii", body: "Un mesaj pe WhatsApp sau Instagram. Prima discuție e gratuită." },
@@ -118,7 +156,6 @@ export const ro: Content = {
     ],
   },
   faq: {
-    eyebrow: "Întrebări",
     headline: "Ce te oprește, de fapt.",
     items: [
       { question: "N-am timp, am facultate.", answer: "Și David are. Planul se construiește în jurul orarului tău, nu invers." },
@@ -129,17 +166,29 @@ export const ro: Content = {
           "Nu. Un plan care interzice tot ține trei săptămâni. Construim unul în care încap și ieșirile, pentru că altfel nu îl ții.",
       },
       { question: "Nu vorbesc română.", answer: "Meril nu vorbește nici el. Mentoratul merge în engleză." },
+      {
+        question: "Unde se țin antrenamentele?",
+        answer:
+          "În Târgu Mureș. Programul se face în jurul orarului tău, nu invers, așa că stabilim orele după ce știm cum arată săptămâna ta.",
+      },
+      {
+        question: "Vreau doar să slăbesc, nu să fac performanță.",
+        answer:
+          "Ăsta e cazul cel mai des întâlnit. Slăbitul vine din ce mănânci în restul săptămânii și din faptul că te întorci în sală și luna viitoare, nu din antrenamentul de azi. De aceea planul pornește de la mâncarea pe care o mănânci deja.",
+      },
     ],
   },
   finalCta: {
     headline: "Prima discuție e gratuită.",
     body: "Scrii, vorbim, îți spun sincer dacă te pot ajuta. Dacă nu simți că e pentru tine, nu se întâmplă nimic.",
-    cta: "Scrie-i lui David pe WhatsApp",
+    cta: "Scrie-i lui David",
   },
   footer: {
     disclaimer:
       "David Biriș este student la Medicină, nu medic sau nutriționist licențiat. Mentoratul nu înlocuiește sfatul medical. Dacă ai o afecțiune, vorbește întâi cu medicul tău.",
     languageLabel: "Limbă",
     rights: "David Biriș",
+    contactLabel: "Scrie-i direct",
+    wordmark: "David Biriș",
   },
 };

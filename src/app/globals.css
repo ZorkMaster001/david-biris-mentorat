@@ -6,8 +6,7 @@
   --color-ink-raised: #141416;
   --color-bone: #f2efe9;
   --color-bone-dim: #a3a099;
-  --color-ember: #ff5c1a;
-  --color-deep: #0e4a4f;
+  --color-signal: #2fe6c4;
   --color-hairline: rgba(242, 239, 233, 0.1);
 
   --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
@@ -27,13 +26,30 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/*
+  `body` nu are fundal propriu anume. Culoarea de baza sta pe `html` si e propagata
+  la panza documentului, care se picteaza sub tot. Fundalul lui `body` s-ar picta
+  in schimb ca al oricarui bloc obisnuit, adica **dupa** copiii cu z-index negativ,
+  deci ar acoperi complet stratul de matase din spate.
+*/
 body {
-  background-color: var(--color-ink);
   color: var(--color-bone);
   font-family: var(--font-body);
   font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+}
+
+/*
+  Varianta statica a fundalului de matase, in aceleasi culori ca shader-ul. Se vede
+  cand WebGL lipseste, la reduced motion, pe save-data si pe telefoane slabe.
+  Valorile sunt scazute anume: peste `--color-ink` trebuie sa ramana un fundal
+  inchis, altfel textul os isi pierde contrastul.
+*/
+.silk-fallback {
+  background-image:
+    radial-gradient(120% 80% at 15% 0%, rgba(148, 184, 183, 0.16), transparent 60%),
+    radial-gradient(100% 70% at 85% 100%, rgba(148, 184, 183, 0.12), transparent 55%);
 }
 
 /* Spatiu sub continut cat sa nu intre nimic sub bottom nav. */
@@ -50,25 +66,81 @@ body {
   line-height: 0.92;
 }
 
-:where(a, button, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-ember);
+/* `summary` e in lista pentru intrebarile din FAQ: e focusabil nativ, dar nu e nici
+   link, nici buton, deci fara el conturul de focus l-ar fi sarit. */
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-signal);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-@keyframes story-fill {
+/*
+  Banda cu clipuri. Pista tine doua copii ale listei si aluneca de la -50% la 0,
+  adica spre dreapta. Gap-ul dintre patratele sta in `padding-right`-ul randului,
+  nu intre randuri, deci o copie masoara exact 50% din pista si reluarea buclei
+  nu se vede.
+*/
+@keyframes reel-drift {
   from {
-    transform: scaleX(0);
+    transform: translate3d(-50%, 0, 0);
   }
   to {
-    transform: scaleX(1);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes reveal-in {
+.reel-viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reel-track {
+    animation: reel-drift 60s linear infinite;
+  }
+
+  .reel-track[data-paused="true"] {
+    animation-play-state: paused;
+  }
+
+  /*
+    Pe telefon o copie a listei masoara vreo trei ecrane si jumatate, fata de unul
+    singur pe desktop, deci la aceeasi durata banda pare ca sta pe loc. Scurtam tura.
+  */
+  @media (max-width: 639px) {
+    .reel-track {
+      animation-duration: 38s;
+    }
+  }
+}
+
+/*
+  Fara animatie, banda devine o lista pe care o parcurgi cu degetul sau cu rotita:
+  copia a doua si butonul de pauza nu mai au ce controla, deci dispar.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .reel-viewport {
+    overflow-x: auto;
+  }
+
+  .reel-clone,
+  .reel-control {
+    display: none;
+  }
+}
+
+/* Butonul de intoarcere intra alunecand din marginea din care si duce. */
+@media (prefers-reduced-motion: no-preference) {
+  .back-button {
+    animation: back-button-in 320ms var(--ease-out-expo) both;
+  }
+}
+
+@keyframes back-button-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateX(-12px);
   }
   to {
     opacity: 1;
@@ -77,19 +149,264 @@ body {
 }
 
 /*
-  Intrarea la scroll ruleaza doar unde exista suport pentru animatii conduse de
-  scroll. Elementul e vizibil implicit, deci un browser fara suport — sau un
-  crawler care nu executa nimic — vede continutul, nu un bloc gol.
-  `--reveal-shift` decaleaza intervalul, ca listele sa intre esalonat.
+  Heroul. Toata miscarea de aici e decor peste un continut care exista si stationar,
+  deci intra doar sub `prefers-reduced-motion: no-preference`: fotografia se apropie
+  incet, linia de accent se intinde din nimic, iar textul si butoanele urca esalonat
+  prin `--hero-delay`. Fara ele ramane exact aceeasi imagine cu acelasi text.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .hero-image {
+    animation: hero-drift 24s var(--ease-out-expo) both;
+  }
+
+  .hero-rise {
+    animation: hero-rise-in 700ms var(--ease-out-expo) var(--hero-delay, 0ms) both;
+  }
+
+  .hero-scroll-dot {
+    animation: hero-scroll-dot 2.4s var(--ease-out-expo) infinite;
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Punctul cade de deasupra liniei si iese pe sub ea, deci bucla nu are cusatura. */
+@keyframes hero-scroll-dot {
+  from {
+    top: -0.5rem;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/*
+  Heroul se stinge pe masura ce cobori: fotografia se departeaza si dispare, textul
+  si butoanele urca si dispar odata cu ea. Cronologia e chiar derularea documentului,
+  fara niciun ascultator de scroll in JavaScript — pe intervalul primilor 70vh.
+
+  Unde `animation-timeline` lipseste (Firefox, Safari inainte de 26), heroul se
+  comporta ca inainte: se ruleaza in sus normal, la opacitate plina. Continutul nu
+  depinde niciodata de efect.
 */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: reveal-in linear both;
-      animation-timeline: view();
-      animation-range: entry calc(0% + var(--reveal-shift, 0%)) cover
-        calc(35% + var(--reveal-shift, 0%));
+    /*
+      Cronologia e legata de sectiunea de hero, nu de pozitia absoluta a derularii.
+      Cu `scroll(root)` si un interval fix in `vh`, stingerea se dezlega de element:
+      dupa capatul intervalului heroul se aprindea la loc mai jos in pagina. Cu
+      `view()` progresul e chiar iesirea sectiunii din ecran, deci nu are cum sa se
+      intoarca — o data plecata, e plecata.
+
+      Numele e declarat pe sectiune si citit de copii: fara el, fiecare strat si-ar
+      masura propria cronologie, iar banda de text de jos, inalta de cateva randuri,
+      s-ar stinge cu totul altfel decat fotografia care umple ecranul.
+    */
+    .hero-stage {
+      view-timeline-name: --hero;
+      view-timeline-axis: block;
     }
+
+    /*
+      Longhand-uri, nu prescurtarea `animation`: aceea reseteaza si durata, iar o
+      durata de `0s` pe o cronologie de derulare sare peste tot intervalul.
+      Lasata pe `auto`, animatia se intinde exact pe interval.
+    */
+    .hero-fade-media,
+    .hero-fade-text {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --hero;
+      /* Toata inaltimea heroului, nu 70vh: derularea trebuie sa tina mai mult.
+         Se stinge complet cu putin inainte sa plece de tot de pe ecran. */
+      animation-range: exit 0% exit 85%;
+    }
+
+    .hero-fade-media {
+      animation-name: hero-media-out;
+    }
+
+    .hero-fade-text {
+      animation-name: hero-text-out;
+    }
+  }
+}
+
+@keyframes hero-media-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hero-text-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-48px);
+  }
+}
+
+/*
+  Fereastra de alegere a canalului de contact. `<dialog>` primeste tot ecranul si
+  ramane transparent: panoul e centrat de un invelis flex din interior, ca sa poata
+  fi foaie lipita de jos pe telefon si card centrat pe ecran lat. Capcana de focus,
+  Escape si fundalul inert vin de la `showModal()`, nu din cod.
+*/
+.contact-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: hidden;
+}
+
+.contact-dialog::backdrop {
+  background-color: rgba(10, 10, 11, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-dialog[open] .contact-panel {
+    animation: contact-panel-in 240ms var(--ease-out-expo) both;
+  }
+
+  .contact-dialog[open]::backdrop {
+    animation: contact-backdrop-in 240ms linear both;
+  }
+}
+
+@keyframes contact-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes contact-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+  Intrarea la scroll. Tranzitii, nu keyframes: pot fi intrerupte si retintite, iar
+  starea finala e chiar starea normala a elementului, deci nimic nu ramane blocat.
+
+  Starea ascunsa atarna de clasa `js` de pe `<html>`, pusa de scriptul din `<head>`.
+  Fara JavaScript regula nu se aplica deloc si continutul e pur si simplu vizibil —
+  nu exista „a ramas la opacitate zero pentru ca observatorul n-a pornit".
+
+  Neclaritatea e reteta lui Jakub: elementul pare ca intra in focus, nu doar ca se
+  aprinde. Pe telefon o scoatem — `filter: blur` pe cateva cadre cu fotografii mari
+  costa reala pe GPU-uri de mobil, iar ridicarea singura arata la fel de bine.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 620ms var(--ease-out-expo) var(--reveal-delay, 0ms),
+      transform 620ms var(--ease-out-expo) var(--reveal-delay, 0ms),
+      filter 620ms var(--ease-out-expo) var(--reveal-delay, 0ms);
+  }
+
+  @media (min-width: 640px) {
+    .js .reveal {
+      transform: translateY(16px);
+      filter: blur(4px);
+    }
+  }
+
+  .js .reveal[data-revealed] {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  /*
+    Sageata dintre „inainte" si „dupa" se traseaza cand cadrul intra in ecran. E
+    singurul loc de pe site unde miscarea chiar spune ceva in plus fata de text:
+    arata directia schimbarii. `pathLength="1"` normalizeaza lungimea traseului,
+    deci aceleasi doua valori merg pe orice forma.
+  */
+  .js .reveal .drawn-arrow path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .js .reveal[data-revealed] .drawn-arrow path {
+    animation: arrow-draw 760ms var(--ease-out-expo) 220ms forwards;
+  }
+
+  .js .reveal[data-revealed] .drawn-arrow .arrow-head {
+    animation-delay: 780ms;
+  }
+}
+
+@keyframes arrow-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/*
+  Apropiere discreta la trecerea cu mouse-ul peste o fotografie. Doar unde exista
+  cu adevarat hover: pe ecran tactil `:hover` ramane lipit dupa atingere si poza ar
+  fi ramas marita.
+*/
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .media-zoom img {
+    transition: transform 600ms var(--ease-out-expo);
+  }
+
+  .media-zoom:hover img {
+    transform: scale(1.04);
   }
 }
 

@@ -21,8 +21,8 @@ describe("content parity", () => {
     expect(deepKeys(en)).toEqual(deepKeys(ro));
   });
 
-  it("has the same number of hero slides", () => {
-    expect(en.hero.slides).toHaveLength(ro.hero.slides.length);
+  it("has the same number of reel clips", () => {
+    expect(en.reel.clips).toHaveLength(ro.reel.clips.length);
   });
 
   it("keeps route slugs untranslated", () => {

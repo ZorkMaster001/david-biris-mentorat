@@ -6,9 +6,8 @@ export function isLocale(value: string): value is Locale {
   return (LOCALES as readonly string[]).includes(value);
 }
 
-export interface HeroSlide {
+export interface ReelClip {
   id: string;
-  word: string;
   video: string;
   poster: string;
   alt: string;
@@ -47,41 +46,108 @@ export interface NavItem {
   label: string;
 }
 
+export interface PageMeta {
+  title: string;
+  description: string;
+}
+
 export interface Content {
-  meta: {
-    title: string;
-    description: string;
+  meta: PageMeta;
+  /**
+   * Titlurile si descrierile paginilor secundare. Stau explicit aici, nu se
+   * compun din titlul sectiunii plus numele site-ului: asa ieseau peste 60 de
+   * caractere si Google le taia exact acolo unde erau cuvintele care conteaza.
+   */
+  pageMeta: {
+    metoda: PageMeta;
+    rezultate: PageMeta;
+    despre: PageMeta;
+  };
+  /**
+   * Datele care descriu afacerea pentru motoarele de cautare si pentru subsol.
+   * Orasul in sine sta in `lib/business.ts`, ca sa fie acelasi in ambele limbi.
+   */
+  business: {
+    serviceType: string;
+    areaServed: string;
+    audience: string;
+    /** Randul vizibil din subsol. Orasul trebuie sa apara si in text, nu doar in schema. */
+    locationLine: string;
+    phoneLabel: string;
   };
   nav: NavItem[];
+  /** Eticheta butonului lipit care duce inapoi la pagina principala. */
+  backLabel: string;
   contact: {
     fabLabel: string;
     whatsappLabel: string;
     instagramLabel: string;
     prefilledMessage: string;
+    /** Fereastra de alegere care se deschide din butoanele mari de contact. */
+    pickerTitle: string;
+    pickerBody: string;
+    whatsappNote: string;
+    instagramNote: string;
+    closeLabel: string;
   };
   hero: {
     headline: string;
+    /**
+     * A doua propozitie din titlu, scrisa in culoarea de accent. Sta separat, nu
+     * taiata din `headline` la randare: o impartire dupa punct s-ar fi rupt la
+     * prima schimbare de text sau la o limba noua. Amandoua intra in acelasi `h1`.
+     */
+    headlineAccent: string;
     subheadline: string;
     ctaPrimary: string;
     ctaSecondary: string;
-    prevSlideLabel: string;
-    nextSlideLabel: string;
-    pauseLabel: string;
-    resumeLabel: string;
-    slides: HeroSlide[];
+    image: string;
+    imageAlt: string;
   };
-  firstTime: { eyebrow: string; headline: string; body: string[]; image: string; imageAlt: string };
+  firstTime: { headline: string; body: string[]; image: string; imageAlt: string };
   balance: {
     headline: string;
     beerCaption: string;
     fastfoodCaption: string;
     closing: string;
   };
-  method: { eyebrow: string; headline: string; body: string; pillars: Pillar[] };
-  david: { eyebrow: string; headline: string; body: string[]; image: string; imageAlt: string };
-  results: { eyebrow: string; headline: string; testimonials: Testimonial[]; beforeLabel: string; afterLabel: string };
-  process: { eyebrow: string; headline: string; steps: Step[] };
-  faq: { eyebrow: string; headline: string; items: Faq[] };
+  method: { headline: string; body: string; pillars: Pillar[] };
+  reel: { headline: string; pauseLabel: string; resumeLabel: string; clips: ReelClip[] };
+  david: {
+    headline: string;
+    body: string[];
+    image: string;
+    imageAlt: string;
+    /**
+     * Transformarea lui, pe /despre. Etichetele nu se repeta aici: sunt aceleasi
+     * cuvinte ca la testimoniale, deci vin din `results.beforeLabel` / `afterLabel`.
+     */
+    transformation: {
+      headline: string;
+      beforeSrc: string;
+      afterSrc: string;
+      beforeAlt: string;
+      afterAlt: string;
+    };
+  };
+  results: {
+    headline: string;
+    testimonials: Testimonial[];
+    beforeLabel: string;
+    afterLabel: string;
+    quoteOpen: string;
+    quoteClose: string;
+  };
+  process: { headline: string; steps: Step[] };
+  faq: { headline: string; items: Faq[] };
   finalCta: { headline: string; body: string; cta: string };
-  footer: { disclaimer: string; languageLabel: string; rights: string };
+  footer: {
+    disclaimer: string;
+    languageLabel: string;
+    rights: string;
+    /** Eticheta de deasupra legaturilor de contact din subsol. */
+    contactLabel: string;
+    /** Semnatura mare de la baza paginii. */
+    wordmark: string;
+  };
 }

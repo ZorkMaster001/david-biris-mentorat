@@ -1,18 +1,20 @@
 "use client";
 
 import type { Icon } from "@phosphor-icons/react";
-import { Barbell, House, TrendUp, User } from "@phosphor-icons/react/dist/ssr";
+import { Barbell, House, TrendUp } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale, NavItem } from "@/content/types";
 import { localePath } from "@/lib/site";
 import { isActiveTab } from "./navigation";
 
-const ICONS: Record<NavItem["href"], Icon> = {
+// „Despre" nu are pictograma: are chipul lui David. Restul tabului e navigatie,
+// acela e omul.
+const ICONS: Partial<Record<NavItem["href"], Icon>> = {
   "": House,
   metoda: Barbell,
   rezultate: TrendUp,
-  despre: User,
 };
 
 export function BottomNav({ locale, items }: { locale: Locale; items: NavItem[] }) {
@@ -35,7 +37,7 @@ export function BottomNav({ locale, items }: { locale: Locale; items: NavItem[] 
         {activeIndex >= 0 ? (
           <span
             aria-hidden="true"
-            className="absolute top-0 h-[2px] rounded-full bg-ember transition-[left] duration-300 ease-[var(--ease-out-expo)]"
+            className="absolute top-0 h-[2px] rounded-full bg-signal transition-[left] duration-300 ease-[var(--ease-out-expo)]"
             style={{
               width: `calc(${100 / items.length}% - 2rem)`,
               left: `calc(${(activeIndex * 100) / items.length}% + 1rem)`,
@@ -54,7 +56,25 @@ export function BottomNav({ locale, items }: { locale: Locale; items: NavItem[] 
                   aria-current={active ? "page" : undefined}
                   className="flex h-full min-h-[44px] flex-col items-center justify-center gap-1"
                 >
-                  <IconComponent size={24} weight={active ? "fill" : "regular"} />
+                  {IconComponent ? (
+                    <IconComponent size={24} weight={active ? "fill" : "regular"} />
+                  ) : (
+                    <span
+                      className={`relative block h-6 w-6 overflow-hidden rounded-full ring-1 transition-colors duration-200 ${
+                        active ? "ring-signal" : "ring-bone/25"
+                      }`}
+                    >
+                      <Image
+                        src="/media/img/david-avatar.avif"
+                        alt=""
+                        width={24}
+                        height={24}
+                        className={`h-full w-full object-cover transition-[filter,opacity] duration-200 ${
+                          active ? "" : "opacity-75 grayscale"
+                        }`}
+                      />
+                    </span>
+                  )}
                   <span
                     className={`text-[11px] tracking-wide ${active ? "text-bone" : "text-bone-dim"}`}
                   >

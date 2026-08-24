@@ -11,12 +11,12 @@ export function Balance({ data }: { data: Content["balance"] }) {
   ];
 
   return (
-    <Section tone="deep" headline={data.headline}>
+    <Section headline={data.headline}>
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
         {items.map((item, index) => (
-          <Reveal key={item.src} delay={index * 0.08}>
+          <Reveal key={item.src} delay={index * 110}>
             <figure>
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+              <div className="media-zoom relative aspect-[3/4] overflow-hidden rounded-2xl">
                 <Image
                   src={`/media/img/${item.src}.avif`}
                   alt={item.caption}
@@ -30,7 +30,7 @@ export function Balance({ data }: { data: Content["balance"] }) {
           </Reveal>
         ))}
       </div>
-      <Reveal delay={0.16}>
+      <Reveal delay={180}>
         <p className="mt-12 max-w-[52ch] text-lg leading-relaxed text-bone-dim">{data.closing}</p>
       </Reveal>
     </Section>

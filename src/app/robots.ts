@@ -10,6 +10,8 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "ChatGPT-User", allow: "/" },
       { userAgent: "PerplexityBot", allow: "/" },
       { userAgent: "ClaudeBot", allow: "/" },
+      { userAgent: "anthropic-ai", allow: "/" },
+      { userAgent: "OAI-SearchBot", allow: "/" },
       { userAgent: "Google-Extended", allow: "/" },
       // Crawler de antrenament pur: consuma continut fara sa aduca citari.
       { userAgent: "CCBot", disallow: "/" },
