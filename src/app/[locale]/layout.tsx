@@ -126,7 +126,6 @@ export default async function LocaleLayout({
                 knowsAbout: KNOWS_ABOUT,
                 knowsLanguage: ["ro", "en"],
                 image: `${SITE_URL}/media/img/david-formal.webp`,
-                // Depinde de INSTAGRAM_HANDLE, inca provizoriu — vezi TODO(client).
                 sameAs: [instagramUrl()],
                 url: absoluteUrl(locale, "despre"),
                 worksFor: { "@id": `${SITE_URL}/#business` },

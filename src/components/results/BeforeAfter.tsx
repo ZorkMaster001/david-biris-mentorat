@@ -89,20 +89,22 @@ export function BeforeAfter({
         />
       </div>
 
+      {/*
+        Numele vine primul si poarta accentul, sub el o liniuta scurta, apoi citatul
+        in gri si cursiv. `figcaption` are voie sa fie primul copil al lui `figure`,
+        deci ordinea vizuala si cea din DOM raman aceeasi — un cititor de ecran aude
+        tot „cine vorbeste" inaintea vorbelor.
+      */}
       <figure className="mt-6">
-        <blockquote className="text-lg leading-relaxed">
-          <span className="text-bone-dim">{quoteOpen}</span>
-          {testimonial.quote}
-          <span className="text-bone-dim">{quoteClose}</span>
-        </blockquote>
-        {/*
-          Numele poarta accentul: e singurul lucru care spune cine vorbeste, iar in
-          gri se pierdea sub citat. Nota de dedesubt cedeaza turcoazul si pastreaza
-          doar bara din stanga, altfel s-ar bate cu numele.
-        */}
-        <figcaption className="mt-3 font-display text-base tracking-[0.08em] text-signal">
+        <figcaption className="font-display text-base tracking-[0.08em] text-signal">
           {testimonial.name}
         </figcaption>
+        <span aria-hidden="true" className="mt-3 block h-px w-10 bg-signal/50" />
+        <blockquote className="mt-4 text-lg italic leading-relaxed text-bone-dim">
+          <span className="not-italic text-signal/50">{quoteOpen}</span>
+          {testimonial.quote}
+          <span className="not-italic text-signal/50">{quoteClose}</span>
+        </blockquote>
       </figure>
       {testimonial.note ? (
         <p className="mt-4 border-l-2 border-signal pl-4 font-display text-xl text-bone">

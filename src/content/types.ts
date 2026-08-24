@@ -73,7 +73,6 @@ export interface Content {
     audience: string;
     /** Randul vizibil din subsol. Orasul trebuie sa apara si in text, nu doar in schema. */
     locationLine: string;
-    phoneLabel: string;
   };
   nav: NavItem[];
   /** Eticheta butonului lipit care duce inapoi la pagina principala. */

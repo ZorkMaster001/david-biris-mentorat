@@ -75,56 +75,37 @@ body {
 }
 
 /*
-  Banda cu clipuri. Pista tine doua copii ale listei si aluneca de la -50% la 0,
-  adica spre dreapta. Gap-ul dintre patratele sta in `padding-right`-ul randului,
-  nu intre randuri, deci o copie masoara exact 50% din pista si reluarea buclei
-  nu se vede.
-*/
-@keyframes reel-drift {
-  from {
-    transform: translate3d(-50%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
+  Banda cu clipuri e un container derulabil pe orizontala, nu o pista animata cu
+  `transform`. Asa vine gratis tot ce ar fi trebuit imitat altfel: tragere cu degetul,
+  inertie, rotita pe orizontala. Derularea automata inainteaza `scrollLeft` din
+  JavaScript si se da la o parte cat timp omul conduce — vezi `ClipMarquee`.
 
+  Bara de derulare e ascunsa: pozitia e evidenta din patratelele care se misca, iar o
+  bara peste banda ar fi taiat-o in doua.
+*/
 .reel-viewport {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  cursor: grab;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .reel-track {
-    animation: reel-drift 60s linear infinite;
-  }
+.reel-viewport::-webkit-scrollbar {
+  display: none;
+}
 
-  .reel-track[data-paused="true"] {
-    animation-play-state: paused;
-  }
-
-  /*
-    Pe telefon o copie a listei masoara vreo trei ecrane si jumatate, fata de unul
-    singur pe desktop, deci la aceeasi durata banda pare ca sta pe loc. Scurtam tura.
-  */
-  @media (max-width: 639px) {
-    .reel-track {
-      animation-duration: 38s;
-    }
-  }
+.reel-viewport:active {
+  cursor: grabbing;
 }
 
 /*
-  Fara animatie, banda devine o lista pe care o parcurgi cu degetul sau cu rotita:
-  copia a doua si butonul de pauza nu mai au ce controla, deci dispar.
+  Fara derulare automata, butonul de pornire/oprire nu mai are ce controla: banda se
+  parcurge oricum cu degetul. Ramane doar lista.
 */
 @media (prefers-reduced-motion: reduce) {
-  .reel-viewport {
-    overflow-x: auto;
-  }
-
-  .reel-clone,
   .reel-control {
     display: none;
   }

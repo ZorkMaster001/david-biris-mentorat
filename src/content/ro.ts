@@ -2,7 +2,7 @@ import type { Content } from "./types";
 
 export const ro: Content = {
   meta: {
-    title: "Antrenor personal Târgu Mureș · David Biriș",
+    title: "David Biriș 1-la-1 · Antrenor personal Târgu Mureș",
     description:
       "Antrenor personal în Târgu Mureș. Mentorat 1-la-1 pentru slăbit, forță și obiceiuri care țin: sală, box, înot sau cățărat, plus un plan de nutriție realist.",
   },
@@ -28,7 +28,6 @@ export const ro: Content = {
     areaServed: "Județul Mureș",
     audience: "Adulți care vor să slăbească, să prindă forță sau să învețe să facă sală",
     locationLine: "Antrenamente 1-la-1 în Târgu Mureș, în română și engleză.",
-    phoneLabel: "Telefon",
   },
   nav: [
     { href: "", label: "Acasă" },

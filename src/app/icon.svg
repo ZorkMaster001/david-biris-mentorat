@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    Gantera, nu chipul lui. La 16px o fata se face pastă: nu se distinge nici omul,
+    nici site-ul. Doua discuri groase si o bara scurta raman lizibile pana la cea mai
+    mica dimensiune, iar bara e deja motivul vizual al sectiunii de metoda.
+    Poza lui e pusa pe `apple-icon.png`, unde 180px chiar lasa un chip sa se vada.
+    Culorile sunt tokenii `color-ink` si `color-signal` din globals.css, scrisi
+    aici ca valori: un SVG de favicon nu are acces la variabilele paginii.
+  -->
+  <rect width="32" height="32" rx="7" fill="#0a0a0b"/>
+  <g fill="#2fe6c4">
+    <rect x="11" y="14" width="10" height="4" rx="1"/>
+    <rect x="5" y="8" width="6" height="16" rx="2"/>
+    <rect x="21" y="8" width="6" height="16" rx="2"/>
+  </g>
+</svg>

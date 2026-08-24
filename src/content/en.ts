@@ -2,7 +2,7 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "Personal Trainer in Târgu Mureș · David Biriș",
+    title: "David Biriș 1-on-1 · Personal Trainer Târgu Mureș",
     description:
       "Personal trainer in Târgu Mureș. One-on-one mentoring for weight loss, strength and habits that last: lifting, boxing, swimming or climbing, plus real nutrition.",
   },
@@ -28,7 +28,6 @@ export const en: Content = {
     areaServed: "Mureș County",
     audience: "Adults who want to lose weight, get stronger or learn how to train",
     locationLine: "One-on-one training in Târgu Mureș, in Romanian and English.",
-    phoneLabel: "Phone",
   },
   nav: [
     { href: "", label: "Home" },

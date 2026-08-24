@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import type { Content } from "@/content/types";
-import { PHONE_DISPLAY, PHONE_E164, instagramUrl, whatsappUrl } from "@/lib/contact";
+import { instagramUrl, whatsappUrl } from "@/lib/contact";
 
 interface FooterProps {
   data: Content["footer"];
@@ -25,13 +25,12 @@ export function Footer({ data, contact, business }: FooterProps) {
   ];
 
   return (
-    // Pe ecran lat tot subsolul se aseaza pe axa: eticheta, pastilele de contact,
-    // semnatura si randul de jos. Pe telefon ramane aliniat la stanga, unde
-    // centrarea unui disclaimer de trei randuri ar fi aratat prost.
-    <footer className="relative overflow-hidden border-t border-hairline px-5 pb-12 pt-16 sm:text-center">
+    // Tot subsolul e centrat, pe orice latime: eticheta, pastilele de contact,
+    // localitatea, semnatura si randul de jos.
+    <footer className="relative overflow-hidden border-t border-hairline px-5 pb-12 pt-16 text-center">
       <div className="mx-auto w-full max-w-[1200px]">
         <p className="text-xs uppercase tracking-[0.25em] text-bone-dim">{data.contactLabel}</p>
-        <div className="mt-5 flex flex-wrap gap-3 sm:justify-center">
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
           {channels.map((channel) => (
             <a
               key={channel.key}
@@ -52,22 +51,15 @@ export function Footer({ data, contact, business }: FooterProps) {
         </div>
 
         {/*
-          Orasul si telefonul, vizibile in text, nu doar in datele structurate.
-          Google potriveste afacerea cu localitatea din continutul paginii; o adresa
-          care exista doar in JSON-LD e un semnal mult mai slab. Randul asta apare
-          pe fiecare pagina, deci e si ancora locala a intregului site.
+          Localitatea, vizibila in text, nu doar in datele structurate. Google
+          potriveste afacerea cu orasul din continutul paginii; o adresa care exista
+          doar in JSON-LD e un semnal mult mai slab. Randul asta apare pe fiecare
+          pagina, deci e ancora locala a intregului site — nu-l scoate.
+
+          Numarul de telefon a fost scos la cererea clientului. Ramane in schema
+          (`telephone`) si in legatura de WhatsApp, deci contactul nu s-a pierdut.
         */}
-        <address className="mt-8 not-italic text-sm text-bone-dim">
-          <span>{business.locationLine}</span>
-          <br />
-          <span className="sr-only">{business.phoneLabel}: </span>
-          <a
-            href={`tel:+${PHONE_E164}`}
-            className="transition-colors duration-200 hover:text-signal"
-          >
-            {PHONE_DISPLAY}
-          </a>
-        </address>
+        <p className="mt-8 text-sm text-bone-dim">{business.locationLine}</p>
 
         <p
           aria-hidden="true"
@@ -76,7 +68,7 @@ export function Footer({ data, contact, business }: FooterProps) {
           {data.wordmark}
         </p>
 
-        <div className="mt-12 flex flex-col gap-6 border-t border-hairline pt-8 sm:items-center">
+        <div className="mt-12 flex flex-col items-center gap-6 border-t border-hairline pt-8">
           {/* Mai ingust decat inainte: pe ecran lat randul e centrat, iar 70 de
               caractere centrate se citesc prost. La 62 liniile ies echilibrate. */}
           <p className="max-w-[62ch] text-xs leading-relaxed text-bone-dim">{data.disclaimer}</p>

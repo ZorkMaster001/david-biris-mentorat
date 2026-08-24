@@ -476,3 +476,73 @@ Punctul care coboară pe linia din hero e o animație în buclă. Ghidul de moti
 buclele care atrag privirea. L-am păstrat pentru că a fost cerut explicit ca „element" în hero și
 pentru că e o afordanță de derulare, nu decor — dar e singurul loc de pe site cu mișcare continuă
 care nu poate fi oprită dintr-un buton.
+
+## Runda 13 (2026-08-24) — titlu de tab și icoane
+
+Feedback client: în tabul de sus să scrie doar „David Biriș 1-1"; ca favicon, o poză cu el sau o
+ganteră.
+
+- **Titlul paginii principale a trecut pe marca întâi**: `David Biriș 1-la-1 · Antrenor personal
+  Târgu Mureș` (RO) și `David Biriș 1-on-1 · Personal Trainer Târgu Mureș` (EN). Tabul taie pe la
+  ~20 de caractere, deci se citește exact „David Biriș 1-la-1", iar cuvintele locale rămân în
+  rezultatele Google. **Nu scurta titlul de tot**: `<title>` e același string și în tab, și în
+  SERP, iar fără „Antrenor personal Târgu Mureș" se pierde tocmai semnalul din runda 11.
+  Titlurile paginilor secundare rămân descriptive, ca tabul să spună pe ce pagină ești.
+- **Favicon: gantera, nu chipul.** `app/icon.svg` (plus `app/icon.png` la 48px, pentru Safari
+  înainte de 16, randat din același fișier). La 16px o față se face pastă — nu se distinge nici
+  omul, nici site-ul. Două discuri groase și o bară scurtă rămân lizibile, iar bara e deja motivul
+  vizual al secțiunii de metodă.
+- **Poza lui a intrat pe `app/apple-icon.png`**, 180×180, decupată din `david-avatar` cu fundal
+  opac (iOS nu acceptă transparență și ar pune negru oricum). Acolo un chip chiar se vede.
+- `app/favicon.ico` (icoana implicită de la Next) a fost șters. `/favicon.ico` are acum un rewrite
+  către `/icon.png`, ca uneltele care îl cer direct să nu ia 404.
+
+## Runda 14 (2026-08-24)
+
+Feedback client: banda de clipuri să poată fi mișcată cu mâna, nu doar derulare automată, și pe
+telefon și pe PC; footerul centrat pe telefon, fără numărul de telefon, cu WhatsApp/IG și textul pe
+mijloc; site-ul implicit pe română; la testimoniale numele, o liniuță, iar textul mai gri și italic
+dedesubt.
+
+- **Banda nu mai e o animație de `transform`, ci un container derulabil** (`overflow-x: auto`).
+  Așa vine gratis tot ce ar fi trebuit imitat altfel: tragere cu degetul, inerție, rotiță pe
+  orizontală. Derularea automată înaintează `scrollLeft` cadru cu cadru (26px/s) și se dă la o parte
+  1,4 secunde după ce omul a terminat de tras. Pe mouse tragerea e scrisă de mână (pointer capture);
+  pe touch **nu** — atingerea are deja derulare nativă cu inerție, iar dublarea ar fi făcut-o sacadată.
+- **Trei copii ale listei, nu două.** Cu două, capătul benzii era și capătul zonei derulabile și
+  tragerea se oprea sec în perete. Cu trei, poziția e ținută mereu în copia din mijloc și are o copie
+  întreagă de joc în fiecare parte. Normalizarea se calculează pe o valoare locală, nu scriind în
+  `scrollLeft` la fiecare pas: browserul plafonează poziția la maximul derulabil, iar o buclă care
+  compară cu o valoare plafonată n-ar mai fi ieșit niciodată.
+- `@keyframes reel-drift`, `.reel-track` și `.reel-clone` au dispărut din CSS. Butonul de
+  pornire/oprire controlează acum derularea automată (și clipurile).
+- **Footer centrat pe orice lățime**, nu doar de la `sm:` în sus. Numărul de telefon a fost scos din
+  pagină; rămâne în schema `LocalBusiness` (`telephone`) și în legătura de WhatsApp, deci contactul
+  nu s-a pierdut. `footer.phoneLabel` a ieșit din conținut și din tipuri. **Rândul cu localitatea
+  rămâne** — e ancora locală a întregului site.
+- **Testimoniale**: numele primul, o liniuță scurtă turcoaz sub el, apoi citatul în gri și cursiv,
+  cu ghilimelele în accent. `figcaption` are voie să fie primul copil al lui `figure`, deci un
+  cititor de ecran aude „cine vorbește" înaintea vorbelor.
+
+### Limba implicită — nu era nimic de schimbat
+
+`/` face 308 către `/ro`, `DEFAULT_LOCALE` e `"ro"`, `x-default` din hreflang și din sitemap arată
+spre română, iar comutatorul marchează RO ca activ pe paginile `/ro`. Site-ul **era deja** implicit
+pe română. Impresia contrară venea, cel mai probabil, din tabul de test pe care îl navigasem eu pe
+`/en/despre`.
+
+### Verificat în DOM
+
+Banda: `overflow-x: auto`, `cursor: grab`, 3 copii (doar prima expusă tehnologiilor asistive),
+pornește în copia din mijloc (1393 din 4179), mutarea manuală ține. Footer: `text-align: center`,
+fără „755", cu „Târgu Mureș", doar două legături. Testimonial: ordinea
+`FIGCAPTION → SPAN → BLOCKQUOTE`, liniuța 40×1px, citat `italic`, culoare `rgb(163,160,153)`.
+
+## Runda 15 (2026-08-24)
+
+- **`INSTAGRAM_HANDLE` e acum `david_biris`**, confirmat de client. TODO-ul provizoriu a fost scos
+  din `src/lib/contact.ts` și din comentariul de la `sameAs`. Se propagă singur peste tot: butonul
+  sticky de contact, fereastra de alegere din butoanele mari, pastilele din subsol, `sameAs` din
+  JSON-LD și `llms.txt`. Verificat: `instagram.com/david_biris` e singura formă din pagină și din
+  `llms.txt`.
+- **Rămâne un singur blocant înainte de publicare**: `SITE_URL` e tot `https://david-biris.vercel.app`.

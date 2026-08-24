@@ -1,11 +1,8 @@
 export const PHONE_E164 = "40755659389";
 export const PHONE_DISPLAY = "+40 755 659 389";
 
-/**
- * TODO(client): handle-ul de Instagram nu a fost furnizat inca.
- * Trebuie inlocuit inainte de publicare — apare si in JSON-LD (sameAs).
- */
-export const INSTAGRAM_HANDLE = "davidbiris";
+/** Handle confirmat de client. Apare si in `sameAs` din JSON-LD, si in `llms.txt`. */
+export const INSTAGRAM_HANDLE = "david_biris";
 
 export function whatsappUrl(message: string): string {
   const base = `https://wa.me/${PHONE_E164}`;

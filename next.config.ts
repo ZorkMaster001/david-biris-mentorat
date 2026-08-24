@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
     // limba corecta pe `<html>`.
     return [{ source: "/", destination: `/${DEFAULT_LOCALE}`, permanent: true }];
   },
+  async rewrites() {
+    // Icoanele vin acum din `app/icon.svg` si `app/icon.png`, declarate in `<head>`,
+    // deci `favicon.ico` nu mai exista. Browserele citesc `<link>`-urile, dar destule
+    // unelte de previzualizare cer direct `/favicon.ico` si ar primi 404.
+    return [{ source: "/favicon.ico", destination: "/icon.png" }];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },
