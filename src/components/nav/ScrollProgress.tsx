@@ -1,31 +1,55 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+/** Sub atat degetul mare nu mai are ce apuca, oricat de lunga ar fi pagina. */
+const MIN_THUMB_PERCENT = 8;
+
+interface Progress {
+  /** Cat din pagina a fost parcurs, 0 la 100. */
+  percent: number;
+  /** Inaltimea manerului ca procent din pista, adica cat din continut incape pe ecran. */
+  thumb: number;
+}
 
 /**
- * Cat de departe ai ajuns in pagina: un procent si o bara verticala care se umple,
- * fixate pe marginea din dreapta, intre comutatorul de limba si butonul de contact.
+ * Bara de derulare a site-ului. Inlocuieste bara nativa, care e ascunsa in
+ * `globals.css`, deci trebuie sa faca tot ce facea si aceea: sa arate unde esti, cat
+ * din pagina vezi si sa poata fi trasa cu mouse-ul. In plus arata si procentul.
  *
- * Ascultatorul de derulare e pasiv si strans intr-un `requestAnimationFrame`, deci
- * o rafala de evenimente de scroll produce o singura masuratoare pe cadru. Alegerea
- * asta, in locul unei cronologii CSS de derulare, e deliberata: numarul e text si
- * trebuie sa functioneze si in Firefox si pe iOS mai vechi, unde `animation-timeline`
- * nu exista.
+ * Manerul isi schimba inaltimea dupa cat din continut incape pe ecran, exact ca o
+ * bara adevarata: pe o pagina scurta e aproape cat pista, pe una lunga e scurt.
  *
- * Pe pozitia zero nu se arata nimic: in hero indicatorul n-ar spune inca nimic util
- * si ar concura cu titlul.
+ * Pe atingere tragerea e ignorata anume. Manerul are cativa pixeli latime, iar pe
+ * telefon pagina se trage oricum direct cu degetul; a prinde acolo evenimentele ar fi
+ * insemnat sa fure gesturi de derulare de la marginea ecranului.
+ *
+ * Masuratoarea sta intr-un `requestAnimationFrame`, deci o rafala de evenimente de
+ * derulare produce o singura citire pe cadru. Deliberat JavaScript, nu o cronologie
+ * CSS de derulare: procentul e text, si trebuie sa mearga si in Firefox si pe iOS mai
+ * vechi, unde `animation-timeline` nu exista.
  */
 export function ScrollProgress() {
-  const [percent, setPercent] = useState(0);
+  const [{ percent, thumb }, setProgress] = useState<Progress>({ percent: 0, thumb: 100 });
+  const trackRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
+  const dragging = useRef(false);
+  // Citit din handler-ul de tragere, care traieste in afara randarii.
+  const thumbRef = useRef(100);
+  useEffect(() => {
+    thumbRef.current = thumb;
+  }, [thumb]);
 
   useEffect(() => {
     const measure = () => {
       frame.current = 0;
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      // Pagina mai scurta decat ecranul nu are ce progres sa arate.
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
       const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
-      setPercent(Math.round(Math.min(Math.max(ratio, 0), 1) * 100));
+      setProgress({
+        percent: Math.round(Math.min(Math.max(ratio, 0), 1) * 100),
+        thumb: Math.max(MIN_THUMB_PERCENT, (window.innerHeight / doc.scrollHeight) * 100),
+      });
     };
 
     const schedule = () => {
@@ -43,28 +67,81 @@ export function ScrollProgress() {
     };
   }, []);
 
+  /** Duce pagina acolo unde a fost apucata pista, socotind si inaltimea manerului. */
+  const scrollToPointer = useCallback((clientY: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const box = track.getBoundingClientRect();
+    const thumbHeight = box.height * (thumbRef.current / 100);
+    const usable = Math.max(box.height - thumbHeight, 1);
+    const ratio = (clientY - box.top - thumbHeight / 2) / usable;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: Math.min(Math.max(ratio, 0), 1) * scrollable });
+  }, []);
+
+  const onPointerDown = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (event.pointerType === "touch") return;
+      dragging.current = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+      scrollToPointer(event.clientY);
+    },
+    [scrollToPointer],
+  );
+
+  const onPointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!dragging.current) return;
+      scrollToPointer(event.clientY);
+    },
+    [scrollToPointer],
+  );
+
+  const endDrag = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = false;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }, []);
+
   return (
     <div
-      // Decorativ: cine foloseste un cititor de ecran are deja pozitia din structura
-      // paginii, iar un numar care se schimba la fiecare cadru ar fi doar zgomot.
+      /*
+        Ascuns de tehnologiile asistive: tot ce face e disponibil oricum din derularea
+        obisnuita si de la tastatura. Nu e focusabil, deci nu ascunde niciun control.
+      */
       aria-hidden="true"
-      className={`pointer-events-none fixed right-4 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-3 transition-opacity duration-300 ease-[var(--ease-out-expo)] ${
-        percent > 0 ? "opacity-100" : "opacity-0"
-      }`}
+      ref={trackRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      /*
+        Pista incepe sub comutatorul de limba si se opreste deasupra barei de jos, ca
+        manerul si numarul sa nu ajunga niciodata peste ele. Zona de prindere e mai
+        lata decat linia care se vede.
+      */
+      // Fara `touch-action: none`: pe telefon fasia asta de la marginea din dreapta
+      // trebuie sa lase pagina sa se deruleze normal cu degetul.
+      className="fixed right-0 top-24 z-40 w-4 cursor-pointer"
+      style={{ bottom: "calc(var(--spacing-nav) + env(safe-area-inset-bottom) + 5rem)" }}
     >
-      <span className="font-display text-[11px] tracking-[0.08em] text-signal tabular-nums">
-        {percent}%
-      </span>
-      <span className="relative block h-24 w-px overflow-hidden bg-bone/20">
-        {/*
-          Se umple prin `scaleY`, cu originea sus, nu prin `height`: inaltimea ar fi
-          cerut o reasezare la fiecare cadru de derulare, scala nu cere nimic.
-        */}
-        <span
-          className="absolute inset-0 origin-top bg-signal"
-          style={{ transform: `scaleY(${percent / 100})` }}
-        />
-      </span>
+      <div className="absolute inset-y-0 right-1.5 w-px bg-bone/15" />
+
+      <div
+        className="absolute right-1 w-[3px] rounded-full bg-signal transition-[height] duration-150 ease-[var(--ease-out-expo)]"
+        style={{
+          height: `${thumb}%`,
+          // Pozitia se masoara pe spatiul ramas dupa ce se scade manerul, altfel la
+          // 100% ar iesi cu propria inaltime sub capatul pistei.
+          top: `${(percent / 100) * (100 - thumb)}%`,
+        }}
+      >
+        {/* Numarul calatoreste cu manerul, ca sa arate mereu la ce inaltime esti. */}
+        <span className="absolute right-4 top-0 font-display text-[10px] tabular-nums leading-none tracking-[0.06em] text-signal">
+          {percent}%
+        </span>
+      </div>
     </div>
   );
 }

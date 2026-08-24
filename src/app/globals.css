@@ -21,9 +21,21 @@
   color-scheme: dark;
 }
 
+/*
+  Bara de derulare nativa e ascunsa, fiindca ii ia locul `ScrollProgress`, care arata
+  acelasi lucru plus procentul si poate fi trasa la fel. Ascunderea are un pret real —
+  se pierde maneta pe care o poti apuca cu mouse-ul — de aceea inlocuitorul e chiar
+  tragabil. Daca vreodata se scoate componenta, se scot si randurile astea, altfel
+  pagina ramane fara niciun indicator de pozitie.
+*/
 html {
   background-color: var(--color-ink);
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 /*

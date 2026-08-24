@@ -608,3 +608,33 @@ eroarea și trece pe varianta statică fără să se plângă vizibil.
 La 430px lățime: `canvas` 0 (poarta de mobil pentru Silk ține), punctul din hero dispărut,
 indicatorul prezent, culoarea `rgb(47, 230, 196)`. **Actualizarea procentului la derulare n-a putut
 fi măsurată** — tabul e ascuns, iar `requestAnimationFrame` nu rulează fără cadre randate.
+
+## Runda 18 (2026-08-24)
+
+Feedback client: indicatorul să ia locul barei de derulare native, de pe PC și de pe telefon, și să
+aibă procentaj.
+
+- **Bara nativă e ascunsă** (`scrollbar-width: none` + `::-webkit-scrollbar`), iar `ScrollProgress`
+  îi ia locul: pistă la marginea din dreapta, mâner turcoaz, procentul care călătorește cu mânerul.
+- **Mânerul își schimbă înălțimea după cât din conținut încape pe ecran**, ca o bară adevărată. Pe
+  pagina principală, care are 11 ecrane, iese la minimul de 8% — sub atât n-ar mai avea ce apuca
+  degetul mare.
+- **Se poate trage cu mouse-ul.** Asta nu e ornament: ascunderea barei native are un preț real,
+  pierzi maneta pe care o apuci cu mouse-ul, iar înlocuitorul trebuie s-o dea înapoi. Poziția se
+  socotește pe spațiul rămas după ce se scade mânerul, altfel la 100% ar ieși cu propria înălțime
+  sub capătul pistei. **Dacă se scoate componenta, se scot și cele două rânduri din `globals.css`**,
+  altfel pagina rămâne fără niciun indicator de poziție.
+- **Pe atingere tragerea e ignorată** și fâșia n-are `touch-action: none`: pe telefon marginea din
+  dreapta trebuie să lase pagina să se deruleze normal cu degetul, iar un mâner de trei pixeli
+  n-are cum să fie apucat oricum.
+- Pista începe sub comutatorul de limbă și se oprește deasupra barei de jos, ca mânerul și numărul
+  să nu ajungă niciodată peste ele.
+
+### Verificat în DOM
+
+`scrollbar-width: none` pe `html`. Pista lipită de marginea dreaptă (right 0), 16px zonă de
+prindere, 692px înălțime. Mâner `8.04%`, exact cât iese formula, culoare `rgb(47, 230, 196)`.
+Matematica tragerii verificată la capete: apucat sus → 0, la mijloc → 5329 din 10657 (jumătate
+exactă), jos → 10657. **Actualizarea la derulare n-a putut fi văzută** — tabul e ascuns și
+`requestAnimationFrame` nu rulează acolo; măsurătoarea inițială, care rulează sincron la montare, a
+dat valorile corecte.
