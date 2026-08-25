@@ -27,9 +27,17 @@ export function generateStaticParams() {
   Se citeste de pe disc, nu de la o adresa: `ImageResponse` se randeaza la build, iar
   un fetch catre propriul site n-ar avea ce sa raspunda inainte ca site-ul sa existe.
 
-  Fara fonturi proprii — `next/font` le tine sub amprente in `.next`, deci n-au o cale
-  stabila de citit. Si fara butoanele din hero: intr-o imagine nu se poate apasa nimic,
-  iar un buton desenat care nu face nimic e mai rau decat lipsa lui.
+  Fonturile sunt chiar ale site-ului, tinute in `src/media/fonts`. Fara ele, Satori
+  desena titlul cu un sans oarecare, la corp normal si cu litere mici, in timp ce in
+  pagina `.font-display` inseamna Archivo 700, latit la 115%, cu majuscule si spatiere
+  stransa — adica exact ce facea cardul sa arate a alta pagina. `next/font` tine
+  aceleasi fonturi sub amprente in `.next`, in woff2, pe care Satori nu le citeste;
+  de-aia stau aici, ca .ttf, si se citesc de pe disc la build.
+
+  Fara butoanele din hero: intr-o imagine nu se poate apasa nimic, iar un buton desenat
+  care nu face nimic e mai rau decat lipsa lui. Si fara linia de sub accent: in pagina
+  se opreste la capatul cuvintelor (`width: fit-content`), iar Satori n-are cum sa masoare
+  asta — o linie de latime ghicita s-ar fi vazut ca greseala, nu ca detaliu.
 */
 export default async function OpengraphImage({
   params,
@@ -39,8 +47,23 @@ export default async function OpengraphImage({
   const { locale } = await params;
   const content = getContent(isLocale(locale) ? locale : "ro");
 
-  const photo = await readFile(path.join(process.cwd(), "src/media/og-hero.jpg"));
+  const asset = (file: string) => readFile(path.join(process.cwd(), "src/media", file));
+  const [photo, display, body] = await Promise.all([
+    asset("og-hero.jpg"),
+    asset("fonts/archivo-700.ttf"),
+    asset("fonts/inter-400.ttf"),
+  ]);
   const photoSrc = `data:image/jpeg;base64,${photo.toString("base64")}`;
+
+  // Aceleasi valori ca `.font-display` din globals.css.
+  const displayFont = {
+    fontFamily: "Archivo",
+    fontSize: 54,
+    lineHeight: 0.92,
+    letterSpacing: -1,
+    textTransform: "uppercase" as const,
+    maxWidth: 900,
+  };
 
   return new ImageResponse(
     (
@@ -89,20 +112,40 @@ export default async function OpengraphImage({
             padding: 64,
           }}
         >
-          <div style={{ fontSize: 60, lineHeight: 1.06, maxWidth: 760 }}>
-            {content.hero.headline}
-          </div>
+          <div style={displayFont}>{content.hero.headline}</div>
           {/* A doua propozitie duce promisiunea, deci ea poarta accentul — ca in hero,
-              pe randul ei. */}
-          <div style={{ fontSize: 60, lineHeight: 1.06, maxWidth: 760, color: "#2FE6C4" }}>
+              pe randul ei, in culoarea de semnal si cu aura care o desprinde de poza. */}
+          <div
+            style={{
+              ...displayFont,
+              marginTop: 6,
+              color: "#2FE6C4",
+              textShadow: "0 0 34px rgba(47,230,196,0.45)",
+            }}
+          >
             {content.hero.headlineAccent}
           </div>
-          <div style={{ fontSize: 24, lineHeight: 1.4, marginTop: 26, maxWidth: 680, color: "#A3A099" }}>
+          <div
+            style={{
+              fontFamily: "Inter",
+              fontSize: 23,
+              lineHeight: 1.45,
+              marginTop: 24,
+              maxWidth: 660,
+              color: "#A3A099",
+            }}
+          >
             {content.hero.subheadline}
           </div>
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        { name: "Archivo", data: display, weight: 700, style: "normal" },
+        { name: "Inter", data: body, weight: 400, style: "normal" },
+      ],
+    },
   );
 }

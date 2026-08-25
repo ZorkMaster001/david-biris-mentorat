@@ -102,7 +102,7 @@ export const ro: Content = {
     body: [
       "Vrei să arăți bine în tricou. Să te uiți în oglindă și să-ți placă ce vezi. Să ai încredere când intri undeva.",
       "Vrei să fii puternic, să ai energie și să nu te lase corpul la primul etaj de scări.",
-      "Sala e doar instrumentul prin care ajungi acolo. Eu sunt aici să te învăț cum să o folosești, ca peste doi ani să ți se pară ciudat să nu te antrenezi.",
+      "Sala e doar instrumentul prin care ajungi acolo. Eu sunt aici să te învăț cum să o folosești și să ajungi să te descurci singur.",
     ],
     image: "training-bench",
     imageAlt: "David în sală, între serii",
@@ -116,12 +116,12 @@ export const ro: Content = {
   },
   method: {
     headline: "Sala e baza. Restul se așază în jurul ei.",
-    body: "Fizicul se construiește în sală. Acolo se face treaba și de acolo pornește tot. Cei cinci pași de mai jos te ajută să faci din sală ceva ce poți ține pe termen lung, fără să-ți dai viața peste cap.",
+    body: "Fizicul se construiește în sală. Acolo se face cea mai mare parte din treabă. Așa poți să te ții de sală pe termen lung, fără să-ți dai viața peste cap.",
     pillars: [
       {
         id: "antrenament",
         name: "Antrenament",
-        angle: "Program de sală construit pe obiectivul, nivelul și timpul pe care le ai.",
+        angle: "Program de sală făcut pentru obiectivul tău, nivelul tău și timpul pe care îl ai.",
       },
       {
         id: "progres",
@@ -226,7 +226,7 @@ export const ro: Content = {
       {
         index: "02",
         title: "Construim planul",
-        body: "Pornind de la obiectivul tău, de la timpul pe care îl ai și de la ce mănânci acum.",
+        body: "Pornim de la obiectivul tău, timpul pe care îl ai și felul în care mănânci acum.",
       },
       { index: "03", title: "Ajustăm", body: "Săptămână de săptămână, cu acces direct la mine." },
     ],
@@ -247,7 +247,7 @@ export const ro: Content = {
       "Urmărirea progresului",
       "Ajustări ale programului",
       "Acces direct la mine",
-      "Suport și accountability",
+      "Suport și motivație",
     ],
     cta: "Vreau să vorbim",
     ctaNote:
@@ -278,12 +278,12 @@ export const ro: Content = {
       {
         question: "Eu fac deja alt sport. Mai are rost?",
         answer:
-          "Are. Sala rămâne baza pe care se construiește fizicul, iar sportul tău e ce faci în plus. Le așezăm așa încât să nu se încurce unul pe altul, nu te învăț eu sportul tău.",
+          "Are. Sala rămâne baza pe care se construiește fizicul, iar sportul tău e ce faci în plus. Le facem să funcționeze împreună, fără să se încurce unul cu altul. Nu te învăț eu sportul tău.",
       },
       {
         question: "Vreau doar să slăbesc, nu să fac performanță.",
         answer:
-          "Perfect. Nu trebuie să faci performanță ca să arăți bine. Slăbitul vine din ce mănânci în restul săptămânii și din faptul că te întorci în sală și luna viitoare, nu din antrenamentul de azi. De aceea planul pornește de la mâncarea pe care o mănânci deja.",
+          "Slăbitul vine din ce faci constant, nu din antrenamentul de azi. De aceea ne uităm la ce mănânci în general și facem un plan pe care să-l poți ține și luna viitoare.",
       },
     ],
   },

@@ -102,7 +102,7 @@ export const en: Content = {
     body: [
       "You want to look good in a t-shirt. To look in the mirror and like what you see. To walk into a room with confidence.",
       "You want to be strong, to have energy, and not to be out of breath at the first flight of stairs.",
-      "The gym is only the tool that gets you there. I'm here to teach you how to use it, so that in two years, not training feels strange.",
+      "The gym is only the tool that gets you there. I'm here to teach you how to use it, so you end up managing on your own.",
     ],
     image: "training-bench",
     imageAlt: "David in the gym, between sets",
@@ -116,12 +116,12 @@ export const en: Content = {
   },
   method: {
     headline: "Lifting is the base. Everything else sits around it.",
-    body: "The physique is built in the gym. That's where the work happens and where everything starts. The five steps below help you turn the gym into something you can keep for the long run, without turning your life upside down.",
+    body: "The physique is built in the gym. That's where most of the work happens. This is how you stick with it long term, without turning your life upside down.",
     pillars: [
       {
         id: "antrenament",
         name: "Training",
-        angle: "A gym plan built on your goal, your level and the time you have.",
+        angle: "A gym plan made for your goal, your level and the time you have.",
       },
       {
         id: "progres",
@@ -226,7 +226,7 @@ export const en: Content = {
       {
         index: "02",
         title: "We build the plan",
-        body: "Starting from your goal, the time you have and what you eat right now.",
+        body: "We start from your goal, the time you have and the way you eat right now.",
       },
       { index: "03", title: "We adjust", body: "Week by week, with direct access to me." },
     ],
@@ -247,7 +247,7 @@ export const en: Content = {
       "Progress tracking",
       "Adjustments to the plan",
       "Direct access to me",
-      "Support and accountability",
+      "Support and motivation",
     ],
     cta: "Let's talk",
     ctaNote:
@@ -278,12 +278,12 @@ export const en: Content = {
       {
         question: "I already play another sport. Is this still for me?",
         answer:
-          "It is. Lifting stays the base the physique is built on, and your sport is what you do on top. We arrange the two so they stop working against each other. I'm not teaching you your sport.",
+          "It is. Lifting stays the base the physique is built on, and your sport is what you do on top. We make the two work together, without getting in each other's way. I'm not teaching you your sport.",
       },
       {
         question: "I only want to lose weight, not compete.",
         answer:
-          "Perfect. You don't have to compete to look good. Weight loss comes from what you eat during the rest of the week and from still walking into the gym next month, not from today's session. That is why the plan starts from the food you already eat.",
+          "Weight loss comes from what you do consistently, not from today's session. So we look at how you eat in general and build a plan you can still keep next month.",
       },
     ],
   },
