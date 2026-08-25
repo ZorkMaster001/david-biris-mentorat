@@ -38,6 +38,10 @@ const ICONS: Record<string, Icon> = {
  *
  * Concluzia nu e al optulea serviciu, e beneficiul final — de aceea are rama si
  * fundal in culoarea de accent, nu aceeasi rama ca restul.
+ *
+ * Pretul nu sta aici, ci in `sections/Pricing`, in treimea de jos a paginii: aici
+ * omul inca afla ce cumpara, iar o suma pusa inainte sa vada dovada il face sa
+ * compare pretul cu nimic.
  */
 export function Offer({ data }: { data: Content["offer"] }) {
   const last = data.items.length - 1;

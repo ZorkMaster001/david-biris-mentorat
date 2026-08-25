@@ -7,6 +7,21 @@ const ROOT = process.cwd();
 const OUT_VIDEO = path.join(ROOT, "public/media/video");
 const OUT_IMG = path.join(ROOT, "public/media/img");
 
+/*
+  Doua destinatii in afara lui `public`, fiecare din alt motiv.
+
+  `OUT_TESTIMONIAL`: fotografiile primite de la oameni. Din `public` ar fi stat la o
+  adresa curata, ghicibila si de enumerat — `/media/img/darius-before.avif`. Importate
+  din `src`, trec prin bundler si ies la o adresa cu amprenta, pe care n-o nimereste
+  nimeni fara sa deschida pagina. Publice raman, cum e orice imagine dintr-o pagina
+  publica; ce dispare e adresa comoda.
+
+  `OUT_OG`: sursa pentru cardul de previzualizare. Aia nici macar nu se serveste — se
+  citeste de pe disc la build si se coase in PNG-ul generat de `opengraph-image`.
+*/
+const OUT_TESTIMONIAL = path.join(ROOT, "src/media/testimonials");
+const OUT_OG = path.join(ROOT, "src/media");
+
 const VIDEOS = [
   { src: "assets/WhatsApp Video 2026-08-15 at 11.54.03.mp4", out: "01-sala", trim: null },
   { src: "assets/WhatsApp Video 2026-08-15 at 11.54.03 (4).mp4", out: "02-box", trim: null },
@@ -23,6 +38,9 @@ const IMAGES = [
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (6).jpeg", out: "nutrition-plate", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (3).jpeg", out: "outdoor-summit", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (9).jpeg", out: "climbing-wall", crop: null },
+  // Prima poza din galeria de pe /metoda. Sursa e deja 1200x1600, adica exact 3:4,
+  // cadrul in care o pune pagina — deci nu se decupeaza nimic.
+  { src: "assets/WhatsApp Image 2026-08-15 at 11.54.05 (4).jpeg", out: "metoda-oglinda", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (7).jpeg", out: "training-bench", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.05 (3).jpeg", out: "hiking-peaks", crop: null },
   /*
@@ -34,19 +52,50 @@ const IMAGES = [
     degradeul de sub text.
   */
   { src: "assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg", out: "david-gym", crop: [2800, 4520, 0, 600] },
+  /*
+    Aceeasi fotografie, taiata pentru panoul din dreapta al cardului de previzualizare.
+    Decupajul e mai scurt decat cel din hero (3150 in loc de 4520) ca sa cada cap si
+    trunchi in raportul panoului, fara sa fie nevoie de `object-position` in Satori,
+    care il trateaza inconstant. JPEG, nu avif: PNG-ul de previzualizare se compune la
+    build cu resvg, iar acolo doar JPEG si PNG sunt sigure.
+  */
+  {
+    src: "assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg",
+    out: "og-hero",
+    crop: [2800, 3150, 0, 600],
+    dest: OUT_OG,
+    format: "jpeg",
+    width: 900,
+  },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23.jpeg", out: "david-formal", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "sea-rest", crop: null },
   // Acelasi cadru, decupat pe cap: e avatarul rotund din tabul „Despre" al barei de jos.
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "david-avatar", crop: [739, 739, 945, 1361] },
 
-  // Testimoniale, normalizate la 9:16. Decupajele sunt masurate pe fiecare sursa.
-  { src: "testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0] },
-  { src: "testimonial_darius/after.jpeg", out: "darius-after", crop: [2268, 4032, 378, 0] },
+  /*
+    Testimoniale, normalizate la 9:16. Decupajele sunt masurate pe fiecare sursa.
+
+    Sursele stau in `assets/`, ca tot restul materialului brut: folderul e ignorat de
+    git, deci fotografiile primite de la oameni nu ajung in repo. In pagina intra doar
+    derivatele din `public/media/img`, decupate la cadrul care se vede pe site.
+  */
+  { src: "assets/testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0], dest: OUT_TESTIMONIAL },
+  { src: "assets/testimonial_darius/after.jpeg", out: "darius-after", crop: [2268, 4032, 378, 0], dest: OUT_TESTIMONIAL },
   // meril-before: decupajul ocoleste bara de status de sus, coloana de unelte Snapchat din
   // dreapta si panoul „Ajouter une Lens" de jos. Iese exact 9:16 (796x1415), deci nu mai e
   // nevoie de completarea canvas-ului cu fundal.
-  { src: "testimonial_meril/before.jpeg", out: "meril-before", crop: [796, 1415, 39, 235] },
-  { src: "testimonial_meril/after.jpeg", out: "meril-after", crop: [790, 1404, 39, 0] },
+  { src: "assets/testimonial_meril/before.jpeg", out: "meril-before", crop: [796, 1415, 39, 235], dest: OUT_TESTIMONIAL },
+  { src: "assets/testimonial_meril/after.jpeg", out: "meril-after", crop: [790, 1404, 39, 0], dest: OUT_TESTIMONIAL },
+  /*
+    Fratele lui David. Ambele surse sunt 3:4, deci trebuie taiate la 9:16, si sunt
+    facute in doua oglinzi diferite — una rotunda, de hol, alta dreapta, de vestiar.
+    Decupajele nu urmaresc doar subiectul, ci si acelasi raport intre om si cadru in
+    amandoua (~86%): la un glisor de comparatie, o diferenta de marime se citeste ca
+    diferenta de fizic, ceea ce ar minti exact acolo unde trebuie sa fie cinstit.
+    La „inainte" marginea de sus se opreste sub rama rotunda a oglinzii.
+  */
+  { src: "assets/testimonial_birisJR/before.jpeg", out: "birisjr-before", crop: [480, 854, 285, 185], dest: OUT_TESTIMONIAL },
+  { src: "assets/testimonial_birisJR/after.jpeg", out: "birisjr-after", crop: [686, 1220, 332, 380], dest: OUT_TESTIMONIAL },
 ];
 
 const ffmpeg = (args) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
@@ -78,13 +127,13 @@ function processVideo({ src, out, trim, crf }) {
   return posterPng;
 }
 
-async function toWebFormats(inputBuffer, outName) {
-  const base = path.join(OUT_IMG, outName);
+async function toWebFormats(inputBuffer, outName, outDir = OUT_IMG) {
+  const base = path.join(outDir, outName);
   await sharp(inputBuffer).avif({ quality: 55 }).toFile(`${base}.avif`);
   await sharp(inputBuffer).webp({ quality: 78 }).toFile(`${base}.webp`);
 }
 
-async function processImage({ src, out, crop, pad }) {
+async function processImage({ src, out, crop, pad, dest, format, width }) {
   const input = path.join(ROOT, src);
   if (!existsSync(input)) throw new Error(`Lipseste sursa imagine: ${src}`);
 
@@ -101,10 +150,17 @@ async function processImage({ src, out, crop, pad }) {
     // (width: 1440) ar suprascrie height-ul din pad si ar strica raportul 9:16.
     pipeline = pipeline.resize({ width: pad.width, height: pad.height, fit: "contain", background: pad.background });
   } else {
-    pipeline = pipeline.resize({ width: 1440, withoutEnlargement: true });
+    pipeline = pipeline.resize({ width: width ?? 1440, withoutEnlargement: true });
   }
   const buffer = await pipeline.toBuffer();
-  await toWebFormats(buffer, out);
+
+  const outDir = dest ?? OUT_IMG;
+  mkdirSync(outDir, { recursive: true });
+  if (format === "jpeg") {
+    await sharp(buffer).jpeg({ quality: 82, mozjpeg: true }).toFile(path.join(outDir, `${out}.jpg`));
+    return;
+  }
+  await toWebFormats(buffer, out, outDir);
 }
 
 /*

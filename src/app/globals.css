@@ -142,6 +142,43 @@ body {
 }
 
 /*
+  Blocul de text al heroului, lipit de marginea de jos. Distantele stau aici, nu in
+  clase pe componenta, fiindca pe ecran scund trebuie sa se stranga toate odata.
+
+  Heroul e `100dvh`: nu se micsoreaza, se micsoreaza doar cadrul din fotografie. Pe
+  o fereastra scunda (tab micsorat pe desktop, telefon in peisaj, browser cu bara
+  vizibila) din poza portret ramane o banda ingusta cu David, iar blocul de text —
+  care isi pastreaza inaltimea — ajungea sa o acopere aproape toata. Sub 780px
+  inaltime titlul scade, distantele se string si textul coboara mai aproape de bara
+  de jos: raman aceleasi cuvinte, dar fotografia isi recapata trunchiul.
+
+  `> p` si `> div` anume, nu `*`: inauntru mai sunt paragrafe si invelisuri din
+  fereastra de contact, care n-au treaba cu asezarea heroului.
+*/
+.hero-copy {
+  padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom) + 1.25rem);
+}
+
+@media (max-height: 780px) {
+  .hero-copy {
+    padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom) + 0.75rem);
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(1.75rem, 6vw, 3rem);
+  }
+
+  .hero-copy > p {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .hero-copy > div {
+    margin-top: 1rem;
+  }
+}
+
+/*
   Heroul. Toata miscarea de aici e decor peste un continut care exista si stationar,
   deci intra doar sub `prefers-reduced-motion: no-preference`: fotografia se apropie
   incet, iar titlul, subtitlul si butoanele urca esalonat prin `--hero-delay`. Fara

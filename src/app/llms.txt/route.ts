@@ -1,6 +1,13 @@
 import { getContent } from "@/content";
 import { LOCALES } from "@/content/types";
-import { CITY, REGION } from "@/lib/business";
+import {
+  CITY,
+  PRICE_AMOUNT,
+  PRICE_CURRENCY,
+  PRICE_LAUNCH_SEATS,
+  PRICE_STANDARD_AMOUNT,
+  REGION,
+} from "@/lib/business";
 import { PHONE_DISPLAY, instagramUrl } from "@/lib/contact";
 import { ROUTES, absoluteUrl } from "@/lib/site";
 
@@ -67,7 +74,9 @@ export function GET(): Response {
     `Public: ${getContent("ro").business.audience}.`,
     "În practică, cei mai mulți au între 17 și 27 de ani.",
     "",
-    "Preț: nu este public. Prima discuție e gratuită și se stabilește pe WhatsApp sau Instagram.",
+    `Preț: ${PRICE_AMOUNT} ${PRICE_CURRENCY} pe lună, preț de lansare pentru primele ${PRICE_LAUNCH_SEATS} locuri.`,
+    `După ocuparea lor, ${PRICE_STANDARD_AMOUNT} ${PRICE_CURRENCY} pe lună. Prima discuție e gratuită și se face pe`,
+    "WhatsApp sau Instagram.",
     "",
     `Contact: ${PHONE_DISPLAY} (WhatsApp) · ${instagramUrl()}`,
     "",

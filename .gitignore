@@ -40,10 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# media brută, procesată local prin npm run media
+# media brută, procesată local prin npm run media. Tot ce primim de la oameni
+# (inclusiv fotografiile de testimonial) stă aici și nu intră niciodată în repo.
 /assets
-/testimonial_darius
-/testimonial_meril
 .tmp-scaffold
 
 # scratch workspace, nu intră niciodată în repo

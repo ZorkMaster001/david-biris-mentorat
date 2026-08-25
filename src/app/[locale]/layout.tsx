@@ -10,7 +10,14 @@ import { ScrollProgress } from "@/components/nav/ScrollProgress";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { CITY, KNOWS_ABOUT, REGION } from "@/lib/business";
+import {
+  CITY,
+  KNOWS_ABOUT,
+  PRICE_AMOUNT,
+  PRICE_CURRENCY,
+  PRICE_PERIOD,
+  REGION,
+} from "@/lib/business";
 import { PHONE_E164, instagramUrl } from "@/lib/contact";
 import { display, body } from "@/lib/fonts";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
@@ -153,6 +160,7 @@ export default async function LocaleLayout({
                 areaServed: { "@type": "Country", name: content.business.areaServed },
                 availableLanguage: ["ro", "en"],
                 knowsLanguage: ["ro", "en"],
+                priceRange: `${PRICE_AMOUNT} ${PRICE_CURRENCY}`,
                 founder: { "@id": `${SITE_URL}/#david` },
                 employee: { "@id": `${SITE_URL}/#david` },
                 sameAs: [instagramUrl()],
@@ -176,6 +184,24 @@ export default async function LocaleLayout({
                 },
                 availableLanguage: ["ro", "en"],
                 audience: { "@type": "Audience", audienceType: content.business.audience },
+                // Pretul e afisat pe pagina, deci are ce cauta si aici. Cifra vine
+                // din `lib/business.ts`, nu din textul tradus: schema cere un numar
+                // si un cod ISO, iar un pret care nu se potriveste cu cel de pe
+                // pagina e mai rau decat unul lipsa.
+                offers: {
+                  "@type": "Offer",
+                  priceCurrency: PRICE_CURRENCY,
+                  price: PRICE_AMOUNT,
+                  priceSpecification: {
+                    "@type": "UnitPriceSpecification",
+                    priceCurrency: PRICE_CURRENCY,
+                    price: PRICE_AMOUNT,
+                    unitCode: PRICE_PERIOD,
+                    billingDuration: 1,
+                  },
+                  availability: "https://schema.org/InStock",
+                  url: absoluteUrl(locale, ""),
+                },
               },
             ],
           }}

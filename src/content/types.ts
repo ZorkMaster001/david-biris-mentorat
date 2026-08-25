@@ -20,12 +20,25 @@ export interface Pillar {
 }
 
 export interface Testimonial {
+  /**
+   * Si cheia dupa care `results/BeforeAfter` isi alege fotografiile. Pozele nu mai
+   * stau in continut ca nume de fisier: sunt importate din `src/media/testimonials`,
+   * ca sa treaca prin bundler si sa iasa la o adresa cu amprenta in loc de una curata
+   * si ghicibila sub `/media/img`. Textul alternativ ramane aici — ala se traduce.
+   */
   id: string;
   name: string;
+  /** Textul de sub fotografii. Cine il spune se decide din `attribution`. */
   quote: string;
+  /**
+   * Cine vorbeste. `null` inseamna ca `quote` sunt chiar vorbele omului, deci se
+   * randeaza intre ghilimele. Un text aici inseamna ca vorbeste altcineva despre el —
+   * la fratele lui David nu exista un citat primit, iar a-i pune vorbe in gura ar fi
+   * insemnat sa inventam un testimonial. Atunci ghilimelele dispar si sub text apare
+   * cine a spus-o.
+   */
+  attribution: string | null;
   note: string | null;
-  beforeSrc: string;
-  afterSrc: string;
   beforeAlt: string;
   afterAlt: string;
 }
@@ -82,7 +95,13 @@ export interface Content {
     serviceType: string;
     areaServed: string;
     audience: string;
-    /** Randul vizibil din subsol. Orasul trebuie sa apara si in text, nu doar in schema. */
+    /**
+     * Randul vizibil din subsol. Nu numeste orasul: mentoratul e 100% online, iar
+     * pentru cineva care citeste subsolul „din Targu Mures” nu spune nimic despre
+     * ce cumpara — mai rau, sugereaza ca trebuie sa fie prin zona. Orasul ramane
+     * unde conteaza: in `LocalBusiness` din layout si in `llms.txt`, ca adresa de
+     * la care lucreaza David, nu ca loc al antrenamentelor.
+     */
     locationLine: string;
   };
   nav: NavItem[];
@@ -180,6 +199,42 @@ export interface Content {
     quoteClose: string;
   };
   process: { headline: string; steps: Step[] };
+  /**
+   * Pretul, scris pe pagina. Nu sta langa lista de servicii din `offer`, ci in
+   * treimea de jos, dupa ce omul a citit ce primeste si a vazut ca a functionat la
+   * altii: acolo intrebarea „cat costa?” e deja pusa, iar un pret ascuns o amana
+   * pana pe WhatsApp — si cine nu scrie pleaca fara raspuns.
+   *
+   * Cifrele pentru datele structurate stau in `lib/business.ts`, nu se citesc din
+   * textele de mai jos: schema are nevoie de un numar si de un cod ISO, care nu se
+   * traduc. Cand se schimba pretul, se schimba in amandoua locurile — un pret
+   * afisat diferit de cel din schema e o nepotrivire pe care Google o vede.
+   */
+  pricing: {
+    headline: string;
+    /** Numele pachetului, deasupra sumei. */
+    planLabel: string;
+    /** Suma cu moneda, asa cum se citeste: „299 lei”. */
+    amount: string;
+    /** Perioada, tinuta separat ca sa se randeze mai mic langa suma. */
+    period: string;
+    /** Eticheta de lansare, pe fundal de accent. */
+    launchLabel: string;
+    /** Ce se intampla dupa ce se ocupa locurile. */
+    launchNote: string;
+    /**
+     * Suma impartita la zi. Nu e o justificare a pretului, ci o schimbare de unitate:
+     * de aceea sta separat de suma si se randeza discret, nu ca argument de vanzare.
+     */
+    perDay: string;
+    includesLabel: string;
+    includes: string[];
+    cta: string;
+    /** Randul de sub buton: ce se intampla dupa ce scrie. */
+    ctaNote: string;
+    /** Promisiunea ca pretul de lansare nu creste sub primii clienti. */
+    lockNote: string;
+  };
   faq: { headline: string; items: Faq[] };
   finalCta: { headline: string; body: string; cta: string };
   footer: {

@@ -1,9 +1,37 @@
 "use client";
 
 import { ArrowsLeftRight } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useId, useState } from "react";
+import birisjrAfter from "@/media/testimonials/birisjr-after.avif";
+import birisjrBefore from "@/media/testimonials/birisjr-before.avif";
+import dariusAfter from "@/media/testimonials/darius-after.avif";
+import dariusBefore from "@/media/testimonials/darius-before.avif";
+import merilAfter from "@/media/testimonials/meril-after.avif";
+import merilBefore from "@/media/testimonials/meril-before.avif";
 import type { Testimonial } from "@/content/types";
+
+/**
+ * Fotografiile stau aici, nu in continut, si sunt importate, nu cerute de la o adresa.
+ * Doua motive, in ordine:
+ *
+ * Sunt pozele unor oameni care ni le-au dat pe incredere. Din `public` ar fi ajuns la
+ * `/media/img/darius-before.avif` — adresa curata, de ghicit dintr-o incercare si de
+ * enumerat pentru celelalte. Importate, trec prin bundler si ies sub o amprenta, deci
+ * nu se ajunge la ele decat de pe pagina. Publice raman, ca orice imagine dintr-o
+ * pagina publica; ce dispare e adresa comoda.
+ *
+ * Si nu sunt text. Nu se traduc, deci n-au ce cauta intr-un fisier care se traduce —
+ * acelasi motiv pentru care pictogramele stau in `sections/Offer`. Cheia e `id`-ul
+ * testimonialului; textul alternativ ramane in continut, ala chiar se traduce.
+ *
+ * Un `id` nou fara pereche aici ramane fara fotografii, deci cadrul iese gol.
+ */
+const PHOTOS: Record<string, { before: StaticImageData; after: StaticImageData }> = {
+  darius: { before: dariusBefore, after: dariusAfter },
+  meril: { before: merilBefore, after: merilAfter },
+  birisjr: { before: birisjrBefore, after: birisjrAfter },
+};
 
 interface BeforeAfterProps {
   testimonial: Testimonial;
@@ -22,6 +50,7 @@ export function BeforeAfter({
 }: BeforeAfterProps) {
   const [position, setPosition] = useState(50);
   const sliderId = useId();
+  const photos = PHOTOS[testimonial.id];
 
   return (
     <div>
@@ -32,22 +61,26 @@ export function BeforeAfter({
         la 40svh si ramane centrat in coloana, ca sa nu ajunga cat pagina.
       */}
       <div className="relative mx-auto aspect-[9/16] w-full max-w-[46svh] overflow-hidden sm:max-w-[40svh] rounded-2xl bg-ink-raised has-[input:focus-visible]:outline has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-signal">
-        <Image
-          src={`/media/img/${testimonial.afterSrc}.avif`}
-          alt={testimonial.afterAlt}
-          fill
-          sizes="(min-width: 640px) 480px, 100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
-          <Image
-            src={`/media/img/${testimonial.beforeSrc}.avif`}
-            alt={testimonial.beforeAlt}
-            fill
-            sizes="(min-width: 640px) 480px, 100vw"
-            className="object-cover"
-          />
-        </div>
+        {photos ? (
+          <>
+            <Image
+              src={photos.after}
+              alt={testimonial.afterAlt}
+              fill
+              sizes="(min-width: 640px) 480px, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+              <Image
+                src={photos.before}
+                alt={testimonial.beforeAlt}
+                fill
+                sizes="(min-width: 640px) 480px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </>
+        ) : null}
 
         {/*
           Manerul face vizibil ca imaginea se trage. Fara el, controlul exista dar
@@ -100,11 +133,26 @@ export function BeforeAfter({
           {testimonial.name}
         </figcaption>
         <span aria-hidden="true" className="mt-3 block h-px w-10 bg-signal/50" />
-        <blockquote className="mt-4 text-lg italic leading-relaxed text-bone-dim">
-          <span className="not-italic text-signal/50">{quoteOpen}</span>
-          {testimonial.quote}
-          <span className="not-italic text-signal/50">{quoteClose}</span>
-        </blockquote>
+        {/*
+          Ghilimelele apar doar cand textul chiar e al omului. Cand vorbeste David
+          despre el, dispar si sub text ramane cine a spus-o: altfel randul de sub un
+          nume s-ar citi ca vorbele lui, adica exact un testimonial inventat. Si nu mai
+          e `blockquote`, fiindca nu se mai citeaza persoana din titlu.
+        */}
+        {testimonial.attribution ? (
+          <>
+            <p className="mt-4 text-lg leading-relaxed text-bone-dim">{testimonial.quote}</p>
+            <p className="mt-3 font-display text-xs tracking-[0.2em] text-bone-dim">
+              — {testimonial.attribution}
+            </p>
+          </>
+        ) : (
+          <blockquote className="mt-4 text-lg italic leading-relaxed text-bone-dim">
+            <span className="not-italic text-signal/50">{quoteOpen}</span>
+            {testimonial.quote}
+            <span className="not-italic text-signal/50">{quoteClose}</span>
+          </blockquote>
+        )}
       </figure>
       {testimonial.note ? (
         <p className="mt-4 border-l-2 border-signal pl-4 font-display text-xl text-bone">

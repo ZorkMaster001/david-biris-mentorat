@@ -65,7 +65,11 @@ export function Hero({
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" />
       </div>
 
-      <div className="hero-fade-text absolute inset-x-0 bottom-0 z-10 px-5 pb-[calc(var(--spacing-nav)+env(safe-area-inset-bottom)+2rem)]">
+      {/*
+        `hero-copy` duce distantele, nu clasele de aici: pe ecran scund se strang
+        toate deodata, ca sa se elibereze fotografia. Vezi `.hero-copy` in globals.css.
+      */}
+      <div className="hero-fade-text hero-copy absolute inset-x-0 bottom-0 z-10 px-5">
         <h1 className="hero-rise max-w-[16ch] font-display text-[clamp(2.25rem,8.5vw,5rem)]">
           {headline}{" "}
           {/* A doua propozitie duce promisiunea, deci ea poarta accentul: rand

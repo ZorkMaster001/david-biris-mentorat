@@ -12,7 +12,9 @@ export function Results({
 }) {
   return (
     <Section id="rezultate" headline={data.headline} headingLevel={headingLevel}>
-      <div className="mt-12 grid gap-14 sm:grid-cols-2">
+      {/* Trei coloane abia de la `lg`. Pe tableta, trei cadre 9:16 unul langa altul ar
+          fi lasat citatelor de dedesubt vreo 200px latime, adica patru cuvinte pe rand. */}
+      <div className="mt-12 grid gap-14 sm:grid-cols-2 lg:grid-cols-3">
         {data.testimonials.map((testimonial, index) => (
           <Reveal key={testimonial.id} delay={index * 110}>
             <BeforeAfter

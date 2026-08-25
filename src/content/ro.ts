@@ -10,24 +10,24 @@ export const ro: Content = {
     metoda: {
       title: "Metoda · Sala e baza, viața ta rămâne a ta",
       description:
-        "Cinci pași: antrenament, progres, nutriție, lifestyle, ajustare. Sala e baza pe care se construiește fizicul, iar restul se așază peste viața pe care o ai deja.",
+        "Cinci pași: antrenament, progres, nutriție, lifestyle, ajustare. Sala e baza pe care se construiește fizicul, iar restul se potrivește cu viața pe care o ai deja.",
     },
     rezultate: {
       title: "Rezultate reale · Mentorat online 1-la-1",
       description:
-        "Doi oameni care au pornit din puncte diferite și ce s-a schimbat la ei. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1, 100% online.",
+        "Trei oameni care au pornit din puncte diferite și ce s-a schimbat la ei. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1, 100% online.",
     },
     despre: {
       title: "Despre David Biriș · Mentor fitness online",
       description:
-        "7 ani în sală, rezultate proprii și anul 2 la Medicină. Pasiunea de a înțelege de ce funcționează lucrurile, nu doar că funcționează. Mentorat 1-la-1, online.",
+        "7 ani în sală, rezultatele mele și anul 2 la Medicină. Vreau să înțeleg de ce funcționează lucrurile, nu doar că funcționează. Mentorat 1-la-1, online.",
     },
   },
   business: {
     serviceType: "Mentorat fitness online 1-la-1",
     areaServed: "România",
     audience: "Oameni care vor să arate bine și să fie fit, fără să renunțe la restul vieții lor",
-    locationLine: "Mentorat 1-la-1, 100% online. Din Târgu Mureș, în română și engleză.",
+    locationLine: "Mentorat fitness 1-la-1, 100% online. Oriunde te-ai afla, în română și engleză.",
   },
   nav: [
     { href: "", label: "Acasă" },
@@ -42,24 +42,24 @@ export const ro: Content = {
     instagramLabel: "Instagram",
     prefilledMessage: "Salut David, am văzut site-ul și vreau să aflu mai multe despre mentorat.",
     pickerTitle: "Pe unde îți e mai ușor?",
-    pickerBody: "Ajunge direct la David. Fără formulare, fără intermediari.",
+    pickerBody: "Ajunge direct la mine. Fără formulare, fără intermediari.",
     whatsappNote: "Mesajul e deja scris. Răspunde cel mai repede aici.",
-    instagramNote: "Dacă vrei să vezi întâi ce postează.",
+    instagramNote: "Dacă vrei să vezi întâi ce postez.",
     closeLabel: "Închide",
   },
   hero: {
     headline: "Un fizic de care ești mândru,",
     headlineAccent: "fără să-ți sacrifici viața.",
     subheadline:
-      "Mentorat 1-la-1, 100% online. Program de sală, nutriție și ghidare directă de la mine, așezate peste facultate, job și tot ce faci deja.",
-    ctaPrimary: "Scrie-i lui David",
+      "Mentorat 1-la-1, 100% online. Program de sală, nutriție și ghidare directă de la mine, făcute să se potrivească cu facultatea, jobul și viața ta de zi cu zi.",
+    ctaPrimary: "Vreau să vorbim",
     ctaSecondary: "Vezi metoda",
     image: "david-gym",
     imageAlt: "David în sală, fotografiat în oglindă după antrenament",
   },
   offer: {
     headline: "Ce înseamnă, concret, mentoratul.",
-    body: "Lucrăm 1-la-1, online. Îți construiesc planul, te ghidez pe execuție și ajustăm pe parcurs, până când sala nu mai e ceva ce încerci, ci ceva ce știi să faci.",
+    body: "Lucrăm 1-la-1, online. Îți construiesc planul, te ghidez pe execuție și ajustăm pe parcurs, până când știi exact ce faci în sală și de ce.",
     items: [
       { id: "online", label: "100% online", detail: "De oriunde ai fi, în română sau în engleză." },
       {
@@ -95,14 +95,14 @@ export const ro: Content = {
     ],
     closingLabel: "Rezultatul",
     closing:
-      "Nu o listă de servicii, ci ce rămâne din ea: arăți bine, te simți bine în corpul tău și îți păstrezi în același timp facultatea, jobul, relația, prietenii și tot ce faci în afara sălii.",
+      "La final nu rămâi doar cu un program. Arăți bine, te simți bine în corpul tău și îți păstrezi în același timp facultatea, jobul, relația, prietenii și tot ce faci în afara sălii.",
   },
   firstTime: {
     headline: "Nu vrei un program de antrenament. Vrei să te simți bine în pielea ta.",
     body: [
       "Vrei să arăți bine în tricou. Să te uiți în oglindă și să-ți placă ce vezi. Să ai încredere când intri undeva.",
       "Vrei să fii puternic, să ai energie și să nu te lase corpul la primul etaj de scări.",
-      "Sala e doar instrumentul prin care ajungi acolo. Treaba mea e să ți-l pun în mână și să te învăț să-l folosești, ca peste doi ani să ți se pară ciudat să nu te antrenezi.",
+      "Sala e doar instrumentul prin care ajungi acolo. Eu sunt aici să te învăț cum să o folosești, ca peste doi ani să ți se pară ciudat să nu te antrenezi.",
     ],
     image: "training-bench",
     imageAlt: "David în sală, între serii",
@@ -112,11 +112,11 @@ export const ro: Content = {
     beerCaption: "Berea de pe plajă nu îți anulează luna. Bere în fiecare seară, da.",
     fastfoodCaption: "Nici burgerul din aeroport. Ce contează e ce faci în restul săptămânii.",
     closing:
-      "Ai nevoie de o balanță, nu de o pedeapsă. Planurile care interzic tot funcționează trei săptămâni și apoi te lasă mai rău decât te-au găsit. Un plan bun are loc în el pentru viața pe care o trăiești deja.",
+      "Ai nevoie de o balanță, nu de o pedeapsă. Planurile care îți interzic totul țin câteva săptămâni, apoi le abandonezi. Un plan bun te lasă să trăiești normal.",
   },
   method: {
     headline: "Sala e baza. Restul se așază în jurul ei.",
-    body: "Fizicul se construiește în sală. Acolo se face treaba și de acolo pornește tot. Cei cinci pași de mai jos sunt felul în care sala intră în viața ta și rămâne acolo, fără să o dea peste cap.",
+    body: "Fizicul se construiește în sală. Acolo se face treaba și de acolo pornește tot. Cei cinci pași de mai jos te ajută să faci din sală ceva ce poți ține pe termen lung, fără să-ți dai viața peste cap.",
     pillars: [
       {
         id: "antrenament",
@@ -136,23 +136,23 @@ export const ro: Content = {
       {
         id: "lifestyle",
         name: "Lifestyle",
-        angle: "Sala intră peste facultate, job, relație și hobby-uri. Nu în locul lor.",
+        angle: "Îți faci loc pentru sală fără să renunți la facultate, job, relație sau hobby-uri.",
       },
       {
         id: "ajustare",
         name: "Ajustare",
-        angle: "Îți urmăresc progresul și schimbăm ce nu merge, săptămână de săptămână.",
+        angle: "Îți urmăresc progresul și schimbăm ce nu funcționează, săptămână de săptămână.",
       },
     ],
     gallery: [
-      { id: "sala", src: "poster-01-sala", alt: "David antrenându-se în sală" },
+      { id: "sala", src: "metoda-oglinda", alt: "David fotografiat în oglinda sălii, între serii" },
       { id: "nutritie", src: "nutrition-plate", alt: "Farfurie cu mâncare gătită simplu" },
       { id: "catarat", src: "climbing-wall", alt: "David cățărându-se pe perete, cu coardă" },
     ],
   },
   reel: {
     headline: "Fitness-ul ar trebui să-ți îmbunătățească viața, nu să devină toată viața ta.",
-    body: "David merge la sală ca să arate bine. În aceeași săptămână face box, alergare, cățărat și înot, și îi rămâne timp de facultate, de prieteni și de viața lui. Nu te învață sporturile astea. Sunt doar dovada că se poate.",
+    body: "Eu merg la sală ca să arăt bine. În aceeași săptămână fac box, alergare, cățărat și înot, și îmi rămâne timp de facultate, de prieteni și de viața mea. Nu te învăț sporturile astea. Sunt doar dovada că se poate.",
     pauseLabel: "Oprește derularea",
     resumeLabel: "Pornește derularea",
     clips: [
@@ -166,14 +166,14 @@ export const ro: Content = {
   david: {
     headline: "7 ani în sală. Și obsesia de a înțelege de ce funcționează.",
     body: [
-      "A intrat în sală la 13 ani și nu s-a mai oprit. Fizicul pe care îl are acum vine din anii ăia, nu dintr-o diplomă.",
-      "Între timp studiază Medicina, ceea ce înseamnă că nu se mulțumește cu „așa se face”. Vrea să știe ce se întâmplă în corp când ridici greutatea și de ce.",
-      "Antrenează oameni pentru că a fost și el la început, a greșit tot ce era de greșit și știe exact unde se rupe firul.",
+      "Am intrat în sală la 13 ani și nu m-am mai oprit. Fizicul pe care îl am acum vine din anii ăia, nu dintr-o diplomă.",
+      "Între timp studiez Medicina, ceea ce înseamnă că nu mă mulțumesc cu „așa se face”. Vreau să înțeleg ce se întâmplă în corp când ridici greutatea și de ce.",
+      "Te antrenez pentru că am fost și eu la început, am făcut destule greșeli și știu cât de greu e să-ți dai seama singur ce funcționează.",
     ],
     image: "david-formal",
     imageAlt: "David Biriș",
     transformation: {
-      headline: "A trecut și el pe acolo.",
+      headline: "Am trecut și eu pe acolo.",
       beforeSrc: "sea-rest",
       afterSrc: "outdoor-summit",
       beforeAlt: "David pe stâncă la mare, înainte de anii de sală",
@@ -181,7 +181,7 @@ export const ro: Content = {
     },
   },
   results: {
-    headline: "Doi oameni, două puncte de plecare, aceeași metodă.",
+    headline: "Trei oameni, trei puncte de plecare, aceeași metodă.",
     beforeLabel: "Înainte",
     afterLabel: "După",
     quoteOpen: "„",
@@ -192,9 +192,8 @@ export const ro: Content = {
         name: "Darius B.",
         quote:
           "Cu ajutorul lui David nu doar că mi-am schimbat corpul. Sala a devenit un hobby adevărat. Și, mai important, ideea de a te îmbunătăți puțin în fiecare zi.",
+        attribution: null,
         note: null,
-        beforeSrc: "darius-before",
-        afterSrc: "darius-after",
         beforeAlt: "Darius înainte de mentorat",
         afterAlt: "Darius după mentorat",
       },
@@ -203,11 +202,20 @@ export const ro: Content = {
         name: "Meril",
         quote:
           "Am venit din Elveția ca să studiez Medicina și nu vorbesc română. Cu David ne-am înțeles perfect de la început și am făcut un progres mare în scurt timp.",
+        attribution: null,
         note: "Mentoratul funcționează și în engleză.",
-        beforeSrc: "meril-before",
-        afterSrc: "meril-after",
         beforeAlt: "Meril înainte de mentorat",
         afterAlt: "Meril după mentorat",
+      },
+      {
+        id: "birisjr",
+        name: "Biriș Jr.",
+        quote:
+          "E fratele meu. I-am fost aproape mereu și, de câte ori a avut nevoie de ajutor, a venit la mine. Rezultatele se văd în poză.",
+        attribution: "David",
+        note: null,
+        beforeAlt: "Biriș Jr. înainte de mentorat",
+        afterAlt: "Biriș Jr. după mentorat",
       },
     ],
   },
@@ -220,8 +228,31 @@ export const ro: Content = {
         title: "Construim planul",
         body: "Pornind de la obiectivul tău, de la timpul pe care îl ai și de la ce mănânci acum.",
       },
-      { index: "03", title: "Ajustăm", body: "Săptămână de săptămână, cu acces direct la David." },
+      { index: "03", title: "Ajustăm", body: "Săptămână de săptămână, cu acces direct la mine." },
     ],
+  },
+  pricing: {
+    headline: "Cât costă.",
+    planLabel: "Mentorat 1-la-1",
+    amount: "349 lei",
+    period: "/ lună",
+    launchLabel: "Preț de lansare · primele 10 locuri",
+    launchNote: "După primele 10 locuri, prețul va fi 399 lei/lună.",
+    perDay: "Cam 12 lei pe zi. Mai puțin decât dai pe multe lucruri fără să te gândești de două ori.",
+    includesLabel: "Ce primești",
+    includes: [
+      "Program personalizat de sală",
+      "Ghidare pe nutriție",
+      "Feedback pe execuție",
+      "Urmărirea progresului",
+      "Ajustări ale programului",
+      "Acces direct la mine",
+      "Suport și accountability",
+    ],
+    cta: "Vreau să vorbim",
+    ctaNote:
+      "Prima discuție este gratuită. Îmi spui unde ești acum, ce vrei să obții și îți spun sincer dacă te pot ajuta.",
+    lockNote: "Prețul de lansare rămâne valabil pentru primii 10 clienți cât timp colaborarea continuă.",
   },
   faq: {
     headline: "Ce te oprește, de fapt.",
@@ -234,9 +265,9 @@ export const ro: Content = {
       {
         question: "Cât timp pe săptămână îmi ia?",
         answer:
-          "Cât ai tu de dat. Planul se construiește pe timpul tău, nu invers. Dacă poți trei zile pe săptămână, planul are trei zile. Nu-ți cer să-ți muți viața în jurul sălii.",
+          "Cât îți permite programul. Dacă poți trei zile pe săptămână, facem planul pentru trei zile. Nu-ți cer să-ți muți viața în jurul sălii.",
       },
-      { question: "N-am timp, am facultate.", answer: "Și David are. Planul se construiește în jurul orarului tău, nu invers." },
+      { question: "N-am timp, am facultate.", answer: "Și eu am. De aceea planul se construiește în jurul orarului tău, nu invers." },
       { question: "N-am mai fost niciodată în sală.", answer: "E cazul cel mai bun. N-ai obiceiuri proaste de dezvățat." },
       {
         question: "Trebuie să renunț la ieșiri și la bere?",
@@ -252,21 +283,21 @@ export const ro: Content = {
       {
         question: "Vreau doar să slăbesc, nu să fac performanță.",
         answer:
-          "Ăsta e cazul cel mai des întâlnit. Slăbitul vine din ce mănânci în restul săptămânii și din faptul că te întorci în sală și luna viitoare, nu din antrenamentul de azi. De aceea planul pornește de la mâncarea pe care o mănânci deja.",
+          "Perfect. Nu trebuie să faci performanță ca să arăți bine. Slăbitul vine din ce mănânci în restul săptămânii și din faptul că te întorci în sală și luna viitoare, nu din antrenamentul de azi. De aceea planul pornește de la mâncarea pe care o mănânci deja.",
       },
     ],
   },
   finalCta: {
     headline: "Prima discuție e gratuită.",
     body: "Scrii, vorbim, îți spun sincer dacă te pot ajuta. Dacă nu simți că e pentru tine, nu se întâmplă nimic.",
-    cta: "Scrie-i lui David",
+    cta: "Vreau să vorbim",
   },
   footer: {
     disclaimer:
-      "David Biriș este student la Medicină, nu medic sau nutriționist licențiat. Mentoratul nu înlocuiește sfatul medical. Dacă ai o afecțiune, vorbește întâi cu medicul tău.",
+      "Sunt student la Medicină, nu medic sau nutriționist licențiat. Mentoratul nu înlocuiește sfatul medical. Dacă ai o afecțiune, vorbește întâi cu medicul tău.",
     languageLabel: "Limbă",
     rights: "David Biriș",
-    contactLabel: "Scrie-i direct",
+    contactLabel: "Scrie-mi direct",
     wordmark: "David Biriș",
   },
 };

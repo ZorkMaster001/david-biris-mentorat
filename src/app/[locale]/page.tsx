@@ -8,6 +8,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { FirstTime } from "@/components/sections/FirstTime";
 import { Method } from "@/components/sections/Method";
 import { Offer } from "@/components/sections/Offer";
+import { Pricing } from "@/components/sections/Pricing";
 import { Process } from "@/components/sections/Process";
 import { Reel } from "@/components/sections/Reel";
 import { Results } from "@/components/sections/Results";
@@ -43,6 +44,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         `Results` a urcat inaintea tuturor explicatiilor anume: traficul vine din
         TikTok, iar omul care nu il cunoaste pe David are nevoie sa vada rezultate
         inainte sa aiba rabdare de metoda.
+
+        `Pricing` vine abia dupa `Process`, spre finalul argumentului: pretul se
+        citeste altfel cand omul stie deja ce primeste, a vazut dovada si a inteles
+        cum incepe. Pus mai sus, ar fi fost o suma comparata cu nimic. Iar `Faq` sta
+        intre pret si `FinalCta` anume — obiectiile care apar dupa ce vezi suma se
+        raspund inainte de ultimul buton.
       */}
       <Offer data={content.offer} />
       <Results data={content.results} />
@@ -52,6 +59,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Balance data={content.balance} />
       <David data={content.david} />
       <Process data={content.process} />
+      <Pricing data={content.pricing} contact={content.contact} />
       <Faq data={content.faq} />
       <FinalCta data={content.finalCta} contact={content.contact} />
       <Footer data={content.footer} contact={content.contact} business={content.business} />
