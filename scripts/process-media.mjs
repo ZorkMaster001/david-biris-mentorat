@@ -42,15 +42,10 @@ const IMAGES = [
   // Testimoniale, normalizate la 9:16. Decupajele sunt masurate pe fiecare sursa.
   { src: "testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0] },
   { src: "testimonial_darius/after.jpeg", out: "darius-after", crop: [2268, 4032, 378, 0] },
-  // meril-before: crop-ul de 617px latime elimina UI-ul Snapchat dar nu mai respecta 9:16
-  // (0.436 in loc de 0.5625). Se completeaza canvas-ul la 796x1415 (9:16 exact la aceasta
-  // inaltime) cu fundalul site-ului, in loc sa se decupeze si mai mult din subiect.
-  {
-    src: "testimonial_meril/before.jpeg",
-    out: "meril-before",
-    crop: [617, 1415, 23, 176],
-    pad: { width: 796, height: 1415, background: "#0A0A0B" },
-  },
+  // meril-before: decupajul ocoleste bara de status de sus, coloana de unelte Snapchat din
+  // dreapta si panoul „Ajouter une Lens" de jos. Iese exact 9:16 (796x1415), deci nu mai e
+  // nevoie de completarea canvas-ului cu fundal.
+  { src: "testimonial_meril/before.jpeg", out: "meril-before", crop: [796, 1415, 39, 235] },
   { src: "testimonial_meril/after.jpeg", out: "meril-after", crop: [790, 1404, 39, 0] },
 ];
 
