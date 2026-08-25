@@ -209,13 +209,13 @@ export const ro: Content = {
       },
       {
         id: "birisjr",
-        name: "Biriș Jr.",
+        name: "Sergiu Biriș",
         quote:
           "E fratele meu. I-am fost aproape mereu și, de câte ori a avut nevoie de ajutor, a venit la mine. Rezultatele se văd în poză.",
         attribution: "David",
         note: null,
-        beforeAlt: "Biriș Jr. înainte de mentorat",
-        afterAlt: "Biriș Jr. după mentorat",
+        beforeAlt: "Sergiu înainte de mentorat",
+        afterAlt: "Sergiu după mentorat",
       },
     ],
   },

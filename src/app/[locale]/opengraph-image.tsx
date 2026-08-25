@@ -14,17 +14,22 @@ export function generateStaticParams() {
 
 /*
   Cardul care se vede cand cineva trimite linkul pe WhatsApp, Instagram sau Slack.
-  Inainte era numai text pe negru: corect, dar arata a pagina goala, iar linkul trimis
-  intr-o conversatie e de multe ori prima impresie, inaintea site-ului.
+  E chiar heroul paginii, nu o compozitie facuta separat pentru previzualizare: aceeasi
+  fotografie pe tot cadrul, acelasi degradeu care apasa de jos, acelasi titlu in coltul
+  din stanga-jos, cu a doua propozitie in culoarea de accent. Cine deschide linkul dupa
+  ce a vazut cardul nimereste exact imaginea pe care si-o aminteste.
 
-  Acum poarta aceeasi fotografie ca heroul, in dreapta, cu textul la stanga peste un
-  degradeu care leaga cele doua jumatati. Sursa e un JPEG citit de pe disc din
-  `src/media`, nu o adresa: `ImageResponse` se randeaza la build, in Node, si un fetch
-  catre propriul site nu are ce sa raspunda inainte ca site-ul sa existe.
+  Fotografia nu e reincadrata aici: `src/media/og-hero.jpg` e taiat de scriptul de
+  media exact la banda pe care `object-cover` cu `object-position: 50% 30%` o arata in
+  hero pe ecran lat. Motivul e ca Satori trateaza inconstant `object-position`, deci
+  incadrarea se face inainte, cu sharp, nu din CSS.
 
-  JPEG, nu avif sau webp: compunerea trece prin resvg, care le trateaza inconstant.
+  Se citeste de pe disc, nu de la o adresa: `ImageResponse` se randeaza la build, iar
+  un fetch catre propriul site n-ar avea ce sa raspunda inainte ca site-ul sa existe.
+
   Fara fonturi proprii — `next/font` le tine sub amprente in `.next`, deci n-au o cale
-  stabila de citit. Ierarhia o fac fotografia si culoarea de accent, nu corpul literei.
+  stabila de citit. Si fara butoanele din hero: intr-o imagine nu se poate apasa nimic,
+  iar un buton desenat care nu face nimic e mai rau decat lipsa lui.
 */
 export default async function OpengraphImage({
   params,
@@ -53,60 +58,47 @@ export default async function OpengraphImage({
         <img
           src={photoSrc}
           alt=""
-          width={550}
+          width={1200}
           height={630}
-          style={{ position: "absolute", top: 0, right: 0, objectFit: "cover" }}
+          style={{ position: "absolute", top: 0, left: 0, objectFit: "cover" }}
         />
 
-        {/* Trecerea dintre text si fotografie. Capatul opac cade exact pe muchia din
-            stanga a pozei (x=650), nu inaintea ei: pus peste negru, degradeul nu s-ar
-            fi vazut deloc, iar poza ar fi inceput tot cu o taietura dreapta. */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 646,
-            width: 300,
-            height: 630,
-            background:
-              "linear-gradient(90deg, #0A0A0B 0%, rgba(10,10,11,0.72) 38%, rgba(10,10,11,0) 100%)",
-          }}
-        />
-
+        {/* Acelasi degradeu ca in hero: `from-ink via-ink/55 to-ink/15`, catre sus.
+            Subiectul sta in jumatatea de sus, deci intunericul apasa doar sub text. */}
         <div
           style={{
             position: "absolute",
             top: 0,
             left: 0,
-            width: 700,
+            width: 1200,
             height: 630,
+            background:
+              "linear-gradient(0deg, #0A0A0B 0%, rgba(10,10,11,0.55) 55%, rgba(10,10,11,0.15) 100%)",
+          }}
+        />
+
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: 1200,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            padding: 72,
+            alignItems: "flex-start",
+            padding: 64,
           }}
         >
-          <div style={{ fontSize: 24, color: "#2FE6C4", letterSpacing: 5 }}>DAVID BIRIȘ</div>
-
-          {/* Titlul ramane impartit ca in hero: a doua propozitie duce promisiunea,
-              deci ea poarta culoarea de accent. */}
-          <div style={{ fontSize: 56, lineHeight: 1.08, marginTop: 24, maxWidth: 520 }}>
+          <div style={{ fontSize: 60, lineHeight: 1.06, maxWidth: 760 }}>
             {content.hero.headline}
           </div>
-          <div
-            style={{
-              fontSize: 56,
-              lineHeight: 1.08,
-              marginTop: 4,
-              maxWidth: 520,
-              color: "#2FE6C4",
-            }}
-          >
+          {/* A doua propozitie duce promisiunea, deci ea poarta accentul — ca in hero,
+              pe randul ei. */}
+          <div style={{ fontSize: 60, lineHeight: 1.06, maxWidth: 760, color: "#2FE6C4" }}>
             {content.hero.headlineAccent}
           </div>
-
-          <div style={{ fontSize: 25, marginTop: 32, color: "#A3A099" }}>
-            {content.business.serviceType}
+          <div style={{ fontSize: 24, lineHeight: 1.4, marginTop: 26, maxWidth: 680, color: "#A3A099" }}>
+            {content.hero.subheadline}
           </div>
         </div>
       </div>

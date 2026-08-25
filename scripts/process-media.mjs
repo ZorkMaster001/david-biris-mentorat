@@ -53,19 +53,30 @@ const IMAGES = [
   */
   { src: "assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg", out: "david-gym", crop: [2800, 4520, 0, 600] },
   /*
-    Aceeasi fotografie, taiata pentru panoul din dreapta al cardului de previzualizare.
-    Decupajul e mai scurt decat cel din hero (3150 in loc de 4520) ca sa cada cap si
-    trunchi in raportul panoului, fara sa fie nevoie de `object-position` in Satori,
-    care il trateaza inconstant. JPEG, nu avif: PNG-ul de previzualizare se compune la
-    build cu resvg, iar acolo doar JPEG si PNG sunt sigure.
+    Aceeasi fotografie, taiata la banda pe care o vede omul in hero.
+
+    Formula e a heroului: `object-cover` cu `object-position: 50% 30%` din `Hero.tsx`.
+    Din decupajul de hero (2800x4520), un container 1200x630 arata 630/1937 din
+    inaltimea scalata, iar 30% din restul cade la y=915 — adica banda [2800x1470] de
+    la 1515 in sursa.
+
+    Banda porneste totusi de la 1360, nu de la 1515. 1200x630 e un raport mult mai lat
+    decat orice fereastra reala, deci formula scoate acolo o fasie prea ingusta si taie
+    varful capului; pe un ecran normal, la 30%, capul intra intreg. Cardul trebuie sa
+    arate ce vede omul in pagina, nu sa aplice aceeasi aritmetica unui raport pe care
+    pagina nu il are niciodata.
+
+    Decupata dinainte, nu asezata din CSS: Satori trateaza inconstant
+    `object-position`. JPEG, nu avif: compunerea trece prin resvg, unde doar JPEG si
+    PNG sunt sigure.
   */
   {
     src: "assets/WhatsApp Image 2026-08-13 at 15.41.57.jpeg",
     out: "og-hero",
-    crop: [2800, 3150, 0, 600],
+    crop: [2800, 1470, 0, 1360],
     dest: OUT_OG,
     format: "jpeg",
-    width: 900,
+    width: 1400,
   },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23.jpeg", out: "david-formal", crop: null },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "sea-rest", crop: null },
@@ -77,7 +88,8 @@ const IMAGES = [
 
     Sursele stau in `assets/`, ca tot restul materialului brut: folderul e ignorat de
     git, deci fotografiile primite de la oameni nu ajung in repo. In pagina intra doar
-    derivatele din `public/media/img`, decupate la cadrul care se vede pe site.
+    derivatele decupate la cadrul de pe site, iar alea merg in `OUT_TESTIMONIAL`, nu
+    in `public` — vezi motivul acolo sus.
   */
   { src: "assets/testimonial_darius/before.jpeg", out: "darius-before", crop: [1260, 2240, 2342, 0], dest: OUT_TESTIMONIAL },
   { src: "assets/testimonial_darius/after.jpeg", out: "darius-after", crop: [2268, 4032, 378, 0], dest: OUT_TESTIMONIAL },

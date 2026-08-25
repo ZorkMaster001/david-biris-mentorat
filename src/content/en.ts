@@ -209,13 +209,13 @@ export const en: Content = {
       },
       {
         id: "birisjr",
-        name: "Biriș Jr.",
+        name: "Sergiu Biriș",
         quote:
           "He's my brother. I've always been there for him, and whenever he needed help he came to me. The results are in the photo.",
         attribution: "David",
         note: null,
-        beforeAlt: "Biriș Jr. before the mentoring",
-        afterAlt: "Biriș Jr. after the mentoring",
+        beforeAlt: "Sergiu before the mentoring",
+        afterAlt: "Sergiu after the mentoring",
       },
     ],
   },
