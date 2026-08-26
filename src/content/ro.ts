@@ -126,12 +126,12 @@ export const ro: Content = {
       {
         id: "progres",
         name: "Progres",
-        angle: "Înveți cum se execută corect, cum se încarcă și cum îți urmărești rezultatele.",
+        angle: "Înveți cum să execuți corect exercițiile, cum să progresezi cu greutățile și cum să-ți urmărești rezultatele.",
       },
       {
         id: "nutritie",
         name: "Nutriție",
-        angle: "Obiceiuri alimentare pe care le ții, nu o dietă extremă pe care o lași după două săptămâni.",
+        angle: "Obiceiuri alimentare pe care le poți ține pe termen lung, nu o dietă extremă pe care o lași după două săptămâni.",
       },
       {
         id: "lifestyle",
