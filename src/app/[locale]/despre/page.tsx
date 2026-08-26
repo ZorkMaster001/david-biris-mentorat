@@ -5,9 +5,10 @@ import { Footer } from "@/components/nav/Footer";
 import { David } from "@/components/sections/David";
 import { ContactCta } from "@/components/contact/ContactCta";
 import { Section } from "@/components/ui/Section";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { absoluteUrl } from "@/lib/site";
+import { ID, breadcrumbSchema, pageMetadata, webPageSchema } from "@/lib/seo";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -22,23 +23,14 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
 
-  return {
-    title: content.pageMeta.despre.title,
-    description: content.pageMeta.despre.description,
-    alternates: {
-      canonical: absoluteUrl(locale, "despre"),
-      languages: {
-        ...Object.fromEntries(LOCALES.map((other) => [other, absoluteUrl(other, "despre")])),
-        "x-default": absoluteUrl("ro", "despre"),
-      },
-    },
-  };
+  return pageMetadata(locale, "despre", content.pageMeta.despre);
 }
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
+  const crumb = breadcrumbSchema(locale, "despre", content.nav);
 
   return (
     <main>
@@ -54,6 +46,24 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </Section>
       <Footer data={content.footer} contact={content.contact} business={content.business} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              ...webPageSchema({
+                locale,
+                route: "despre",
+                meta: content.pageMeta.despre,
+                type: "ProfilePage",
+                breadcrumb: crumb,
+              }),
+        mainEntity: { "@id": ID.person },
+            },
+            crumb,
+          ],
+        }}
+      />
     </main>
   );
 }

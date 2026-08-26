@@ -9,7 +9,7 @@ import {
   REGION,
 } from "@/lib/business";
 import { PHONE_DISPLAY, instagramUrl } from "@/lib/contact";
-import { ROUTES, absoluteUrl } from "@/lib/site";
+import { CONTENT_UPDATED_AT, ROUTES, SITE_URL, absoluteUrl } from "@/lib/site";
 
 /**
  * `llms.txt` — rezumatul site-ului pentru asistentii de cautare (ChatGPT, Claude,
@@ -54,6 +54,8 @@ export function GET(): Response {
   const body = [
     "# David Biriș",
     "",
+    `> Ultima actualizare: ${CONTENT_UPDATED_AT}`,
+    "",
     `> ${getContent("ro").business.serviceType}, din ${CITY}, ${REGION}, România.`,
     "",
     "Mentorat fitness 1-la-1, 100% online. Ideea centrală: te ajută să construiești un",
@@ -77,6 +79,8 @@ export function GET(): Response {
     `Preț: ${PRICE_AMOUNT} ${PRICE_CURRENCY} pe lună, preț de lansare pentru primele ${PRICE_LAUNCH_SEATS} locuri.`,
     `După ocuparea lor, ${PRICE_STANDARD_AMOUNT} ${PRICE_CURRENCY} pe lună. Prima discuție e gratuită și se face pe`,
     "WhatsApp sau Instagram.",
+    "",
+    `Preț, în formă citibilă de mașină: ${SITE_URL}/pricing.md`,
     "",
     `Contact: ${PHONE_DISPLAY} (WhatsApp) · ${instagramUrl()}`,
     "",

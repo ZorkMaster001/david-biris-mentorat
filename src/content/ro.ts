@@ -2,32 +2,32 @@ import type { Content } from "./types";
 
 export const ro: Content = {
   meta: {
-    title: "Mentorat fitness online 1-la-1 · David Biriș",
+    title: "Antrenor personal online · Mentorat 1-la-1 · David Biriș",
     description:
-      "Te ajut să construiești un fizic de care ești mândru, fără să-ți sacrifici viața pentru el. Mentorat 1-la-1, 100% online: program de sală, nutriție, ghidare pe execuție și ajustări săptămânale.",
+      "Antrenor personal online, 1-la-1. Program de sală personalizat, nutriție și ghidare pe execuție, făcute să încapă în viața ta. Prima discuție e gratuită.",
   },
   pageMeta: {
     metoda: {
-      title: "Metoda · Sala e baza, viața ta rămâne a ta",
+      title: "Program de sală personalizat online · Metoda · David Biriș",
       description:
-        "Cinci pași: antrenament, progres, nutriție, lifestyle, ajustare. Sala e baza pe care se construiește fizicul, iar restul se potrivește cu viața pe care o ai deja.",
+        "Cum arată un program de sală personalizat: antrenament, progres, nutriție, lifestyle, ajustare. Cinci părți, construite pe obiectivul și timpul tău.",
     },
     rezultate: {
-      title: "Rezultate reale · Mentorat online 1-la-1",
+      title: "Rezultate reale cu antrenor personal online · David Biriș",
       description:
-        "Trei oameni care au pornit din puncte diferite și ce s-a schimbat la ei. Fotografii înainte și după, cu vorbele lor. Mentorat 1-la-1, 100% online.",
+        "Trei oameni care au pornit din puncte diferite și ce s-a schimbat la ei. Fotografii înainte și după, cu vorbele lor. Antrenor personal online, 1-la-1.",
     },
     despre: {
-      title: "Despre David Biriș · Mentor fitness online",
+      title: "Despre David Biriș · Antrenor personal online",
       description:
-        "7 ani în sală, rezultatele mele și anul 2 la Medicină. Vreau să înțeleg de ce funcționează lucrurile, nu doar că funcționează. Mentorat 1-la-1, online.",
+        "7 ani în sală, rezultatele mele și anul 2 la Medicină. Antrenor personal online, 1-la-1: vreau să înțeleg de ce funcționează lucrurile, nu doar că funcționează.",
     },
   },
   business: {
-    serviceType: "Mentorat fitness online 1-la-1",
+    serviceType: "Antrenor personal online 1-la-1",
     areaServed: "România",
     audience: "Oameni care vor să arate bine și să fie fit, fără să renunțe la restul vieții lor",
-    locationLine: "Mentorat fitness 1-la-1, 100% online. Oriunde te-ai afla, în română și engleză.",
+    locationLine: "Antrenor personal online, mentorat 1-la-1. Oriunde te-ai afla, în română și engleză.",
   },
   nav: [
     { href: "", label: "Acasă" },

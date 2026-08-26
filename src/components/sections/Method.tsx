@@ -61,7 +61,11 @@ export function Method({
             <BarbellFallback pillars={data.pillars} />
           )}
         </div>
-        <PillarList pillars={data.pillars} onVisibleCountChange={handleCount} />
+        <PillarList
+          pillars={data.pillars}
+          onVisibleCountChange={handleCount}
+          headingLevel={headingLevel}
+        />
       </div>
     </Section>
   );

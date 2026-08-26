@@ -1,22 +1,27 @@
 import type { MetadataRoute } from "next";
 import { LOCALES } from "@/content/types";
-import { DEFAULT_LOCALE, ROUTES, absoluteUrl } from "@/lib/site";
+import { languageAlternates } from "@/lib/seo";
+import { CONTENT_UPDATED_AT, ROUTES, absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // O data fixa, scrisa de mana in `lib/site.ts`, nu `new Date()`.
+  //
+  // Cat timp era momentul build-ului, fiecare redeploy ii spunea lui Google ca
+  // s-au schimbat toate paginile deodata — inclusiv cand se schimbase o culoare.
+  // Un `lastmod` care minte nu e doar ignorat: cand incepe sa fie ignorat, e
+  // ignorat si atunci cand spune adevarul, deci se pierde tocmai semnalul pentru
+  // care exista campul.
+  const lastModified = new Date(CONTENT_UPDATED_AT);
+
   return LOCALES.flatMap((locale) =>
     ROUTES.map((route) => ({
       url: absoluteUrl(locale, route),
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "monthly" as const,
       priority: route === "" ? 1 : 0.7,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(LOCALES.map((other) => [other, absoluteUrl(other, route)])),
-          // Fara `x-default`, cine cauta dintr-o a treia limba nu are catre ce sa fie
-          // trimis si Google alege singur. Romana e varianta principala.
-          "x-default": absoluteUrl(DEFAULT_LOCALE, route),
-        },
-      },
+      // Aceeasi harta de limbi ca in `<head>`. Daca cele doua s-ar contrazice,
+      // Google arunca perechea in conflict cu totul — vezi `lib/seo.ts`.
+      alternates: { languages: languageAlternates(route) },
     })),
   );
 }

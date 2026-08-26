@@ -2,32 +2,32 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "Online 1-on-1 fitness mentoring · David Biriș",
+    title: "Online personal trainer · 1-on-1 coaching · David Biriș",
     description:
-      "I help you build a physique you're proud of, without sacrificing your life for it. One-on-one mentoring, 100% online: training plan, nutrition, form feedback and weekly adjustments.",
+      "Online personal trainer, one-on-one. A gym plan built for you, nutrition and form feedback, made to fit the life you have. First conversation is free.",
   },
   pageMeta: {
     metoda: {
-      title: "The method · Lifting is the base, your life stays yours",
+      title: "Custom online gym plan · The method · David Biriș",
       description:
-        "Five steps: training, progress, nutrition, lifestyle, adjustment. Lifting is the base the physique is built on, and the rest fits around the life you already have.",
+        "What a custom gym plan looks like: training, progress, nutrition, lifestyle, adjustment. Five parts built on your goal, your level and the time you have.",
     },
     rezultate: {
-      title: "Real results · Online 1-on-1 mentoring",
+      title: "Real results with an online personal trainer · David Biriș",
       description:
-        "Three people who started from different places, and what changed. Before and after photos, in their own words. One-on-one mentoring, 100% online.",
+        "Three people who started from different places, and what changed. Before and after photos, in their own words. Online personal trainer, one-on-one.",
     },
     despre: {
-      title: "About David Biriș · Online fitness mentor",
+      title: "About David Biriș · Online personal trainer",
       description:
-        "7 years under the bar, my own results, and second year of medical school. I want to understand why things work, not just that they do. One-on-one mentoring, online.",
+        "7 years under the bar, my own results, and second year of medical school. Online personal trainer, one-on-one: I want to understand why things work.",
     },
   },
   business: {
-    serviceType: "Online one-on-one fitness mentoring",
+    serviceType: "Online personal trainer, one-on-one",
     areaServed: "Romania",
     audience: "People who want to look good and be fit without giving up the rest of their life",
-    locationLine: "One-on-one fitness mentoring, 100% online. Wherever you are, in Romanian and English.",
+    locationLine: "Online personal trainer, one-on-one mentoring. Wherever you are, in Romanian and English.",
   },
   nav: [
     { href: "", label: "Home" },

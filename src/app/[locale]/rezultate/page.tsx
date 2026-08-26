@@ -4,9 +4,15 @@ import { Footer } from "@/components/nav/Footer";
 import { Results } from "@/components/sections/Results";
 import { ContactCta } from "@/components/contact/ContactCta";
 import { Section } from "@/components/ui/Section";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { absoluteUrl } from "@/lib/site";
+import {
+  breadcrumbSchema,
+  pageMetadata,
+  testimonialsSchema,
+  webPageSchema,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -21,23 +27,14 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
 
-  return {
-    title: content.pageMeta.rezultate.title,
-    description: content.pageMeta.rezultate.description,
-    alternates: {
-      canonical: absoluteUrl(locale, "rezultate"),
-      languages: {
-        ...Object.fromEntries(LOCALES.map((other) => [other, absoluteUrl(other, "rezultate")])),
-        "x-default": absoluteUrl("ro", "rezultate"),
-      },
-    },
-  };
+  return pageMetadata(locale, "rezultate", content.pageMeta.rezultate);
 }
 
 export default async function ResultsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
+  const crumb = breadcrumbSchema(locale, "rezultate", content.nav);
 
   return (
     <main>
@@ -49,6 +46,22 @@ export default async function ResultsPage({ params }: { params: Promise<{ locale
         </div>
       </Section>
       <Footer data={content.footer} contact={content.contact} business={content.business} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            webPageSchema({
+              locale,
+              route: "rezultate",
+              meta: content.pageMeta.rezultate,
+              type: "CollectionPage",
+              breadcrumb: crumb,
+            }),
+            crumb,
+            testimonialsSchema(locale, content),
+          ],
+        }}
+      />
     </main>
   );
 }

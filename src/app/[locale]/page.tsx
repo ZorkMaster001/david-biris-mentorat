@@ -15,6 +15,7 @@ import { Results } from "@/components/sections/Results";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { isLocale } from "@/content/types";
+import { webPageSchema } from "@/lib/seo";
 import { localePath } from "@/lib/site";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -64,10 +65,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <FinalCta data={content.finalCta} contact={content.contact} />
       <Footer data={content.footer} contact={content.contact} business={content.business} />
 
+      {/*
+        Pagina de start e in acelasi timp pagina si colectie de intrebari, deci
+        poarta amandoua tipurile pe un singur nod. Doua noduri separate — un
+        `WebPage` si un `FAQPage` la aceeasi adresa — ar fi insemnat doua pagini
+        care se dau drept aceeasi, exact genul de ambiguitate care face un motor
+        sa nu ia in seama niciuna.
+
+        Intrebarile sunt cel mai citabil lucru de pe site: raspunsuri scurte, la
+        obiect, formulate exact cum le pune omul. Aici sunt date gata extrase, ca
+        un asistent sa nu fie nevoit sa citeasca pagina randata ca sa le gaseasca.
+      */}
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "FAQPage",
+          ...webPageSchema({ locale, route: "", meta: content.meta }),
+          "@type": ["WebPage", "FAQPage"],
           mainEntity: content.faq.items.map((item) => ({
             "@type": "Question",
             name: item.question,

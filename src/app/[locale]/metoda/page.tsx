@@ -6,9 +6,15 @@ import { Method } from "@/components/sections/Method";
 import { ContactCta } from "@/components/contact/ContactCta";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/content";
 import { LOCALES, isLocale } from "@/content/types";
-import { absoluteUrl } from "@/lib/site";
+import {
+  breadcrumbSchema,
+  methodListSchema,
+  pageMetadata,
+  webPageSchema,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -23,23 +29,14 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
 
-  return {
-    title: content.pageMeta.metoda.title,
-    description: content.pageMeta.metoda.description,
-    alternates: {
-      canonical: absoluteUrl(locale, "metoda"),
-      languages: {
-        ...Object.fromEntries(LOCALES.map((other) => [other, absoluteUrl(other, "metoda")])),
-        "x-default": absoluteUrl("ro", "metoda"),
-      },
-    },
-  };
+  return pageMetadata(locale, "metoda", content.pageMeta.metoda);
 }
 
 export default async function MethodPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const content = getContent(locale);
+  const crumb = breadcrumbSchema(locale, "metoda", content.nav);
 
   return (
     <main>
@@ -67,6 +64,22 @@ export default async function MethodPage({ params }: { params: Promise<{ locale:
         </div>
       </Section>
       <Footer data={content.footer} contact={content.contact} business={content.business} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            webPageSchema({
+              locale,
+              route: "metoda",
+              meta: content.pageMeta.metoda,
+              type: "WebPage",
+              breadcrumb: crumb,
+            }),
+            crumb,
+            methodListSchema(locale, content),
+          ],
+        }}
+      />
     </main>
   );
 }

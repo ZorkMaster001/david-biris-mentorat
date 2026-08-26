@@ -6,6 +6,16 @@ import type { Pillar } from "@/content/types";
 interface PillarListProps {
   pillars: Pillar[];
   onVisibleCountChange: (count: number) => void;
+  /**
+   * Nivelul titlului sectiunii care contine lista. Pilonii se aseaza cu un nivel
+   * sub el.
+   *
+   * Erau fixati pe `h3`. In pagina principala mergea — titlul sectiunii e `h2` —
+   * dar pe /metoda titlul sectiunii e chiar `h1`-ul paginii, deci se sarea de la
+   * h1 direct la h3. O treapta lipsa rupe schita paginii pentru cititoarele de
+   * ecran si pentru orice unealta care deduce ierarhia din headinguri.
+   */
+  headingLevel?: "h1" | "h2";
 }
 
 /*
@@ -22,7 +32,12 @@ function indexOf(entry: IntersectionObserverEntry): number {
   return Number((entry.target as HTMLElement).dataset.index ?? "0");
 }
 
-export function PillarList({ pillars, onVisibleCountChange }: PillarListProps) {
+export function PillarList({
+  pillars,
+  onVisibleCountChange,
+  headingLevel = "h2",
+}: PillarListProps) {
+  const Heading = headingLevel === "h1" ? "h2" : "h3";
   const items = useRef<(HTMLLIElement | null)[]>([]);
   const passed = useRef(new Set<number>());
   const reported = useRef(-1);
@@ -95,7 +110,7 @@ export function PillarList({ pillars, onVisibleCountChange }: PillarListProps) {
           >
             {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="mt-2 font-display text-2xl">{pillar.name}</h3>
+          <Heading className="mt-2 font-display text-2xl">{pillar.name}</Heading>
           <p className="mt-2 max-w-[44ch] text-bone-dim">{pillar.angle}</p>
         </li>
       ))}
