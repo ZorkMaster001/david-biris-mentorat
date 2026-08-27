@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { Analytics } from "@/components/analytics/Analytics";
 import { SilkBackground } from "@/components/bg/SilkBackground";
 import { BackButton } from "@/components/nav/BackButton";
 import { BottomNav } from "@/components/nav/BottomNav";
@@ -111,6 +112,15 @@ export default async function LocaleLayout({
         <ScrollProgress />
         <BottomNav locale={locale} items={content.nav} />
         <ContactFab labels={content.contact} />
+
+        {/*
+          Cererea de acord si, doar dupa un „da" explicit, Meta Pixel. Fara acord nu
+          se incarca `fbevents.js` si nu se pune niciun cookie — vezi
+          `components/analytics/Analytics.tsx`. Se randeaza doar cand exista
+          `NEXT_PUBLIC_META_PIXEL_ID` in mediu, deci dev-ul si preview-urile raman
+          curate si nu intreaba nimic.
+        */}
+        <Analytics labels={content.consent} />
 
         {/*
           Entitatile valabile pe tot site-ul: site-ul, persoana, afacerea si

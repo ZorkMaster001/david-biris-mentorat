@@ -300,4 +300,10 @@ export const en: Content = {
     contactLabel: "Message me directly",
     wordmark: "David Biriș",
   },
+  consent: {
+    title: "Measurement cookies",
+    body: "I use the Meta Pixel to see which ads bring people here. Decline and nothing loads and nothing is measured — the site works exactly the same.",
+    accept: "Accept",
+    reject: "Decline",
+  },
 };

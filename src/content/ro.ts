@@ -300,4 +300,10 @@ export const ro: Content = {
     contactLabel: "Scrie-mi direct",
     wordmark: "David Biriș",
   },
+  consent: {
+    title: "Cookie-uri de măsurare",
+    body: "Folosesc Meta Pixel ca să văd ce reclame aduc oameni aici. Dacă refuzi, nu se încarcă și nu se măsoară nimic — site-ul merge la fel.",
+    accept: "Accept",
+    reject: "Refuz",
+  },
 };

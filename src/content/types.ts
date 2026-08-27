@@ -246,4 +246,19 @@ export interface Content {
     /** Semnatura mare de la baza paginii. */
     wordmark: string;
   };
+  /**
+   * Cardul prin care se cere acordul pentru Meta Pixel. Textul spune ce se
+   * masoara si ce se intampla la refuz: „cookie-uri, ca sa fie mai bine" nu e
+   * informare, iar un acord dat fara sa stii pentru ce nu e acord.
+   *
+   * Apare doar cand exista `NEXT_PUBLIC_META_PIXEL_ID` in mediu — vezi
+   * `components/analytics/Analytics.tsx`.
+   */
+  consent: {
+    title: string;
+    body: string;
+    accept: string;
+    /** La fel de vizibil ca `accept`. Un refuz mai greu de dat nu e acord liber. */
+    reject: string;
+  };
 }
