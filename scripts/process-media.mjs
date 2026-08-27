@@ -78,7 +78,19 @@ const IMAGES = [
     format: "jpeg",
     width: 1400,
   },
-  { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23.jpeg", out: "david-formal", crop: null },
+  /*
+    Fotografia de pe /despre. Sursa e 900x1600, mai inalta decat cadrul 3:4 in care o
+    pune sectiunea, deci se taie 400px pe verticala.
+
+    Banda porneste de la 200, nu de sus: asa capul cade in treimea de sus si raman
+    cativa pasi de trotuar sub talpi. Taiata de la zero, omul ar fi iesit lipit de
+    marginea de jos, ceea ce se citeste ca fotografie prost incadrata, nu ca mers.
+
+    A inlocuit `david-formal` (portretul alb-negru la costum), la cererea clientului.
+    Aceeasi imagine alimenteaza si `Person.image` / `LocalBusiness.image` din
+    layout — daca se schimba aici, se schimba si acolo.
+  */
+  { src: "assets/WhatsApp Image 2026-08-15 at 11.54.23 (2).jpeg", out: "david-promenade", crop: [900, 1200, 0, 200] },
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "sea-rest", crop: null },
   // Acelasi cadru, decupat pe cap: e avatarul rotund din tabul „Despre" al barei de jos.
   { src: "assets/WhatsApp Image 2026-08-15 at 11.54.04 (8).jpeg", out: "david-avatar", crop: [739, 739, 945, 1361] },

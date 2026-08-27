@@ -3,7 +3,10 @@
     Gantera, nu chipul lui. La 16px o fata se face pastă: nu se distinge nici omul,
     nici site-ul. Doua discuri groase si o bara scurta raman lizibile pana la cea mai
     mica dimensiune, iar bara e deja motivul vizual al sectiunii de metoda.
-    Poza lui e pusa pe `apple-icon.png`, unde 180px chiar lasa un chip sa se vada.
+    Aceeasi gantera sta si pe `apple-icon.png`, la 180px si fara colturi rotunjite,
+    fiindca iOS isi aplica singur masca. Acolo era inainte fotografia lui, dar
+    `apple-touch-icon` e unul dintre candidatii din care Google isi alege pictograma
+    afisata langa rezultat — deci chipul aparea in cautare in locul semnului.
     Culorile sunt tokenii `color-ink` si `color-signal` din globals.css, scrisi
     aici ca valori: un SVG de favicon nu are acces la variabilele paginii.
   -->

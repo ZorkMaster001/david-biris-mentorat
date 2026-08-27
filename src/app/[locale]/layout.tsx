@@ -153,7 +153,7 @@ export default async function LocaleLayout({
                 description: content.david.body.join(" "),
                 knowsAbout: KNOWS_ABOUT,
                 knowsLanguage: ["ro", "en"],
-                image: `${SITE_URL}/media/img/david-formal.webp`,
+                image: `${SITE_URL}/media/img/david-promenade.webp`,
                 sameAs: [instagramUrl()],
                 url: absoluteUrl(locale, "despre"),
                 mainEntityOfPage: { "@id": `${absoluteUrl(locale, "despre")}#webpage` },
@@ -165,7 +165,7 @@ export default async function LocaleLayout({
                 name: `David Biriș · ${content.business.serviceType}`,
                 description: content.meta.description,
                 url: absoluteUrl(locale, ""),
-                image: `${SITE_URL}/media/img/david-formal.webp`,
+                image: `${SITE_URL}/media/img/david-promenade.webp`,
                 telephone: `+${PHONE_E164}`,
                 address: {
                   "@type": "PostalAddress",

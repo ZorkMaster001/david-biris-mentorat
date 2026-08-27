@@ -170,8 +170,8 @@ export const ro: Content = {
       "Între timp studiez Medicina, ceea ce înseamnă că nu mă mulțumesc cu „așa se face”. Vreau să înțeleg ce se întâmplă în corp când ridici greutatea și de ce.",
       "Te antrenez pentru că am fost și eu la început, am făcut destule greșeli și știu cât de greu e să-ți dai seama singur ce funcționează.",
     ],
-    image: "david-formal",
-    imageAlt: "David Biriș",
+    image: "david-promenade",
+    imageAlt: "David pe faleza de la malul mării",
     transformation: {
       headline: "Am trecut și eu pe acolo.",
       beforeSrc: "sea-rest",

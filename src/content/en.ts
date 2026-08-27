@@ -170,8 +170,8 @@ export const en: Content = {
       "I study medicine along the way, which means I'm not satisfied with “that's how it's done”. I want to understand what happens inside the body when you lift, and why.",
       "I train you because I started where you are, made plenty of mistakes, and I know how hard it is to work out on your own what actually works.",
     ],
-    image: "david-formal",
-    imageAlt: "David Biriș",
+    image: "david-promenade",
+    imageAlt: "David on a seafront promenade",
     transformation: {
       headline: "I've been there too.",
       beforeSrc: "sea-rest",
